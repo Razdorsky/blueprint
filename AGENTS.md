@@ -11,3 +11,9 @@ Owner controls project setup, shared data/assets, build and integration. Delegat
 Before handoff: build, link/asset validation and responsive browser QA of both editions and every supplied page. No email sending, real booking, subscription or account changes in QA.
 
 User decision, 2026-11-02: both new editions must use SvelteKit. Production source is native Svelte5; preserve this stack. Do not restore the preliminary JSX/React renderer.
+
+User decision, 2026-11-02 — editions are independent:
+
+- `/figma/` is finished and frozen. Its output must stay exactly as it is. Never edit its files: `src/lib/pages`, `src/lib/components`, `src/lib/site.ts`, `src/lib/site-data.json`, `src/lib/interactions.js`, `src/data/media.json`, `src/shared.css`, `src/figma.css`, `src/assets`, `src/routes/figma`. Do not edit the shared shell files either: `src/app.html`, `src/hooks.server.ts`, the root `src/routes/+layout.*` and `vite.config.ts`. Also never modify or delete public files they reference. `npm run check` runs `scripts/figma-freeze.mjs`, which fails on any such change. Refresh its manifest (`node scripts/figma-freeze.mjs --update`) only when the owner explicitly decides to change the Figma edition.
+- `/blueprint/` is the free edition. Change its layout, composition, markup, motion and structure as needed for a fresh, modern, premium site. It owns `src/lib/blueprint/**` (pages, components, site data, interactions, styles, assets) and `src/routes/blueprint/**`, and imports nothing from the Figma edition. Add new public assets under new names. Blueprint may add dependencies. Dependency upgrades that affect both editions need a before/after check of the Figma output.
+- The Blueprint edition's history: the legacy, owner-built Blueprint lives in `vessyl-website-blueprint`. Its successful ideas were carried into this edition and remain a reference, not a constraint.

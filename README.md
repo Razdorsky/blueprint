@@ -2,8 +2,8 @@
 
 Two independent visual executions of the current 13-page Vessyl website:
 
-- `/blueprint/` — the current content and structure, expressed through the approved Blueprint visual direction.
-- `/figma/` — the current content and structure, closely following the designer's supplied frames.
+- `/blueprint/` — the free edition: the current content, open to new layout, composition and motion for a fresh, premium site.
+- `/figma/` — finished and frozen: a close match of the designer's supplied frames.
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 
@@ -32,7 +32,20 @@ See docs/figma-adaptation.md and docs/blueprint-adaptation.md for the separate v
 
 ## Implementation
 
-`src/lib/pages/P01.svelte`–`P13.svelte` are native source components shared by the two editions. `src/lib/components/` supplies Header, Footer, Newsletter, Menu and Gallery. `src/routes/[edition]/[...slug]/` validates the edition/page and prerenders the26 known routes. SvelteKit manages client navigation, pre-rendered HTML and hydration; the root layout connects transitions and delegated controls with lifecycle cleanup. The source metadata, actual media and all supplied placeholders are retained.
+The two editions share no source. They were separated on 2026-11-02; the separation is described in [docs/edition-separation.md](docs/edition-separation.md).
+
+| | Figma edition (frozen) | Blueprint edition (free) |
+|---|---|---|
+| Route and layout | `src/routes/figma/` | `src/routes/blueprint/` |
+| Pages `P01`–`P13` | `src/lib/pages/` | `src/lib/blueprint/pages/` |
+| Header, Footer, Menu, Gallery, Newsletter | `src/lib/components/` | `src/lib/blueprint/components/` |
+| Site data | `src/lib/site.ts`, `site-data.json`, `src/data/media.json` | `src/lib/blueprint/site.ts`, `site-data.json`, `data/media.json` |
+| Interactions | `src/lib/interactions.js` | `src/lib/blueprint/interactions.js` |
+| Styles and fonts | `src/shared.css`, `src/figma.css`, `src/assets/` | `src/lib/blueprint/styles/`, `src/lib/blueprint/assets/` |
+
+Each edition's layout imports only its own CSS and JavaScript, so neither edition's stylesheet reaches the other. The root layout is edition-neutral. The chooser page (`src/routes/+page.svelte`, `src/lib/chooser.css`) links to each edition with a full page load. `src/hooks.server.ts` takes page lists and canvas colours from each edition's own site module. Media in `public/` is shared read-only: add new files rather than changing existing ones. `npm run check` includes `scripts/figma-freeze.mjs`, which fails on any change to a Figma-edition file.
+
+SvelteKit manages client navigation, pre-rendered HTML and hydration. Each edition's layout connects transitions and delegated controls with lifecycle cleanup. The source metadata, actual media and all supplied placeholders are retained.
 
 The original Figma JSX was used only during the preliminary intake. It is excluded from production source and dependencies. `scripts/convert-pages-to-svelte.mjs` is an optional one-time intake utility, not part of the normal build.
 

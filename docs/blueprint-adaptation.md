@@ -32,3 +32,7 @@ This file records design choices and stable hooks. Final build, complete local r
 ## Final SvelteKit integration
 
 The source fragments were converted into native `src/lib/pages/P01.svelte`–`P13.svelte`, with no runtime HTML injection. Shared shell components and client navigation use SvelteKit. Word-art spaces are explicit Svelte text expressions to preserve typography. Owner QA corrected inherited quote paragraph overrides, reserved card image ratios before lazy loading and kept the Presents newsletter at its source position. Blueprint desktop card groups use three columns, or two for a supplied two-card group. Native page content and placeholders are unchanged.
+
+## Independence from the Figma edition — 2026-11-02
+
+This edition now owns its own pages, shell, data, interactions, styles and assets under `src/lib/blueprint/` and `src/routes/blueprint/`. See [edition-separation.md](edition-separation.md). The notes above describe the state at separation. From here the edition may change layout, composition, markup and motion freely; the Figma edition is frozen.

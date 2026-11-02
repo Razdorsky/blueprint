@@ -27,8 +27,8 @@ body[data-edition='blueprint'] {
   --bp-header-height: 110px;
   --bp-header-color: var(--bp-deep);
   --bp-ease: cubic-bezier(.16, 1, .3, 1);
-  --bp-pattern-forest: url('./assets/patterns/direction-forest.svg');
-  --bp-pattern-copper: url('./assets/patterns/direction-copper.svg');
+  --bp-pattern-forest: url('../assets/patterns/direction-forest.svg');
+  --bp-pattern-copper: url('../assets/patterns/direction-copper.svg');
   --bp-display: 'Telugu MN', Georgia, 'Times New Roman', serif;
   --bp-body: Roboto, Arial, sans-serif;
   color: var(--bp-ink);
