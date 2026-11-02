@@ -17,12 +17,16 @@
 
 {#snippet languageButton()}
   <button type="button" class="language-trigger" data-language-trigger aria-label="Language: English">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <ellipse cx="12" cy="12" rx="4" ry="9" />
-      <path d="M3 12h18M5 7h14M5 17h14" />
-    </svg>
-    <span>EN</span>
+    {#if edition === 'figma'}
+      <span>EN | ES</span>
+    {:else}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <ellipse cx="12" cy="12" rx="4" ry="9" />
+        <path d="M3 12h18M5 7h14M5 17h14" />
+      </svg>
+      <span>EN</span>
+    {/if}
   </button>
 {/snippet}
 
@@ -49,7 +53,7 @@
     </button>
     <a class="brand" href={route(edition, '', base)} aria-label="Vessyl home">
       <img
-        src={asset(`/brand/${page.photo || edition === 'blueprint' ? 'logo-white.svg' : 'logo-dark.svg'}`)}
+        src={asset(`/brand/${page.photo || edition === 'blueprint' ? 'logo-white.svg' : 'logo-copper.svg'}`)}
         width="210"
         height="39"
         alt="VESSYL"

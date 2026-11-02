@@ -56,3 +56,45 @@ Adapter checks were run against rendered SSR for all 13 source pages: exactly on
 ## Final SvelteKit integration
 
 The source fragments were converted into native `src/lib/pages/P01.svelte`–`P13.svelte`, with no runtime HTML injection. Shared shell components and client navigation use SvelteKit. Word-art spaces are explicit Svelte text expressions to preserve typography. Owner QA corrected inherited quote paragraph overrides, reserved card image ratios before lazy loading and kept the Presents newsletter at its source position. Blueprint desktop card groups use three columns, or two for a supplied two-card group. Native page content and placeholders are unchanged.
+
+## Frame-fidelity pass — 2026-11-02
+
+The `/figma/` edition was re-checked against the 13 Website 2.0 frames at 1440px, section by section. Specifications came from the archived `get_design_context` responses for the 13 frames and the shared library in the raw-source bank. Comparisons used native 1:1 frame renders beside full-page renders of the build, plus a per-section height match keyed to the frames' instance order.
+
+- **Shell (Figma edition only).** 96px menu with 166px logo, 13px MENU, an `EN | ES` label and a 166px CHECK AVAILABILITY. Text-only pages use the frames' copper variant (`/brand/logo-copper.svg`, copper language label, copper CTA). Desktop has no extra photo-header gradient. The newsletter is 300px with the 1440px pattern at native scale. The footer is 657px: a 120px bar, right-aligned 160/210px columns and a 100px legal bar.
+- **Sections.** Desktop geometry now follows the frames for every role:
+  - home opening at 860px with the joined 60px double button;
+  - Symbol + Text, with the right half of the symbol on the left edge;
+  - 40/60, 60/40 and 50/50 splits;
+  - overlay panels (598 × 690);
+  - experience tiles at 400px square;
+  - room and half cards at 540px;
+  - description rows, amenities, comparison, map pills, facts rows, events table, heading titles (36/46, or 28/38 on Presents), quote and callouts.
+  
+  Headings use the frames' colours. Link arrows are the frames' chevrons. Text-only openings reserve the in-flow 96px menu.
+- **Photo framing.** Image fills reuse the frames' crop rectangles wherever the delivered asset has the same aspect ratio as the frame's source (26 placements, desktop only). Inner openings use the frames' vertical focus.
+- **Markup, Figma branch only.** The changes are:
+  - explicit line breaks the frames use, in three headings, two paragraphs and the experience and half-card captions;
+  - the Day page's "The half day / The full day" terms as display lines;
+  - chevron gallery controls, plus decorative dots on the two gallery sliders.
+
+  The first chevron is the accessible "Open … gallery" control. The second is a mouse-only duplicate with `tabindex="-1"` and `aria-hidden="true"`. Blueprint markup is unchanged.
+
+Result at 1440px: every section height is within ±3px of its frame. The only exceptions are those listed below and the frame-clipped footers. Page heights match the frames' section stacks.
+
+### Deliberate differences from the frames
+
+| Frame | Implementation | Reason |
+| --- | --- | --- |
+| Home combo placeholders `BUTTON` are drawn in #f5ebe7 on white (invisible) | Library master colour #733a11 | Keeps the supplied placeholder visible and readable |
+| Experiences opening label in #d3a079 on white | #a2551b, as on the other paper openings | Text contrast |
+| Card Grid frames are fixed at 508/510px while their copy overflows | Natural height (+3px) | Copy is never clipped or overlapped |
+| Facts values use Roboto Light | Roboto Regular | Light (300) is not among the bundled font files |
+| OFFER ribbon label is 17.5px SemiBold, white on #d57e3d | 18.7px Bold on the same colours | 3.05:1 contrast passes only as WCAG large text |
+| Slider/gallery chevrons and six dots | Chevrons open the full-screen gallery; dots are decorative | Each source supplies one photograph |
+| Some photos differ in aspect from the frame source (Villas/Treehouse/Day sliders, Frequency and For Two 50/50, glamping card) | Cover framing | The frame's crop rectangle cannot be transferred exactly |
+| Text corrections and `Explore the Dome` | Retained from the change register above | Clear-error policy |
+
+Mobile and tablet have no frames. Their responsive interpretation is retained, with the new controls repositioned over the photograph below 761px.
+
+Checks after this pass: `npm run build` and `npm run check` pass. No document overflow occurs on any of the 13 Figma pages at 360, 375, 414, 768, 1024, 1101, 1280 and 1920px. axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 13 Figma pages at 1440 and 375px.
