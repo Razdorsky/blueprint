@@ -1,0 +1,66 @@
+name: Validate and deploy Vessyl Current
+
+# The same source is pushed to two repositories, as the legacy Blueprint is published:
+# Razdorsky/figma serves https://razdorsky.github.io/figma/ and
+# Razdorsky/blueprint serves https://razdorsky.github.io/blueprint/.
+# The repository name selects the edition.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      EDITION: ${{ github.event.repository.name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build both editions
+        run: npm run build
+      - name: Validate types, routes, assets and the frozen Figma edition
+        run: npm run check
+      - name: Prepare the ${{ env.EDITION }} edition for GitHub Pages
+        run: npm run build:pages -- "$EDITION"
+      - name: Upload website
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: outputs/github-pages
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

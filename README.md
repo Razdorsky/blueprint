@@ -7,6 +7,11 @@ Two independent visual executions of the current 13-page Vessyl website:
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 
+Published like the legacy Blueprint (https://razdorsky.github.io/vessyl-website-blueprint/):
+
+- Figma edition: **https://razdorsky.github.io/figma/** — repository `Razdorsky/figma`
+- Blueprint edition: **https://razdorsky.github.io/blueprint/** — repository `Razdorsky/blueprint`
+
 ## Local preview
 
 ```sh
@@ -28,7 +33,7 @@ The user requests correction of clear errors and preservation of placeholders. `
 
 The13ready source frames contain English copy only. Other locale copy is not invented. Booking actions hand off to the existing partner website; no payment or booking is performed by this project. Newsletter and footer destinations without supplied integrations remain clearly identified preview placeholders and never claim a successful subscription or store an email address.
 
-See docs/figma-adaptation.md and docs/blueprint-adaptation.md for the separate visual contracts. Publication for this new project has not been requested.
+See docs/figma-adaptation.md and docs/blueprint-adaptation.md for the separate visual contracts.
 
 ## Implementation
 
@@ -49,10 +54,23 @@ SvelteKit manages client navigation, pre-rendered HTML and hydration. Each editi
 
 The original Figma JSX was used only during the preliminary intake. It is excluded from production source and dependencies. `scripts/convert-pages-to-svelte.mjs` is an optional one-time intake utility, not part of the normal build.
 
-See `docs/qa.md`, `docs/placeholders.md` and the two adaptation notes for verification and remaining source placeholders. No public publication was requested for this new project.
+See `docs/qa.md`, `docs/placeholders.md` and the two adaptation notes for verification and remaining source placeholders.
 
 Full responsive and interaction audit: [docs/deep-audit-2026-11-02.md](docs/deep-audit-2026-11-02.md).
 
-## Git
+## Publication
 
-This project has its own local Git repository on `main`. Both editions are versioned together; original website repositories remain separate. No remote or public deployment is configured for this project.
+User decision, 2026-11-02: publish exactly as the legacy Blueprint is published. The verbatim request is in the raw-source bank, `marketing-site/current-website/2026-11-02-publication/`.
+
+- One local repository on `main` has two remotes: `figma` → `Razdorsky/figma` and `blueprint` → `Razdorsky/blueprint`. Both are public and receive the same commits.
+- In each repository, GitHub Actions (`.github/workflows/pages.yml`) runs on every push to `main`. It installs the locked dependencies, builds both editions and runs `npm run check`. It then prepares the edition named after the repository and deploys it to GitHub Pages. Pull requests are validated but not deployed.
+- `npm run build:pages -- figma|blueprint` writes `outputs/github-pages`. Routes are already `/figma/…` and `/blueprint/…`, which match the project-site prefixes. The script only moves root-level references (`/_app`, `/media`, `/typography`, `/brand`) under the prefix, then verifies that every reference resolves inside the artifact. Source files are not changed.
+
+To publish, push `main` to both remotes:
+
+```sh
+git push figma main
+git push blueprint main
+```
+
+Both editions are versioned together; the original website repositories remain separate.
