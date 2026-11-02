@@ -1,5 +1,7 @@
 # Both Current editions — deep local audit, 2026-11-02
 
+> The Blueprint findings below describe the edition before its rebuild later on 2026-11-02 (docs/blueprint-edition.md). The Figma findings remain current.
+
 Scope: all 13 English pages in both `/blueprint/` and `/figma/`, native SvelteKit production build on port4180. Existing published projects were not edited. No commit, push or publication requested.
 
 ## Findings fixed in shared roles

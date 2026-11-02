@@ -1,69 +1,25 @@
 <script lang="ts">
-  import { booking, pages, photo, route } from '#lib/blueprint/site.ts';
-
-  type Props = {
-    page: { index: number; slug: string; name: string; photo: boolean };
-    base?: string;
-  };
-
-  let { page, base = '' }: Props = $props();
-
-  function asset(path: string) {
-    if (/^(?:https?:)?\/\//.test(path)) return path;
-    return `${base.replace(/\/$/, '')}${path.startsWith('/') ? '' : '/'}${path}`;
-  }
+  // The header floats over the page, takes the colour of the light beneath it, and steps aside
+  // while you read downwards. The language switch keeps your place on the page.
+  import {bp} from '../context.ts';
+  import {booking, route} from '../site.ts';
+  import logo from '../assets/logo.svg?raw';
+  const {t, page, locale} = bp();
 </script>
 
-{#snippet languageButton()}
-  <button type="button" class="language-trigger" data-language-trigger aria-label="Language: English">
-    
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" />
-        <ellipse cx="12" cy="12" rx="4" ry="9" />
-        <path d="M3 12h18M5 7h14M5 17h14" />
-      </svg>
-      <span>EN</span>
-    
-  </button>
-{/snippet}
-
-{#snippet mega(list: typeof pages, title: string)}
-  <details class="nav-group">
-    <summary class="nav-trigger">{title}</summary>
-    <div class="mega-menu">
-      <a class="mega-overview" href={route(list[0].slug, base)}><span>Overview ↗</span></a>
-      {#each list.slice(1) as item (item.index)}
-        <a href={route(item.slug, base)}>
-          <img src={asset(photo(item.index))} alt={item.name} loading="lazy" />
-          <span>{item.name}</span>
-        </a>
-      {/each}
-    </div>
-  </details>
-{/snippet}
-
-<header class="site-header">
+<header class="site-header" data-header>
   <div class="header-inner">
-    <button type="button" class="menu-toggle" data-menu-open aria-expanded="false" aria-haspopup="dialog" aria-controls="site-menu">
-      <span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span>MENU</span>
+    <button type="button" class="menu-button" data-menu-open aria-expanded="false" aria-controls="site-menu">
+      <span class="menu-icon" aria-hidden="true"><i></i><i></i></span><span>{t('Menu')}</span>
     </button>
-    <a class="brand" href={route('', base)} aria-label="Vessyl home">
-      <img
-        src={asset(`/brand/${'logo-white.svg'}`)}
-        width="210"
-        height="39"
-        alt="VESSYL"
-      />
-    </a>
-    <nav class="desktop-navigation" aria-label="Main navigation">
-      {@render mega(pages.slice(1, 6), 'Stay')}
-      {@render mega([pages[6], ...pages.slice(7)], 'Experiences')}
-      <a href={route('rates-and-offers', base)}>Rates &amp; offers</a>
-    </nav>
-    <div class="header-actions">
-      {@render languageButton()}
-      <a class="nav-book" href={booking} target="_blank" rel="noopener noreferrer">CHECK AVAILABILITY</a>
+    <a class="header-logo" href={route('', locale)} aria-label={t('The Vessyl, home')}>{@html logo}</a>
+    <div class="header-end">
+      <nav class="language" aria-label={t('Language')}>
+        <a href={route(page.slug, 'en')} hreflang="en" lang="en" aria-current={locale === 'en' ? 'true' : undefined} data-locale="en">EN</a>
+        <a href={route(page.slug, 'es')} hreflang="es" lang="es" aria-current={locale === 'es' ? 'true' : undefined} data-locale="es">ES</a>
+      </nav>
+      <a class="button header-book" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
     </div>
   </div>
+  <span class="progress" aria-hidden="true" data-progress></span>
 </header>

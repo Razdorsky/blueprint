@@ -19,7 +19,8 @@ if (edition !== 'figma' && edition !== 'blueprint') {
 
 const dist = path.resolve('dist');
 const out = path.resolve('outputs/github-pages');
-const roots = ['_app', 'media', 'typography', 'brand'];
+// bp holds the Blueprint edition's own photographs and films.
+const roots = ['_app', 'media', 'typography', 'brand', ...(edition === 'blueprint' ? ['bp'] : [])];
 
 await fs.rm(out, { recursive: true, force: true });
 await fs.mkdir(out, { recursive: true });
@@ -42,9 +43,11 @@ for await (const file of files(out)) {
     const source = await fs.readFile(file, 'utf8');
     const result = source
       // SvelteKit's relative asset paths (../../_app/...) assume the site root.
-      .replace(/(["'(])(?:\.\.\/)+(_app|brand|media|typography)\//g, `$1${prefix}/$2/`)
+      .replace(/(["'(])(?:\.\.\/)+(_app|brand|media|typography|bp)\//g, `$1${prefix}/$2/`)
       // Static media and typography written as root paths by the page components.
-      .replace(/(["'(])\/(media|typography|brand)\//g, `$1${prefix}/$2/`);
+      .replace(/(["'(,])\/(media|typography|brand|bp)\//g, `$1${prefix}/$2/`)
+      // srcset lists: every candidate after a comma and space.
+      .replace(/(, )\/(media|bp)\//g, `$1${prefix}/$2/`);
     if (result !== source) {
       await fs.writeFile(file, result);
       html += 1;
@@ -52,7 +55,7 @@ for await (const file of files(out)) {
   } else if (file.endsWith('.js') && file.includes(`${path.sep}_app${path.sep}`)) {
     const source = await fs.readFile(file, 'utf8');
     // Client-rendered pages build the same root paths at runtime (`${base}/media/...`).
-    const result = source.replace(/(["'`}])\/(media|typography|brand)\//g, `$1${prefix}/$2/`);
+    const result = source.replace(/(["'`}])\/(media|typography|brand|bp)\//g, `$1${prefix}/$2/`);
     if (result !== source) {
       await fs.writeFile(file, result);
       js += 1;

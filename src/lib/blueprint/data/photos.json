@@ -1,0 +1,967 @@
+{
+ "aerial": {
+  "w": 5280,
+  "h": 3956,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#667969",
+  "source": "AP/General/2_Drone_General Wides and Main_Stills_1.JPG"
+ },
+ "agave-dome": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#605d65",
+  "source": "AP/Nature & Bird Watching/Vessyl_Nature_and_Bird_Watching-10.jpg"
+ },
+ "dessert": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#9f9b8e",
+  "source": "RAW/Z92_8300.jpg"
+ },
+ "dinner-above": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#525845",
+  "source": "RAW/Z92_8521.jpg"
+ },
+ "dinner-two": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7a7c72",
+  "source": "RAW/Z92_8400.jpg"
+ },
+ "dome-blue": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#518299",
+  "source": "AP/Performance Dome/Z92_9904.jpg"
+ },
+ "dome-circle": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#363639",
+  "source": "AP/Corporate/Vessyl_Corporate-3.jpg"
+ },
+ "dome-garden": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7a8063",
+  "source": "AP/Dome/Vessy_Dome_Extensions-18.jpg"
+ },
+ "dome-gong": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#54422d",
+  "source": "AP/Performance Dome/Vessyl_Performance_Dome-9.jpg"
+ },
+ "dome-headphones": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#585b60",
+  "source": "AP/Vessyl_Inserts_Details-2.jpg"
+ },
+ "dome-mars": {
+  "w": 5385,
+  "h": 8078,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7f3932",
+  "source": "AP/Readings/Vessyl_Reading_In_Dome-10.jpg"
+ },
+ "dome-mats": {
+  "w": 7859,
+  "h": 5239,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#4d433f",
+  "source": "AP/Readings/Vessyl_Reading_In_Dome.jpg"
+ },
+ "dome-scales": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#6b605c",
+  "source": "AP/Dome/Vessy_Dome_Extensions-12.jpg"
+ },
+ "dome-sky": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#5e6065",
+  "source": "AP/Dome/Vessy_Dome_Extensions-13.jpg"
+ },
+ "dome-waves": {
+  "w": 5468,
+  "h": 8202,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#494771",
+  "source": "AP/Readings/Vessyl_Reading_In_Dome-7.jpg"
+ },
+ "drinks": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#96886d",
+  "source": "RAW/Z92_5223.jpg"
+ },
+ "hearth-grounds": {
+  "w": 6000,
+  "h": 4000,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#65695c",
+  "source": "AP/Spa/Vessyl_Spa_4.jpg"
+ },
+ "horses-arena": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#4d4636",
+  "source": "RAW/Z92_6715.jpg"
+ },
+ "horses-bonding": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#6c684c",
+  "source": "AP/Horses/Vessyl_horses_Bonding-10.jpg"
+ },
+ "horses-bonding-8": {
+  "w": 4800,
+  "h": 7123,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#727162",
+  "source": "AP/Horses/Vessyl_horses_Bonding-8.jpg"
+ },
+ "horses-road": {
+  "w": 6158,
+  "h": 3872,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#5e6151",
+  "source": "AP/Horses/Vessyl_horses_general-3_edit.jpg"
+ },
+ "horses-sign": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#68624d",
+  "source": "AP/Horses/Vessyl_horses_general-8.jpg"
+ },
+ "horses-stable": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#5a564d",
+  "source": "RAW/PR9_0741.jpg"
+ },
+ "lantern": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#86583b",
+  "source": "RAW/PR9_2722.jpg"
+ },
+ "lr-bamboo": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#0f1512",
+  "source": "LR/DSC02373.jpg"
+ },
+ "lr-boulders": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#3b443f",
+  "source": "LR/DSC02232.jpg"
+ },
+ "lr-candles": {
+  "w": 2048,
+  "h": 1152,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#0f191c",
+  "source": "LR/DSC03423.jpg"
+ },
+ "lr-chimes": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#484747",
+  "source": "LR/DSC03450.jpg"
+ },
+ "lr-circle": {
+  "w": 2048,
+  "h": 1152,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#3e433b",
+  "source": "LR/DSC03087.jpg"
+ },
+ "lr-cows": {
+  "w": 2048,
+  "h": 1152,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#303228",
+  "source": "LR/DSC02781.jpg"
+ },
+ "lr-dome-above": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#364641",
+  "source": "LR/DSC02135.jpg"
+ },
+ "lr-dome-red": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#323b38",
+  "source": "LR/DSC02177.jpg"
+ },
+ "lr-fire": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#141413",
+  "source": "LR/DSC03243.jpg"
+ },
+ "lr-fire-2": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#111416",
+  "source": "LR/DSC03251.jpg"
+ },
+ "lr-flute": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#5c5b5b",
+  "source": "LR/DSC03407.jpg"
+ },
+ "lr-guan": {
+  "w": 2048,
+  "h": 1536,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#4e664a",
+  "source": "LR/DSC02307.jpg"
+ },
+ "lr-hearth-crowd": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#2a2928",
+  "source": "LR/DSC02491.jpg"
+ },
+ "lr-hearth-door": {
+  "w": 1376,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1376
+  ],
+  "color": "#1d1c1c",
+  "source": "LR/DSC02456.jpg"
+ },
+ "lr-hearth-fire": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#374445",
+  "source": "LR/DSC02467.jpg"
+ },
+ "lr-hearth-smoke": {
+  "w": 2048,
+  "h": 1536,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#344544",
+  "source": "LR/DSC02486.jpg"
+ },
+ "lr-horse-bw": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#242221",
+  "source": "LR/DSC03010.jpg"
+ },
+ "lr-horses-hands": {
+  "w": 2048,
+  "h": 1322,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2048
+  ],
+  "color": "#4a504e",
+  "source": "LR/DSC02970.jpg"
+ },
+ "lr-meditation": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#2d1c11",
+  "source": "LR/DSC03297.jpg"
+ },
+ "lr-path": {
+  "w": 1315,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1315
+  ],
+  "color": "#4f5e50",
+  "source": "LR/DSC03385.jpg"
+ },
+ "lr-shower": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#111914",
+  "source": "LR/DSC02532.jpg"
+ },
+ "lr-showers-dusk": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#403f3a",
+  "source": "LR/DSC02578.jpg"
+ },
+ "lr-silhouette": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#4c5756",
+  "source": "LR/DSC03463.jpg"
+ },
+ "lr-stairs": {
+  "w": 1152,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1152
+  ],
+  "color": "#5c675a",
+  "source": "LR/DSC03353.jpg"
+ },
+ "lr-table-mist": {
+  "w": 1536,
+  "h": 2048,
+  "widths": [
+   640,
+   1080,
+   1536
+  ],
+  "color": "#5e5d53",
+  "source": "LR/DSC02007.jpg"
+ },
+ "massage-canopy": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#64624c",
+  "source": "AP/Massage/Vessy_Massage-5.jpg"
+ },
+ "massage-ritual": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#656f4d",
+  "source": "AP/Massage/Z92_7130.jpg"
+ },
+ "plate-fish": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#887962",
+  "source": "AP/Food & Beverage/Vessyl_Food_and_Beverage-10.jpg"
+ },
+ "plate-prawns": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#948667",
+  "source": "AP/Food & Beverage/Vessyl_Food_and_Beverage-14.jpg"
+ },
+ "pool-front": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#828b86",
+  "source": "AP/Poolside/Vessyl_Poolside-23.jpg"
+ },
+ "pool-mountains": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#969996",
+  "source": "AP/Poolside/Vessyl_Poolside-24.jpg"
+ },
+ "pool-talk": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#6d6857",
+  "source": "RAW/Z92_7831.jpg"
+ },
+ "pool-towel": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7c787b",
+  "source": "AP/Poolside/Vessyl_Poolside-7.jpg"
+ },
+ "pool-waterfall": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#5c6454",
+  "source": "AP/Poolside/Vessyl_Poolside-17.jpg"
+ },
+ "river-horse": {
+  "w": 1920,
+  "h": 1080,
+  "widths": [
+   640,
+   1080,
+   1600,
+   1920
+  ],
+  "color": "#666950",
+  "source": "AP/Horses/Vessy_Horses_River-20.jpg"
+ },
+ "river-jump": {
+  "w": 1920,
+  "h": 1080,
+  "widths": [
+   640,
+   1080,
+   1600,
+   1920
+  ],
+  "color": "#3e4c34",
+  "source": "AP/Horses/Vessy_Horses_River-22.jpg"
+ },
+ "river-ride": {
+  "w": 1920,
+  "h": 1080,
+  "widths": [
+   640,
+   1080,
+   1600,
+   1920
+  ],
+  "color": "#5f5d37",
+  "source": "AP/Horses/Vessy_Horses_River-17.jpg"
+ },
+ "table-chef": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#767565",
+  "source": "AP/Food & Beverage/Dining/Vessyl_Dining-15.jpg"
+ },
+ "table-lunch": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#86847a",
+  "source": "AP/Food & Beverage/Dining/Vessyl_Dining-22.jpg"
+ },
+ "tent": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#797457",
+  "source": "AP/Rooms/Tents/Vessy_4_Room_4_tent-8.jpg"
+ },
+ "tent-2": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#646b55",
+  "source": "RAW/Z92_7610.jpg"
+ },
+ "tingsha": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#8d9dbe",
+  "source": "RAW/PR9_2103.jpg"
+ },
+ "treehouse": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#5e6855",
+  "source": "RAW/PR9_2665.jpg"
+ },
+ "treehouse-inside": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#71583e",
+  "source": "AP/Rooms/Sky Treehouse/Vessy_3_Room_3_treehouser-2.jpg"
+ },
+ "tuning-fork": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#615243",
+  "source": "AP/Tuning Fork/Vessyl_Tuning_Fork-3.jpg"
+ },
+ "villa-bath": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#927864",
+  "source": "RAW/Z92_8619.jpg"
+ },
+ "villa-bed": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7e6b61",
+  "source": "AP/Rooms/Pulse/Pulse Villa/Vessyl_Pulse Villa_10.jpg"
+ },
+ "villa-detail": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7f8983",
+  "source": "AP/Rooms/Horizon/Vessy_1_Room_1_Hacienda-12.jpg"
+ },
+ "villa-kitchen": {
+  "w": 8055,
+  "h": 5370,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#776247",
+  "source": "AP/Rooms/Horizon/Vessy_1_Room_1_Hacienda-8.jpg"
+ },
+ "villa-living": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#938375",
+  "source": "AP/Rooms/Pulse/Pulse Villa/Vessyl_Pulse Villa_7.jpg"
+ },
+ "villa-shower": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#7c6856",
+  "source": "RAW/Z92_8673.jpg"
+ },
+ "villa-suite": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#847e76",
+  "source": "AP/Rooms/Pulse/Pulse Suite/Vessyl_Pulse Suite_6.jpg"
+ },
+ "villa-window": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#483c34",
+  "source": "RAW/Z92_8591.jpg"
+ },
+ "waterfall": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#757365",
+  "source": "RAW/PR9_2479.jpg"
+ },
+ "yoga-arms": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#4e473a",
+  "source": "AP/Yoga/Vessyl_Yoga-2.jpg"
+ },
+ "yoga-child": {
+  "w": 4802,
+  "h": 7269,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#585049",
+  "source": "AP/Yoga/Vessyl_Yoga-3_edit.jpg"
+ },
+ "yoga-group": {
+  "w": 8256,
+  "h": 5504,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#4d463b",
+  "source": "AP/Yoga/Vessyl_Yoga-9.jpg"
+ },
+ "yoga-solo": {
+  "w": 5504,
+  "h": 8256,
+  "widths": [
+   640,
+   1080,
+   1600,
+   2400
+  ],
+  "color": "#686c54",
+  "source": "RAW/Z92_5846.jpg"
+ }
+}

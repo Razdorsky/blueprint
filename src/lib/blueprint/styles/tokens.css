@@ -1,0 +1,48 @@
+/* Blueprint tokens. Colours are the brand palette (Visual Design, p. 36 and 62–63):
+   a light warm room, weighty things as dark vessels, copper only where something is alive. */
+:root {
+  --paper: #f5ebe7;
+  --clay: #e7d8d3;
+  --forest: #1a3013;
+  --petrol: #062a33;
+  --night: #111111;
+  --ink: #111111;
+  --ink-2: #494e56;
+  --copper: #d57e3d;
+  --copper-deep: #a2551b;
+  --copper-soft: #d3a079;
+  --sage: #b8c09f;
+  --mist: #c3d6df;
+
+  --serif: 'EB Garamond Variable', 'EB Garamond', Garamond, Georgia, serif;
+  --sans: Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Type: a classical scale, fluid between phone and wide screen. */
+  --t-hero: clamp(2.65rem, 1.05rem + 5.4vw, 7.4rem);
+  --t-h1: clamp(2.4rem, 1.1rem + 4.2vw, 5.8rem);
+  --t-h2: clamp(2rem, 1.25rem + 2.5vw, 4.1rem);
+  --t-h3: clamp(1.45rem, 1.2rem + 0.75vw, 1.95rem);
+  --t-statement: clamp(1.85rem, 1.05rem + 2.6vw, 3.9rem);
+  --t-lede: clamp(1.2rem, 1.02rem + 0.62vw, 1.6rem);
+  --t-body: clamp(1.125rem, 1.06rem + 0.22vw, 1.3rem);
+  --t-ui: 0.9375rem;
+  --t-small: 0.8125rem;
+
+  /* Motion: at the speed of breath. Starts in stillness, ends in stillness. */
+  --breath: cubic-bezier(0.45, 0, 0.2, 1);
+  --exhale: cubic-bezier(0.3, 0, 0.15, 1);
+  --slow: 1.4s;
+  --calm: 0.9s;
+  --soft: 0.5s;
+
+  --gutter: clamp(20px, 4.4vw, 76px);
+  --max: 1600px;
+  --space: clamp(96px, 12vw, 196px);
+  --header: 76px;
+}
+
+[data-tone='paper'] { --bg: var(--paper); --fg: var(--ink); --fg-2: var(--ink-2); --rule: rgb(17 17 17 / 0.16); --accent: var(--copper-deep); --glass: rgb(245 235 231 / 0.72); }
+[data-tone='clay'] { --bg: var(--clay); --fg: var(--ink); --fg-2: #4d4a48; --rule: rgb(17 17 17 / 0.18); --accent: var(--copper-deep); --glass: rgb(231 216 211 / 0.74); }
+[data-tone='forest'] { --bg: var(--forest); --fg: var(--paper); --fg-2: var(--sage); --rule: rgb(245 235 231 / 0.2); --accent: var(--copper-soft); --glass: rgb(26 48 19 / 0.7); }
+[data-tone='petrol'] { --bg: var(--petrol); --fg: var(--paper); --fg-2: var(--mist); --rule: rgb(245 235 231 / 0.2); --accent: var(--copper-soft); --glass: rgb(6 42 51 / 0.7); }
+[data-tone='night'] { --bg: var(--night); --fg: var(--paper); --fg-2: #a8adb5; --rule: rgb(245 235 231 / 0.18); --accent: var(--copper-soft); --glass: rgb(17 17 17 / 0.7); }

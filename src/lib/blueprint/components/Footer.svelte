@@ -1,75 +1,41 @@
 <script lang="ts">
-  import { booking, pages, route } from '#lib/blueprint/site.ts';
-
-  type Props = {
-    page: { index: number; slug: string; name: string; photo: boolean };
-    base?: string;
-  };
-
-  let { base = '' }: Props = $props();
-
-  const propertyLinks = ['The Dome', 'The Hearth', 'Sound and movement', 'Horses and land', 'The studio', 'The gallery'];
-  const visitLinks = ['Getting here', 'Things to do in Arenal', 'When to visit', 'FAQ', 'Policies'];
-  const contactLinks = ['WhatsApp Contact', 'Phone Contact', 'Address Info'];
+  // The close of every page: the brand's own invitation, the index again, and the newsletter.
+  import {bp, rich} from '../context.ts';
+  import Newsletter from '../blocks/Newsletter.svelte';
+  import {booking, groupPages, route, type Group} from '../site.ts';
+  import symbol from '../assets/symbol.svg?raw';
+  const {t, page, locale} = bp();
+  const groups: [Group, string][] = [['stay', 'Stay'], ['experiences', 'Experiences'], ['property', 'The property']];
+  const visit = ['Getting here', 'Things to do in Arenal', 'When to visit', 'Questions', 'Policies'];
+  const contact = ['WhatsApp', 'Phone', 'Address'];
+  // i18n: ["Stay", "Experiences", "The property", "Getting here", "Things to do in Arenal", "When to visit", "Questions", "Policies", "WhatsApp", "Phone", "Address"]
 </script>
 
-{#snippet languageButton()}
-  <button type="button" class="language-trigger" data-language-trigger aria-label="Language: English">
-    
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" />
-        <ellipse cx="12" cy="12" rx="4" ry="9" />
-        <path d="M3 12h18M5 7h14M5 17h14" />
-      </svg>
-      <span>EN</span>
-    
-  </button>
-{/snippet}
-
-{#snippet pending(label: string)}
-  <button type="button" data-pending-link={label}>{label}</button>
-{/snippet}
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <a class="brand" href={route('', base)}>
-        <img src={`${base.replace(/\/$/, '')}/brand/logo-white.svg`} width="200" height="38" alt="VESSYL" />
-      </a>
-      <div class="header-actions">
-        {@render languageButton()}
-        <a class="nav-book" href={booking} target="_blank" rel="noopener noreferrer">CHECK AVAILABILITY</a>
-      </div>
+<footer class="site-footer" data-tone="night">
+  {#if page.slug !== 'the-vessyl-presents'}<Newsletter />{/if}
+  <div class="wrap footer-close">
+    <p class="footer-line">{@html rich(t('Come for Costa Rica.\nCome for the horses.\nCome for the volcano.'))}<br />{t('Just come curious.')}</p>
+    <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+  </div>
+  <div class="wrap footer-columns">
+    {#each groups as [group, label] (group)}
+      <nav aria-label={t(label)}>
+        <h2>{t(label)}</h2>
+        <ul>{#each groupPages(group) as item (item.index)}<li><a href={route(item.slug, locale)}>{t(item.name)}</a></li>{/each}</ul>
+      </nav>
+    {/each}
+    <div>
+      <h2>{t('Plan your visit')}</h2>
+      <ul>{#each visit as label}<li><button type="button" data-pending>{t(label)}</button></li>{/each}</ul>
     </div>
-    <div class="footer-columns">
-      <section class="footer-group">
-        <h2><a href={route('where-you-sleep', base)}>Stay</a></h2>
-        {#each pages.slice(2, 6) as item (item.index)}
-          <a href={route(item.slug, base)}>{item.name}</a>
-        {/each}
-      </section>
-      <section class="footer-group">
-        <h2><a href={route('experiences', base)}>Experiences</a></h2>
-        {#each pages.slice(7) as item (item.index)}
-          <a href={route(item.slug, base)}>{item.name}</a>
-        {/each}
-      </section>
-      <section class="footer-group">
-        <h2>The Property</h2>
-        {#each propertyLinks as label (label)}{@render pending(label)}{/each}
-      </section>
-      <section class="footer-group">
-        <h2>Plan your visit</h2>
-        {#each visitLinks as label (label)}{@render pending(label)}{/each}
-      </section>
-      <section class="footer-group">
-        <h2>Contact</h2>
-        {#each contactLinks as label (label)}{@render pending(label)}{/each}
-      </section>
+    <div>
+      <h2>{t('Contact')}</h2>
+      <ul>{#each contact as label}<li><button type="button" data-pending>{t(label)}</button></li>{/each}</ul>
     </div>
-    <div class="footer-bottom">
-      <p>© The Vessyl 2026 • La Fortuna, Costa Rica</p>
-      <p>{@render pending('Privacy')} · {@render pending('Terms & Conditions')}</p>
-    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span class="footer-seal" aria-hidden="true">{@html symbol}</span>
+    <p>© The Vessyl 2026. {t('La Fortuna, Costa Rica')}</p>
+    <p><button type="button" data-pending>{t('Privacy')}</button> <button type="button" data-pending>{t('Terms and conditions')}</button></p>
   </div>
 </footer>

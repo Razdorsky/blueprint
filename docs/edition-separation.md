@@ -1,5 +1,7 @@
 # Edition separation — 2026-11-02
 
+> Later the same day the Blueprint source tree described below was replaced by a full rebuild; see [blueprint-edition.md](blueprint-edition.md). The separation rules and the Figma freeze still apply.
+
 Owner decision: the Figma edition is finished and must stay exactly as it is. The Blueprint edition is free to change in any way, and it must not depend on the Figma edition.
 
 ## What changed

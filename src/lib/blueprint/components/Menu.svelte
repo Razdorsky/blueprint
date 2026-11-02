@@ -1,49 +1,47 @@
 <script lang="ts">
-  import { booking, pages, route } from '#lib/blueprint/site.ts';
-
-  type Props = {
-    page: { index: number; slug: string; name: string; photo: boolean };
-    base?: string;
+  // The whole site as one index of eighteen chapters. Pointing at a chapter shows its picture.
+  import {bp} from '../context.ts';
+  import {content} from '../content/pages.ts';
+  import {loop, photo} from '../media.ts';
+  import {booking, groupPages, route, sitePages, type Group} from '../site.ts';
+  import logo from '../assets/logo.svg?raw';
+  const {t, page, locale} = bp();
+  // i18n: ["Stay", "Experiences", "The property"]
+  const groups: [Group, string][] = [['stay', 'Stay'], ['experiences', 'Experiences'], ['property', 'The property']];
+  const preview = (slug: string) => {
+    const hero = content[slug].blocks.find(block => block.type === 'hero');
+    if (!hero || hero.type !== 'hero') return '';
+    return 'photo' in hero.media ? photo(hero.media.photo).src : loop(hero.media.loop).poster;
   };
-
-  let { base = '' }: Props = $props();
 </script>
 
-<dialog class="site-menu" id="site-menu" aria-label="Explore The Vessyl">
+<dialog class="site-menu" id="site-menu" aria-label={t('Menu')} data-tone="night">
   <div class="menu-top">
-    <a href={route('', base)}>
-      <img src={`${base.replace(/\/$/, '')}/brand/logo-dark.svg`} alt="VESSYL" width="220" height="41" />
-    </a>
-    <button type="button" class="icon-button" data-menu-close aria-label="Close menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="m6 6 12 12M18 6 6 18" />
-      </svg>
-    </button>
+    <a class="header-logo" href={route('', locale)} aria-label={t('The Vessyl, home')}>{@html logo}</a>
+    <button type="button" class="menu-close" data-menu-close>{t('Close')}</button>
   </div>
-  <div class="menu-columns">
-    <section class="menu-column">
-      <h2>Where you sleep</h2>
-      {#each pages.slice(1, 6) as item (item.index)}
-        <a href={route(item.slug, base)}>{item.name}</a>
+  <div class="menu-body">
+    <nav class="menu-index" aria-label={t('All pages')}>
+      <a class="menu-home" href={route('', locale)} aria-current={page.index === 1 ? 'page' : undefined} data-preview="1"><span class="menu-n">01</span>{t('The Vessyl')}</a>
+      {#each groups as [group, label] (group)}
+        <div class="menu-group">
+          <p class="menu-group-title">{t(label)}</p>
+          <ul>
+            {#each groupPages(group) as item (item.index)}
+              <li><a href={route(item.slug, locale)} aria-current={item.index === page.index ? 'page' : undefined} data-preview={item.index}><span class="menu-n">{String(item.index).padStart(2, '0')}</span>{t(item.name)}</a></li>
+            {/each}
+          </ul>
+        </div>
       {/each}
-    </section>
-    <section class="menu-column">
-      <h2>Experiences</h2>
-      {#each pages.slice(6) as item (item.index)}
-        <a href={route(item.slug, base)}>{item.name}</a>
+    </nav>
+    <div class="menu-preview arch" aria-hidden="true">
+      {#each sitePages as item (item.index)}
+        <img class="menu-shot" class:active={item.index === page.index} data-shot={item.index} src={preview(item.slug)} alt="" loading="lazy" />
       {/each}
-    </section>
+    </div>
   </div>
-  <div class="menu-footer">
-    <a class="nav-book" href={booking} target="_blank" rel="noopener noreferrer">CHECK AVAILABILITY ↗</a>
-    <button type="button" class="language-trigger" data-language-trigger aria-label="Language: English">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" />
-        <ellipse cx="12" cy="12" rx="4" ry="9" />
-        <path d="M3 12h18M5 7h14M5 17h14" />
-      </svg>
-      <span>EN</span>
-    </button>
+  <div class="menu-foot">
+    <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+    <a class="link" href={route('rates-and-offers', locale)}>{t('Rates and offers')}</a>
   </div>
-  <div class="preview-toast dialog-toast" role="status" hidden></div>
 </dialog>

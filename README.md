@@ -1,8 +1,8 @@
 # Vessyl Current — SvelteKit
 
-Two independent visual executions of the current 13-page Vessyl website:
+Two independent visual executions of the 18-page Vessyl website:
 
-- `/blueprint/` — the free edition: the current content, open to new layout, composition and motion for a fresh, premium site.
+- `/blueprint/` — the free edition: the same 18 pages rebuilt as one story with one design system, new layout, photography, film and motion, in English and Spanish (`/blueprint/es/…`). See [docs/blueprint-edition.md](docs/blueprint-edition.md).
 - `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file plus property pages 14–18 from the designer's update. Changed only on owner request.
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
@@ -31,9 +31,9 @@ Editable source: Figma `The Vessyl`, file `TUJWRVApGPYhc7CXhdJFNF`, completed We
 
 The user requests correction of clear errors and preservation of placeholders. `[rate]`, `[x]`, `[inclusion]`, schedules and similar fields remain explicit source placeholders. These are local design prototypes, not approved published prices or live availability.
 
-The13ready source frames contain English copy only. Other locale copy is not invented. Booking actions hand off to the existing partner website; no payment or booking is performed by this project. Newsletter and footer destinations without supplied integrations remain clearly identified preview placeholders and never claim a successful subscription or store an email address.
+The Figma source frames contain English copy only; the Figma edition stays English. The Blueprint edition adds Latin American Spanish, translated from its English copy (see docs/blueprint-edition.md). Booking actions hand off to the existing partner website; no payment or booking is performed by this project. Newsletter and footer destinations without supplied integrations remain clearly identified preview placeholders and never claim a successful subscription or store an email address.
 
-See docs/figma-adaptation.md and docs/blueprint-adaptation.md for the separate visual contracts.
+See docs/figma-adaptation.md and docs/blueprint-edition.md for the separate visual contracts.
 
 ## Implementation
 
@@ -41,12 +41,12 @@ The two editions share no source. They were separated on 2026-11-02; the separat
 
 | | Figma edition (frozen) | Blueprint edition (free) |
 |---|---|---|
-| Route and layout | `src/routes/figma/` | `src/routes/blueprint/` |
-| Pages `P01`–`P13` | `src/lib/pages/` | `src/lib/blueprint/pages/` |
-| Header, Footer, Menu, Gallery, Newsletter | `src/lib/components/` | `src/lib/blueprint/components/` |
-| Site data | `src/lib/site.ts`, `site-data.json`, `src/data/media.json` | `src/lib/blueprint/site.ts`, `site-data.json`, `data/media.json` |
-| Interactions | `src/lib/interactions.js` | `src/lib/blueprint/interactions.js` |
-| Styles and fonts | `src/shared.css`, `src/figma.css`, `src/assets/` | `src/lib/blueprint/styles/`, `src/lib/blueprint/assets/` |
+| Route and layout | `src/routes/figma/` | `src/routes/blueprint/` (English and `/es/`) |
+| Pages | `src/lib/pages/P01`–`P18` | data: `src/lib/blueprint/content/pages.ts`, Spanish in `content/es.json` |
+| Building blocks and shell | `src/lib/components/` | `src/lib/blueprint/blocks/`, `src/lib/blueprint/components/` |
+| Site data | `src/lib/site.ts`, `site-data.json`, `src/data/media.json` | `src/lib/blueprint/site.ts`, `site-data.json`, `data/photos.json` |
+| Interactions and motion | `src/lib/interactions.js` | `src/lib/blueprint/motion.ts` (GSAP, Lenis) |
+| Styles, fonts and media | `src/shared.css`, `src/figma.css`, `src/assets/`, `public/media` | `src/lib/blueprint/styles/`, EB Garamond and Roboto packages, `public/bp/` |
 
 Each edition's layout imports only its own CSS and JavaScript, so neither edition's stylesheet reaches the other. The root layout is edition-neutral. The chooser page (`src/routes/+page.svelte`, `src/lib/chooser.css`) links to each edition with a full page load. `src/hooks.server.ts` takes page lists and canvas colours from each edition's own site module. Media in `public/` is shared read-only: add new files rather than changing existing ones. `npm run check` includes `scripts/figma-freeze.mjs`, which fails on any change to a Figma-edition file.
 
@@ -64,7 +64,7 @@ User decision, 2026-11-02: publish exactly as the legacy Blueprint is published.
 
 - One local repository on `main` has two remotes: `figma` → `Razdorsky/figma` and `blueprint` → `Razdorsky/blueprint`. Both are public and receive the same commits.
 - In each repository, GitHub Actions (`.github/workflows/pages.yml`) runs on every push to `main`. It installs the locked dependencies, builds both editions and runs `npm run check`. It then prepares the edition named after the repository and deploys it to GitHub Pages. Pull requests are validated but not deployed.
-- `npm run build:pages -- figma|blueprint` writes `outputs/github-pages`. Routes are already `/figma/…` and `/blueprint/…`, which match the project-site prefixes. The script only moves root-level references (`/_app`, `/media`, `/typography`, `/brand`) under the prefix, then verifies that every reference resolves inside the artifact. Source files are not changed.
+- `npm run build:pages -- figma|blueprint` writes `outputs/github-pages`. Routes are already `/figma/…` and `/blueprint/…`, which match the project-site prefixes. The script only moves root-level references (`/_app`, `/media`, `/typography`, `/brand`, and for Blueprint `/bp`) under the prefix, then verifies that every reference resolves inside the artifact. Source files are not changed.
 
 To publish, push `main` to both remotes:
 
