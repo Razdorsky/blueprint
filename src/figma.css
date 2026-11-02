@@ -663,3 +663,50 @@ body[data-edition="figma"] .current-page [data-role="text-hero"] [data-part="cop
   body[data-edition="figma"] .current-page :is([data-role="overlay"], [data-role="gallery"]) [data-part="gallery-next"] { right: 8px; }
   body[data-edition="figma"] .current-page [data-part="gallery-dots"] { bottom: 12px; }
 }
+
+/* Mobile and tablet pass, 2026-11-02. The frames are 1440px only; these rules keep the
+   desktop fidelity work from leaking into narrower layouts. */
+body[data-edition="figma"] .current-page[data-index="09"] [data-role="callout"] img[src$="/74d24d2bc43b341ebc91.webp"] { position: absolute; inset: auto; width: 191.7%; height: auto; max-width: none; min-width: 100%; min-height: 100%; left: -45.85%; top: 10.65%; object-fit: cover; }
+body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] [data-part="actions"] { justify-content: center; gap: 2px; }
+body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action { border-radius: 0; }
+body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action:first-child { border-radius: 8px 0 0 8px; }
+body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action:last-child { border-radius: 0 8px 8px 0; }
+
+@media (max-width: 1100px) {
+  /* Frame line breaks belong to the 1440 measure only. */
+  body[data-edition="figma"] .current-page br[data-frame-break] { display: none; }
+  body[data-edition="figma"] .current-page [data-role="text-hero"]:first-child { padding-top: 156px; }
+}
+
+@media (max-width: 760px) {
+  body[data-edition="figma"] .current-page [data-role="text-hero"]:first-child { padding-top: 128px; }
+  body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] [data-part="actions"] { flex-direction: column; align-items: stretch; width: min(100%, 320px); }
+  body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action { width: 100%; max-width: none; }
+  body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action:first-child { border-radius: 8px 8px 0 0; }
+  body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] .current-action:last-child { border-radius: 0 0 8px 8px; }
+
+  /* The 1100px rule uses :is(), which outranks the earlier :where() mobile gutter. */
+  body[data-edition="figma"] .current-page :is([data-role="facts"], [data-role="amenities"]) { padding-inline: 16px; }
+  body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] > p:first-child,
+  body[data-edition="figma"] .current-page [data-name="included"] [data-part="fact"] > :first-child { font-size: 12px; letter-spacing: 2px; }
+  body[data-edition="figma"] .current-page [data-name="included"] [data-part="fact"] > :not(:first-child) { font-size: 18px; line-height: 24px; }
+  body[data-edition="figma"] .current-page [data-name="3 col info"] [data-part="facts"] { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  body[data-edition="figma"] .current-page [data-name="3 col info"] [data-part="fact"] > :first-child { font-size: 28px; line-height: 36px; letter-spacing: 0; }
+  body[data-edition="figma"] .current-page [data-name="3 col info"] [data-part="fact"] > :not(:first-child) { font-size: 19px; line-height: 29px; }
+
+  body[data-edition="figma"] .current-page [data-name="Heading title"] h2 { font-size: 28px; line-height: 36px; }
+  body[data-edition="figma"] .current-page[data-index="13"] [data-name="Heading title"] h2 { font-size: 24px; line-height: 32px; }
+  body[data-edition="figma"] .current-page[data-index="06"] [data-role="callout"] p[data-part="paragraph"] { font-size: 19px; line-height: 29px; }
+}
+
+/* Tablet: the 1440 footer and newsletter geometry only fits from 1101px. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  body[data-edition="figma"] .footer-top { padding-inline: 40px; }
+  body[data-edition="figma"] .footer-columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 32px; padding: 48px 40px 56px; }
+  body[data-edition="figma"] .footer-group { flex: none; }
+  body[data-edition="figma"] .footer-bottom { padding-inline: 40px; }
+  body[data-edition="figma"] .site-newsletter { padding: 64px 40px; }
+  body[data-edition="figma"] .newsletter-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; max-width: 688px; margin: 0; }
+  body[data-edition="figma"] .newsletter-form { grid-template-columns: minmax(0, 1fr) auto; max-width: 560px; }
+  body[data-edition="figma"] .current-page .newsletter-events { margin: 0; }
+}

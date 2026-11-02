@@ -97,4 +97,18 @@ Result at 1440px: every section height is within ±3px of its frame. The only ex
 
 Mobile and tablet have no frames. Their responsive interpretation is retained, with the new controls repositioned over the photograph below 761px.
 
+### Mobile and tablet review — 2026-11-02
+
+All 13 pages were reviewed at 375px page by page, with spot checks at 360, 414, 768 and 1024px. The review led to these fixes:
+
+- Frame line breaks are marked `br[data-frame-break]` and hidden at 1100px and below. The preceding space keeps words apart, so headings and captions wrap naturally instead of leaving one-word lines.
+- The Home hero buttons keep the joined frame style at every width. They stack centred below 761px.
+- Text-only openings reserve room below the in-flow header, at 156px from the top on tablet and 128px on mobile. Before this the label sat inside the header area.
+- Facts and amenities use the 16px mobile gutter. The earlier `:where()` rule lost to the 1100px `:is()` rule and left 40px. Fact labels drop to 12px with 2px tracking, so "TRANSPORTATION" and "CANCELLATION" no longer break mid-word. "3 col info" stacks into one column.
+- Heading titles are 28/36px on mobile (Presents 24/32). The Rates callout copy is 19/29px.
+- The Frequency callout keeps the frame's crop at every width, so the wordmark fragment no longer shows.
+- Tablet footer uses three columns with 40px gutters. Tablet newsletter stacks with a full-width field.
+
+Checks: 13 pages × 13 widths (360–1920) show no document overflow, no shell or content element outside the viewport, and no text-opening label under the header. axe-core reports 0 violations at 1440 and 375px. The mobile menu (scroll lock, Esc, focus return), the gallery (opens from the chevron, photo fits 375×812, Esc and focus return) and newsletter validation with its local-preview status were exercised at 375px.
+
 Checks after this pass: `npm run build` and `npm run check` pass. No document overflow occurs on any of the 13 Figma pages at 360, 375, 414, 768, 1024, 1101, 1280 and 1920px. axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 13 Figma pages at 1440 and 375px.
