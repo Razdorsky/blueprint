@@ -3,7 +3,7 @@
 Two independent visual executions of the current 13-page Vessyl website:
 
 - `/blueprint/` — the free edition: the current content, open to new layout, composition and motion for a fresh, premium site.
-- `/figma/` — finished and frozen: a close match of the designer's supplied frames.
+- `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file plus property pages 14–18 from the designer's update. Changed only on owner request.
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 

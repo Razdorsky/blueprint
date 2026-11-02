@@ -710,3 +710,110 @@ body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero
   body[data-edition="figma"] .newsletter-form { grid-template-columns: minmax(0, 1fr) auto; max-width: 560px; }
   body[data-edition="figma"] .current-page .newsletter-events { margin: 0; }
 }
+
+/* Designer update, 2026-11-02 (file lI5gmyztqh4RGBA1bLo1KV): the copy-block heading in the
+   50/50 sections and the Home overlay panels is now Heading-3xl, Telugu MN 42/46.
+   40/60, 60/40 and the slider panels keep 52/60. */
+body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 42px; line-height: 46px; }
+body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 .type-word { margin-block: -1.36px; }
+@media (max-width: 1100px) {
+  body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 38px; line-height: 44px; }
+  body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 .type-word { margin-block: 0; }
+}
+@media (max-width: 760px) {
+  body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 32px; line-height: 38px; }
+}
+
+/* Body blocks in these copy blocks end with an empty 30px line in the frames (all except For Two
+   "The loudest thing"); stacked paragraphs are separated by one empty line (30px), not the 40px gap. */
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page :is([data-node-id="814:7301"], [data-node-id="814:7320"], [data-node-id="814:7329"], [data-node-id="814:7310"]) [data-part="copy"] > p:last-child { margin-bottom: 30px; }
+  body[data-edition="figma"] .current-page [data-name^="Section - 50/50"] [data-part="copy"] > p[data-part="paragraph"] + p[data-part="paragraph"] { margin-top: -10px; }
+}
+
+/* Designer update, 2026-11-02 — property pages 14–18 (The Frequency Dome, The Harmonic Hearth,
+   Sound and movement, Horses and the land, The recording studio). Section variants follow the
+   frames; text values are the archived get_design_context of each frame. */
+body[data-edition="figma"] .menu-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body[data-edition="figma"] .current-page [data-role="callout"] [data-part="copy"] > p[data-part="paragraph"] { color: var(--figma-green); }
+body[data-edition="figma"] .current-page [data-node-id="862:15988"] h2 { font-size: 28px; line-height: 38px; }
+body[data-edition="figma"] .current-page [data-node-id="862:15982"] h2 { font-size: 42px; line-height: 46px; }
+@media (max-width: 680px) {
+  body[data-edition="figma"] .menu-columns { grid-template-columns: minmax(0, 1fr); }
+}
+@media (min-width: 681px) and (max-width: 1100px) {
+  body[data-edition="figma"] .menu-columns { gap: 4vw; }
+}
+
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page [data-role="callout"] [data-part="copy"] { gap: 30px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15941"] { min-height: 718px; }
+  body[data-edition="figma"] .current-page :is([data-node-id="862:15984"], [data-node-id="862:15962"], [data-node-id="862:15975"]) { min-height: 440px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15988"] { min-height: 492px; }
+
+  /* Hero text only: heights per instance; the Sound and movement opening matches page 06. */
+  body[data-edition="figma"] .current-page[data-index="16"] [data-role="text-hero"]:first-child { min-height: 504px; }
+  body[data-edition="figma"] .current-page :is([data-node-id="862:15938"], [data-node-id="862:15948"]) { min-height: 242px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15972"] { min-height: 241px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15960"] { min-height: 341px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15985"] { min-height: 354px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15982"] { min-height: 173px; padding-top: 87px; text-align: left; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15982"] > [data-part="copy"] { align-items: flex-start; }
+
+  /* Description rows with two paragraphs: one empty 32px line between them, not the 40px gap. */
+  body[data-edition="figma"] .current-page [data-name="Description and info 60/40"] > [data-part="copy"] > p.current-lede + p.current-lede { margin-top: -8px; }
+
+  /* included and 3 col info variants */
+  body[data-edition="figma"] .current-page [data-node-id="862:15959"] { min-height: 137px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15949"] { min-height: 227px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15939"] { min-height: 386px; }
+
+  /* 50/50 bodies without the trailing empty line in the frames. */
+  body[data-edition="figma"] .current-page :is([data-node-id="862:15937"], [data-node-id="862:15950"], [data-node-id="862:15963"], [data-node-id="862:15964"], [data-node-id="862:15974"])[data-variant="editorial"] [data-part="copy"] > p:not([data-part="eyebrow"]):has(+ [data-part="actions"]) { margin-bottom: 0; }
+}
+
+@media (max-width: 760px) {
+  body[data-edition="figma"] .current-page [data-node-id="862:15982"] h2 { font-size: 32px; line-height: 38px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15988"] h2 { font-size: 24px; line-height: 32px; }
+}
+
+/* Photo framing for pages 14–18 (generated from the frames' crop rectangles). */
+body[data-edition="figma"] .current-page[data-index="14"] img[src$="/7625b812d3c4d8a8132d.webp"] { object-position: 50.0% 44.0%; }
+body[data-edition="figma"] .current-page[data-index="15"] img[src$="/59adbe80393e61e87dcf.webp"] { object-position: 50.0% 0.0%; }
+body[data-edition="figma"] .current-page[data-index="15"] img[src$="/38d41a06235457c76910.webp"] { object-position: 72.6% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="15"] img[src$="/a1e1165521f4e39862e7.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="15"] img[src$="/475782777018244eff8a.webp"] { object-position: 50.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="16"] img[src$="/fe6639645d8031229a08.webp"] { object-position: 36.8% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="16"] img[src$="/95056a50d5469f2216f5.webp"] { object-position: 50.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="17"] img[src$="/fd2dd896fcf8cdc9c5d5.webp"] { object-position: 50.0% 56.6%; }
+body[data-edition="figma"] .current-page[data-index="17"] img[src$="/fe6639645d8031229a08.webp"] { object-position: 36.8% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="17"] img[src$="/2d6cd4f369c0c94cdc29.webp"] { object-position: 69.9% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="17"] img[src$="/a93767addb691181b87a.webp"] { object-position: 48.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="18"] img[src$="/7bdd0284db793a2b6023.webp"] { object-position: 50.0% 46.6%; }
+body[data-edition="figma"] .current-page[data-index="18"] img[src$="/83827942c44678a4b546.webp"] { object-position: 50.0% 21.4%; }
+body[data-edition="figma"] .current-page[data-index="18"] img[src$="/475782777018244eff8a.webp"] { object-position: 50.0% 50.0%; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page[data-index="14"] img[src$="/7625b812d3c4d8a8132d.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -11.5%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="15"] img[src$="/59adbe80393e61e87dcf.webp"] { position: absolute; inset: auto; width: 100.72%; height: 138.15%; max-width: none; left: -0.42%; top: -0.01%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="15"] img[src$="/38d41a06235457c76910.webp"] { position: absolute; inset: auto; width: 178.54%; height: 100%; max-width: none; left: -57.01%; top: 0%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="15"] img[src$="/a1e1165521f4e39862e7.webp"] { position: absolute; inset: auto; width: 144.11%; height: 166.98%; max-width: none; left: -31%; top: -59.43%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="15"] img[src$="/475782777018244eff8a.webp"] { position: absolute; inset: auto; width: 141.58%; height: 117.77%; max-width: none; left: -20.79%; top: -10.36%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="16"] img[src$="/fe6639645d8031229a08.webp"] { position: absolute; inset: auto; width: 208.24%; height: 138.84%; max-width: none; left: -44.99%; top: -19.34%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="16"] img[src$="/95056a50d5469f2216f5.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -13.05%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="17"] img[src$="/fe6639645d8031229a08.webp"] { position: absolute; inset: auto; width: 208.24%; height: 138.84%; max-width: none; left: -44.99%; top: -19.34%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="17"] img[src$="/2d6cd4f369c0c94cdc29.webp"] { position: absolute; inset: auto; width: 211.62%; height: 100%; max-width: none; left: -77.99%; top: 0%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="17"] img[src$="/a93767addb691181b87a.webp"] { position: absolute; inset: auto; width: 410.3%; height: 229.81%; max-width: none; left: -151.55%; top: -57.14%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="18"] img[src$="/7bdd0284db793a2b6023.webp"] { position: absolute; inset: auto; width: 146.11%; height: 534.22%; max-width: none; left: -23.06%; top: -203.97%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="18"] img[src$="/83827942c44678a4b546.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -5.6%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="18"] img[src$="/475782777018244eff8a.webp"] { position: absolute; inset: auto; width: 141.58%; height: 117.77%; max-width: none; left: -20.79%; top: -10.36%; object-fit: fill; }
+}
+
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page:is([data-index="14"], [data-index="15"], [data-index="16"], [data-index="17"], [data-index="18"]) [data-name^="Section - 50/50"] { min-height: 900px; }
+}
+@media (min-width: 1200px) {
+  /* Figma keeps a combo button on one row even when it is wider than the 496px copy block;
+     below 1200px the narrower column would push it past the viewport, so it wraps there. */
+  body[data-edition="figma"] .current-page [data-variant="editorial"] [data-part="actions"] { flex-wrap: nowrap; }
+  body[data-edition="figma"] .current-page [data-variant="editorial"] [data-part="actions"] > * { flex-shrink: 0; }
+}

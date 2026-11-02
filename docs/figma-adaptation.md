@@ -112,3 +112,69 @@ All 13 pages were reviewed at 375px page by page, with spot checks at 360, 414, 
 Checks: 13 pages × 13 widths (360–1920) show no document overflow, no shell or content element outside the viewport, and no text-opening label under the header. axe-core reports 0 violations at 1440 and 375px. The mobile menu (scroll lock, Esc, focus return), the gallery (opens from the chevron, photo fits 375×812, Esc and focus return) and newsletter validation with its local-preview status were exercised at 375px.
 
 Checks after this pass: `npm run build` and `npm run check` pass. No document overflow occurs on any of the 13 Figma pages at 360, 375, 414, 768, 1024, 1101, 1280 and 1920px. axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 13 Figma pages at 1440 and 375px.
+
+## Designer update — 2026-11-02 (file `lI5gmyztqh4RGBA1bLo1KV`)
+
+The designer supplied an updated file with the same Website 2.0 page `814:6489` and library `748:267`. The source intake is archived outside Git in the raw-source bank at `marketing-site/current-website/2026-11-02-update/`. It holds the user's message, 1:1 renders of all 18 frames, per-page specs, design-context responses and original assets.
+
+### Changes to existing pages
+
+1:1 renders of frames 01–13 were compared against the earlier intake. Frames 02–08 and 13 are pixel-identical. Every other difference comes from one library change: the copy-block heading of the 50/50 sections and the Home overlay panels is now Heading-3xl, Telugu MN 42/46 instead of 52/60. Frames 01, 09, 10, 11 and 12 are affected.
+
+What changed in this edition:
+- The heading is 42/46 at 1440px. Below that it is 38/44, and 32/38 on mobile.
+- The frames' explicit breaks were added to the two For Two headings.
+- The 50/50 bodies got the frames' trailing empty line, and stacked paragraphs now have 30px between them.
+- Callout copy spacing is 30px, and callout body paragraphs are green as in the frames. This slightly changes the callouts on Home, Rates and Frequency Experience.
+
+### New pages 14–18
+
+| Page | Route | Frame |
+| --- | --- | --- |
+| 14 The Frequency Dome | `/figma/the-frequency-dome/` | `862:15932` |
+| 15 The Harmonic Hearth | `/figma/the-harmonic-hearth/` | `862:15944` |
+| 16 Sound and movement | `/figma/sound-and-movement/` | `862:15978` |
+| 17 Horses and the land | `/figma/horses-and-the-land/` | `862:15955` |
+| 18 The recording studio | `/figma/the-recording-studio/` | `862:15968` |
+
+The pages reuse the existing roles. New section variants are styled per instance:
+- Hero text only at 173, 241, 242, 341 and 354px. The 173px one is left-aligned with a 42/46 heading.
+- included at 137px and 227px (numbered labels), each with four columns.
+- 3 col info at 386px.
+- Amenities with two rows.
+- Rooms Comparison with session columns.
+- Callouts at 440, 492 and 718px, with or without CTA. Their copy is a Telugu statement, a 28/38 statement, or Roboto 18/30 body paragraphs.
+- 50/50 sections at 900px.
+
+Photo framing reuses the frames' crop rectangles. Where the asset keeps the crop's aspect ratio, the crop is exact at ≥1101px. At every width the crop window's centre becomes the object position.
+
+Navigation:
+- The footer's "The Property" links now open pages 14–18. "The gallery" stays a placeholder.
+- The mobile menu has a third column, "The Property".
+- Desktop Stay and Experiences groups stay on pages 2–6 and 7–13.
+- Home "Explore the Dome" and "What the Dome is" now open The Frequency Dome.
+- On page 14, "Book the Frequency Experience" and "See what is on" open the Frequency Experience and Vessyl Presents pages.
+- Other new buttons have no supplied destination and remain explicit placeholders. This includes the generic "button" / "Button" pair on the studio page.
+
+Corrections, added to the change register above:
+
+| Source | Presentation |
+| --- | --- |
+| `The temezcal` (15) | `The temazcal` |
+| `x] minutes | Included for guests…` (16, two rows) | `[x] minutes | …` |
+| `[[x], [x] nights a week` (16) | `[x], [x] nights a week` |
+| `LIVE ROO` (18) | `Live room` |
+
+Deliberate differences:
+- Card Grid on page 17 is 583px instead of 575px. The frame's copy overflows its fixed height, and the site keeps the copy inside.
+- The hero on page 17 is framed with object-fit cover instead of the frame's 7.7% horizontal stretch.
+- Included values use Roboto Regular (Light is not bundled), so "Vibro-tactile, no furniture" wraps.
+- The word artwork keeps "twenty-minute" whole, so that heading on page 17 breaks one word earlier than the frame.
+- Combo buttons stay on one row from 1200px, as in the frames, and wrap below that.
+
+Checks:
+- At 1440px every new section is within ±3px of its frame, except the Card Grid noted above.
+- Every Figma text node on pages 14–18 appears on the site, except the four corrected strings.
+- No overflow across 18 pages × 13 widths (360–1920).
+- axe reports 0 violations on pages 14–18 at 1440 and 375px.
+- The Blueprint edition is unchanged: normalized DOM and computed-style fingerprints are identical for all 26 captures.

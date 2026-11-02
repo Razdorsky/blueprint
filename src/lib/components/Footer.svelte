@@ -9,7 +9,15 @@
 
   let { edition, base = '' }: Props = $props();
 
-  const propertyLinks = ['The Dome', 'The Hearth', 'Sound and movement', 'Horses and land', 'The studio', 'The gallery'];
+  // Footer labels from the frames; the designer's pages 14–18 supply five of the six destinations.
+  const propertyLinks: [string, string | null][] = [
+    ['The Dome', 'the-frequency-dome'],
+    ['The Hearth', 'the-harmonic-hearth'],
+    ['Sound and movement', 'sound-and-movement'],
+    ['Horses and land', 'horses-and-the-land'],
+    ['The studio', 'the-recording-studio'],
+    ['The gallery', null]
+  ];
   const visitLinks = ['Getting here', 'Things to do in Arenal', 'When to visit', 'FAQ', 'Policies'];
   const contactLinks = ['WhatsApp Contact', 'Phone Contact', 'Address Info'];
 </script>
@@ -53,13 +61,13 @@
       </section>
       <section class="footer-group">
         <h2><a href={route(edition, 'experiences', base)}>Experiences</a></h2>
-        {#each pages.slice(7) as item (item.index)}
+        {#each pages.slice(7, 13) as item (item.index)}
           <a href={route(edition, item.slug, base)}>{item.name}</a>
         {/each}
       </section>
       <section class="footer-group">
         <h2>The Property</h2>
-        {#each propertyLinks as label (label)}{@render pending(label)}{/each}
+        {#each propertyLinks as [label, slug] (label)}{#if slug}<a href={route(edition, slug, base)}>{label}</a>{:else}{@render pending(label)}{/if}{/each}
       </section>
       <section class="footer-group">
         <h2>Plan your visit</h2>

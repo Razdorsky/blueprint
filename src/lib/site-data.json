@@ -89,5 +89,40 @@
     "name": "The Vessyl Presents",
     "slug": "the-vessyl-presents",
     "photo": false
+  },
+  {
+    "index": 14,
+    "id": "862:15932",
+    "name": "The Frequency Dome",
+    "slug": "the-frequency-dome",
+    "photo": true
+  },
+  {
+    "index": 15,
+    "id": "862:15944",
+    "name": "The Harmonic Hearth",
+    "slug": "the-harmonic-hearth",
+    "photo": true
+  },
+  {
+    "index": 16,
+    "id": "862:15978",
+    "name": "Sound and movement",
+    "slug": "sound-and-movement",
+    "photo": false
+  },
+  {
+    "index": 17,
+    "id": "862:15955",
+    "name": "Horses and the land",
+    "slug": "horses-and-the-land",
+    "photo": true
+  },
+  {
+    "index": 18,
+    "id": "862:15968",
+    "name": "The recording studio",
+    "slug": "the-recording-studio",
+    "photo": true
   }
 ]

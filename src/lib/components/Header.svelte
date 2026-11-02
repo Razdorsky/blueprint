@@ -61,7 +61,7 @@
     </a>
     <nav class="desktop-navigation" aria-label="Main navigation">
       {@render mega(pages.slice(1, 6), 'Stay')}
-      {@render mega([pages[6], ...pages.slice(7)], 'Experiences')}
+      {@render mega([pages[6], ...pages.slice(7, 13)], 'Experiences')}
       <a href={route(edition, 'rates-and-offers', base)}>Rates &amp; offers</a>
     </nav>
     <div class="header-actions">

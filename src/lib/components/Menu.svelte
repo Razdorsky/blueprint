@@ -30,7 +30,13 @@
     </section>
     <section class="menu-column">
       <h2>Experiences</h2>
-      {#each pages.slice(6) as item (item.index)}
+      {#each pages.slice(6, 13) as item (item.index)}
+        <a href={route(edition, item.slug, base)}>{item.name}</a>
+      {/each}
+    </section>
+    <section class="menu-column">
+      <h2>The Property</h2>
+      {#each pages.slice(13) as item (item.index)}
         <a href={route(edition, item.slug, base)}>{item.name}</a>
       {/each}
     </section>
