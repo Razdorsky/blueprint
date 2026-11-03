@@ -21,6 +21,12 @@ The brand study behind these choices is outside Git, in the raw-source bank: `ma
 
 ## The system
 
+**The stage and the sheets** (home page, 2026-11-03; the other pages follow).
+- A page told in places plays each place on a fixed, full-screen WebGL stage.
+- The place's word stands between its subject and what is behind it.
+- The content rides on sheets whose top edge is the Dome's curve.
+- See `docs/blueprint-home.md` for the places, how they are drawn and how they were checked. See `docs/blueprint-references.md` for the references behind the direction.
+
 **Light.** Every block declares the light it sits in:
 
 | Tone | Colour | Role |
@@ -72,6 +78,8 @@ Where the tone changes, it changes at a clean edge, carried by a full-screen pic
 | `src/lib/blueprint/blocks/` | the scenes: Hero, Land, Stay, Nightfall, Projection, Voices, Split, Doors, Facts, Steps, Gallery, Film, Table, Events, Map, Notes, Newsletter. Facts, notes, tables and events carry a picture beside their words; the statement, chapter, quote, founder and press blocks were retired on 2026-11-03 |
 | `src/lib/blueprint/components/` | Header, Menu (the index of all 18 chapters), Footer, Next, Intro, Viewer, Picture, Actions, Text |
 | `src/lib/blueprint/motion.ts` | edition-wide behaviour and per-page scroll scenes |
+| `src/lib/blueprint/stage.ts`, `stages.ts`, `components/Stage.svelte`, `blocks/Opener.svelte`, `styles/stage.css` | the stage: the WebGL renderer, the places and their compositions, the plain layers, the openings between sheets |
+| `public/bp/stage` | the places: films side by side with their mattes, stills stacked over their mattes (`-pack`), plain pictures and cut-outs |
 | `src/lib/blueprint/styles/` | `tokens.css`, `base.css`, `blocks.css`, `motion.css` |
 | `src/lib/blueprint/assets/` | logo, symbol and word mark as SVG, coloured by the current text colour |
 | `src/routes/blueprint/` | layout (fonts, styles, transitions, language switch) and the route for both languages |
@@ -123,7 +131,7 @@ Where the tone changes, it changes at a clean edge, carried by a full-screen pic
 - `data/photos.json` holds sizes and a placeholder colour.
 - Images the Figma edition already published (night exteriors, the volcano, the studio, the founder, press marks) are reused read-only from `public/media`.
 
-**Films and loops:** `scripts/blueprint-media/videos.sh`, `videos-pass2.sh` and `videos-home.sh`. Encoding: H.264 High, yuv420p, `faststart`.
+**Films and loops:** `scripts/blueprint-media/videos.sh`, `videos-pass2.sh`, `videos-home.sh`, `loops-pages.sh` and `film-previews.sh`. The stage's places are made by `stage-media.sh`, with mattes from `matte.swift` (macOS Vision). Encoding: H.264 High, yuv420p, `faststart`.
 
 | File | Source | Use |
 |---|---|---|

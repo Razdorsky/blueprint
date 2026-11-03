@@ -4,7 +4,7 @@
   // next page's opening does, so the click continues the same movement.
   import {bp, rich} from '../context.ts';
   import Picture from './Picture.svelte';
-  import {content} from '../content/pages.ts';
+  import {content, opening} from '../content/pages.ts';
   import {next, route} from '../site.ts';
   const {t, page, locale} = bp();
   const following = next(page);
@@ -14,7 +14,7 @@
   const lead = words.slice(0, -1).join(' ');
   const last = words[words.length - 1];
   const target = content[following.slug];
-  const hero = target.blocks.find(block => block.type === 'hero');
+  const media = opening(following.slug);
   // The close stays in the light the page ended in.
   const blocks = content[page.slug].blocks;
   const tone = blocks[blocks.length - 1].tone || 'paper';
@@ -26,8 +26,6 @@
       <span class="next-title">{lead ? `${lead} ` : ''}<span class="next-tail">{last}<span class="next-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 12h14.5M13 6l6 6-6 6" /></svg></span></span></span>
       <span class="next-line">{@html rich(t(target.description))}</span>
     </span>
-    {#if hero && hero.type === 'hero'}
-      <span class="wrap next-frame"><span class="next-media" data-next-arch><Picture media={hero.media} sizes="100vw" /></span></span>
-    {/if}
+    <span class="wrap next-frame"><span class="next-media" data-next-arch><Picture {media} sizes="100vw" ratio={1.6} /></span></span>
   </a>
 </section>

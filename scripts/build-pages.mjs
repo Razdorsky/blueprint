@@ -44,8 +44,9 @@ for await (const file of files(out)) {
     const result = source
       // SvelteKit's relative asset paths (../../_app/...) assume the site root.
       .replace(/(["'(])(?:\.\.\/)+(_app|brand|media|typography|bp)\//g, `$1${prefix}/$2/`)
-      // Static media and typography written as root paths by the page components.
-      .replace(/(["'(,])\/(media|typography|brand|bp)\//g, `$1${prefix}/$2/`)
+      // Static media and typography written as root paths by the page components, and font
+      // preloads, which take their address from the bundler as a root path.
+      .replace(/(["'(,])\/(media|typography|brand|bp|_app)\//g, `$1${prefix}/$2/`)
       // srcset lists: every candidate after a comma and space.
       .replace(/(, )\/(media|bp)\//g, `$1${prefix}/$2/`);
     if (result !== source) {
@@ -68,7 +69,11 @@ const problems = [];
 for await (const file of files(out)) {
   if (!file.endsWith('.html')) continue;
   const text = await fs.readFile(file, 'utf8');
-  for (const [, ref] of text.matchAll(/(?:src|href)="([^"#?]+)/g)) {
+  // Addresses in src, href, data-src (the stage's deferred pictures), poster and data-full (the film),
+  // and every candidate of a srcset or data-srcset list.
+  const refs = [...text.matchAll(/(?:src|href|poster|data-full)="([^"#?]+)/g)].map(match => match[1]);
+  for (const [, list] of text.matchAll(/srcset="([^"]+)"/g)) refs.push(...list.split(',').map(candidate => candidate.trim().split(/\s+/)[0]));
+  for (const ref of refs) {
     if (/^(https?:|mailto:|tel:|data:)/.test(ref)) continue;
     const absolute = ref.startsWith('/') ? ref : path.posix.join(path.posix.dirname('/' + path.relative(out, file).split(path.sep).join('/')), ref);
     const normalized = ref.startsWith('/') ? absolute : prefix + absolute;

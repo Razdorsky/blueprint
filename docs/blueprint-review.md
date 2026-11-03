@@ -311,3 +311,70 @@ After the home page audit the owner asked to roll its level out to every page. E
 Shown on the home page ("Where you sleep") and on the Villas ("The Treehouse") on desktop.
 
 **Update (applied 2026-11-03).** A round arrow follows the next page's name at every size and in both languages. It stays with the last word, so it never wraps onto a line of its own. When the block is pointed at or focused, the arrow fills with copper and the name takes the accent colour.
+
+## The stage and the sheets, 2026-11-03
+
+After the references were studied (`docs/blueprint-references.md`), the owner rated the first prototype 3 out of 10, asked for 9 or 10, and accepted the direction: "do it much more carefully, at a perfect level". The home page is rebuilt on a WebGL stage (`docs/blueprint-home.md`).
+
+**What changed from the prototype:**
+- **Mattes.** They come from macOS Vision instead of a brightness scan. The pool's woman is matted frame by frame from the 4K film.
+- **Composition.** Words are composed in the picture's coordinates, with one capital height across places and languages. The prototype's words collided with the header and lost letters behind the volcano.
+- **Contrast.** A polariser deepens bright skies behind the word. A light shade keeps the header legible over the stage.
+- **One canvas.** The stage is a single WebGL canvas that sleeps while a sheet covers it. The prototype used layered images moved every frame.
+- **Plain layers.** Plain layers serve reduced motion and browsers without WebGL.
+
+**Found and fixed while building:**
+- The person matte lost the woman's head when her arms went up. The stronger of the person and subject mattes is taken every frame, smoothed over three frames.
+- Her head hid the first letter of ARENAL. The word moved beside her, so her raised elbow only touches the A.
+- The stage took the film block's 16:9 shape on phones because of a class-name clash. Renamed.
+- A layout shift of 0.10 at load came from the plain word moving into place and the italic arriving late. The word is hidden while the canvas draws, the first screen's faces are preloaded, and the shift is now 0.
+- The font preloads used root paths that GitHub Pages would not serve under `/blueprint/`. `scripts/build-pages.mjs` now re-roots `/_app/` as well.
+- The plain layers loaded every place's pictures at once. They now load only without WebGL, saving 1.6 MB on the first screen.
+- Across the sheets, section heads use one layout and one size, and the flipped split aligns to the sheet's left edge.
+
+## Deep QA of the home page, 2026-11-03
+
+> «Давай сначала намного более мощный QA, на всех уровнях, по коду и на всех разрешениях, и только потом»
+
+Done before the stage goes to the other seventeen pages. An independent code review of the stage was combined with tests in three browser engines and at every screen size.
+
+**Found and fixed:**
+- **The Frequency Dome page broke.** The stage looked for `[data-stage]`, and that page's projection used the same attribute. The stage code then failed and every scroll scene on the page stopped. The projection's pinned block is now `[data-pin]`, and the stage does nothing on a page without places.
+- **Safari blackened two places.** It decodes alpha premultiplied, so with the matte in a still's alpha channel the sky behind SOUND and TABLE turned black. Mattes now travel in the opaque file itself: films side by side, stills along their short side (within a 4096-pixel texture).
+- **The words did not read on bright skies.** Measured against the picture right around the letters, SOUND stood at 1.4:1, TABLE at 2.2:1, and ARENAL at 2.1:1 on phones. Each crop now dims what is behind its subject until the word reaches 3:1; the subject keeps its own light. Pulling the matte in by 1–3 pixels removed the bright outline the dimming exposed along the Dome, and the lens's green fringe on its rim was taken out.
+- **Words left the screen.** On tablets held upright ARENAL rose under the header; at 1024 × 768 and 1180 × 820 it ran off the right edge. The word now keeps within the margins and below the header: a word set beside its subject narrows, any other moves in.
+- **Resizing reloaded everything.** Every resize refetched each place and restarted the film; on phones the address bar alone causes resizes. A place now reloads only when its file changes.
+- **The film.**
+  - After its end it started again by itself, with sound.
+  - Coming back to it resumed it, and jumping away left it playing under the sheets.
+  - It now plays only from its controls once opened, stops at its end, and stops when the reader leaves.
+  - Focus moves to its controls when the play button gives way to them.
+  - The pause button names what it will do and shows the matching icon. "Mute the film" is a pressed toggle; before, its label meant the opposite of its state.
+- **A place before its time.** While a new place loaded, the canvas kept showing the previous place and its word. It now stays dark until the place arrives.
+- **Failures.**
+  - Neither a lost WebGL context nor a place that failed to load fell back to the plain layers. Both now do, and a stalled film no longer waits forever.
+  - The language switch started two navigations at once and logged "navigation aborted". It now listens before the router.
+  - After a switch of language, the canvas could still write the previous language's word. The word now comes from the page itself.
+- **Soft upright crops.** Tablets held upright and large phones enlarged the phone crops by 1.4 to 2.1 times. They now load the same crops at 1440 × 2560 for stills and 1080 × 1920 for the pool film.
+- **Smaller fixes:**
+  - the canvas draws at most 6 megapixels and uploads a film frame only when there is a new one;
+  - the mist's noise is computed only while there is mist;
+  - the word's halo no longer ends in a step at its texture's edge;
+  - the canvas follows the stage's own width, without the scrollbar;
+  - hidden tabs pause the silent films;
+  - the plain layers frame each crop on its own focus and stay up until the canvas has faded in;
+  - the page no longer depends on `:has()` to keep the footer above the stage;
+  - header controls are at least 44 pixels on every touch screen;
+  - the Pages build now checks the stage's deferred pictures, posters and the film as well.
+
+**Checked and found correct:** the pool film's colour matrix. Re-encoding with an explicit BT.709 matrix gave a byte-identical file, because ffmpeg 9 already takes it from the output tags.
+
+**Results** are in `docs/blueprint-home.md`, "Checked on 2026-11-03".
+
+**Still open, for the owner:** three supplied pictures are smaller than the screens they fill:
+- Josh Stanley's portrait (800 px);
+- the volcano (1024 px);
+- the Milky Way (1791 px).
+
+Under reduced motion, a tablet held upright still shows the phone's plain pictures (1080 px).
+

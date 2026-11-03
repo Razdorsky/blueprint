@@ -16,7 +16,7 @@
 </script>
 
 <div class="wrap voices">
-  <figure class="frame voices-portrait" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 30vw, 80vw" /></figure>
+  <figure class="frame voices-portrait" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 30vw, 80vw" ratio={0.8} /></figure>
   <div class="voices-copy">
     <figure class="voices-quote">
       <blockquote>{#each block.quote as paragraph}<Text text={paragraph} />{/each}</blockquote>

@@ -24,5 +24,5 @@
       {/each}
     </ol>
   </div>
-  {#if block.media}<figure class="frame events-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 32vw, 92vw" /></figure>{/if}
+  {#if block.media}<figure class="frame events-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 32vw, 92vw" ratio={0.8} /></figure>{/if}
 </div>

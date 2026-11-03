@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import {translate} from './i18n.ts';
+import {stage} from './stage.ts';
 import type {Locale} from './site.ts';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -173,6 +174,8 @@ export function scenes(root: HTMLElement) {
   document.addEventListener('visibilitychange', visibility);
 
   const media = gsap.matchMedia();
+  // A page told in places: the stage behind its sheets.
+  const leaveStage = stage(root);
   const theme = (tone: string) => header?.setAttribute('data-theme', tone === 'forest' || tone === 'petrol' || tone === 'night' ? 'dark' : 'light');
   const context = gsap.context(() => {
     // Header: hides while reading down, returns on the way up, takes the colour under it.
@@ -231,7 +234,7 @@ export function scenes(root: HTMLElement) {
     // Inside the Dome: the stage holds still while the projection slowly comes closer and drifts from
     // one state to the next; the words beside it change with it.
     root.querySelectorAll<HTMLElement>('[data-projection]').forEach(block => {
-      const stage = block.querySelector<HTMLElement>('[data-stage]');
+      const stage = block.querySelector<HTMLElement>('[data-pin]');
       const states = [...block.querySelectorAll<HTMLElement>('[data-state]')];
       const shots = [...block.querySelectorAll<HTMLElement>('[data-shot]')];
       if (!stage || !states.length) return;
@@ -247,16 +250,6 @@ export function scenes(root: HTMLElement) {
         .fromTo(shots, {scale: 1}, {scale: 1.1, ease: 'none'});
     });
 
-    // The land drifts past its title at three depths.
-    media.add('(min-width: 900px)', () => {
-      root.querySelectorAll<HTMLElement>('[data-land]').forEach(land => {
-        land.querySelectorAll<HTMLElement>('[data-depth-layer]').forEach(item => {
-          const depth = Number(item.dataset.depthLayer) || 1;
-          gsap.fromTo(item, {y: () => (depth - 1) * window.innerHeight * 0.35}, {y: () => (1 - depth) * window.innerHeight * 0.35, ease: 'none',
-            scrollTrigger: {trigger: land, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true}});
-        });
-      });
-    });
 
     // Depth: pictures drift a little slower than the page.
     root.querySelectorAll<HTMLElement>('[data-depth]').forEach(frame => {
@@ -296,6 +289,7 @@ export function scenes(root: HTMLElement) {
 
   return () => {
     window.clearTimeout(refresh);
+    leaveStage();
     media.revert();
     context.revert();
     io.disconnect();

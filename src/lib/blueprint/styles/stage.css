@@ -1,0 +1,84 @@
+/* The stage and the sheets. A page told in places has a fixed stage (stage.ts draws it) and its
+   content rides on sheets that slide over it; between sheets an opening shows the place. A sheet's
+   top edge is the Dome's curve. */
+
+.stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: #0e0f0f; }
+.stage-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.9s var(--breath); }
+.stage.drawn:not(.showing-film) .stage-canvas { opacity: 1; }
+.stage-place { --grade: var(--dim, 1); position: absolute; inset: 0; visibility: hidden; }
+.stage-place.on { visibility: visible; }
+/* The plain layer stays under the canvas until the canvas has faded in, so nothing dark shows between. */
+.stage.drawn .stage-place:not(.stage-film) { visibility: hidden; transition: visibility 0s linear 0.9s; }
+.stage-flat, .stage-cut { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focus); }
+@media (max-aspect-ratio: 9/10) {
+  .stage-place { --grade: var(--dim-upright, 1); }
+  .stage-flat, .stage-cut { object-position: var(--focus-upright); }
+}
+/* The polariser and the dimming of the plain layers: the whole picture deepens and the cut-out subject on top stays as it is. */
+.stage.flat .stage-flat { filter: brightness(calc((1 - var(--sky, 0) * 0.32) * var(--grade))) contrast(calc(1 + var(--sky, 0) * 0.12)); }
+/* The plain word is only for the plain layers; on the canvas the shader draws it. */
+.stage:not(.flat) .stage-word { display: none; }
+.stage-word { position: absolute; top: 18%; left: 8%; width: 84%; color: var(--paper); font: 440 12vw / 1 var(--serif); letter-spacing: 0.035em; text-transform: uppercase; text-align: center; white-space: nowrap; text-shadow: 0 0 0.35em rgb(0 0 0 / 0.22); }
+/* The canvas shades the top of the place for the header; the plain layers do the same. */
+.stage.flat::after { content: ''; position: absolute; inset: 0 0 auto; height: 160px; background: linear-gradient(to bottom, rgb(0 0 0 / 0.28), transparent); pointer-events: none; }
+.stage-film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: calc(1 - var(--fog, 0) * 0.6); filter: blur(calc(var(--fog, 0) * 14px)); }
+/* The film's own words sit low; a quiet shade under them keeps them legible on any frame. */
+.stage-film::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(to top, rgb(0 0 0 / 0.42), transparent); pointer-events: none; }
+
+.page-main.staged, .page-main.staged ~ .site-footer { position: relative; z-index: 1; }
+.b-stage { position: relative; height: 100svh; min-height: 560px; padding: 0; background: transparent; }
+.b-stage.first { height: 64svh; min-height: 460px; }
+
+.sheet { --arch: clamp(44px, 11vh, 132px); position: relative; background: var(--bg); color: var(--fg); border-radius: 50% 50% 0 0 / var(--arch) var(--arch) 0 0; padding-top: calc(var(--arch) * 0.7); }
+.sheet > .b { background: transparent; }
+.sheet > .b:last-child { padding-bottom: var(--space); }
+
+/* Over the stage the header has no ground: the place shows to the top of the screen. */
+.site-header[data-over='stage']::before { opacity: 0; }
+
+/* The film's opening carries its controls, low on the screen. */
+.opener-film { position: absolute; left: 0; right: 0; bottom: clamp(28px, 7vh, 72px); display: flex; align-items: center; justify-content: space-between; gap: 24px; color: var(--paper); }
+.opener-caption { margin: 0; font-size: var(--t-h3); line-height: 1.1; }
+.opener-play { display: inline-flex; align-items: center; gap: 16px; padding: 0; border: 0; background: none; color: inherit; font: 500 var(--t-ui) / 1 var(--sans); letter-spacing: 0.01em; }
+.opener-play-ring { display: grid; place-items: center; width: 68px; height: 68px; border: 1px solid rgb(245 235 231 / 0.6); border-radius: 50%; transition: background-color var(--calm) var(--breath), border-color var(--calm) var(--breath), color var(--calm) var(--breath), transform var(--calm) var(--breath); }
+.opener-play-ring svg { width: 22px; height: 22px; fill: currentColor; margin-left: 3px; }
+.opener-play:hover .opener-play-ring, .opener-play:focus-visible .opener-play-ring { background: var(--copper); border-color: var(--copper); color: var(--ink); transform: scale(1.06); }
+.opener-controls { display: none; gap: 10px; }
+.opener-controls button { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgb(245 235 231 / 0.5); border-radius: 50%; background: rgb(17 17 17 / 0.4); color: var(--paper); }
+.opener-controls svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.opener-controls [data-playing='true'] .icon-play, .opener-controls [data-playing='false'] .icon-pause { display: none; }
+.opener-controls [aria-pressed='true'] .icon-sound, .opener-controls [aria-pressed='false'] .icon-muted { display: none; }
+.b-stage.activated .opener-play { display: none; }
+.b-stage.activated .opener-controls { display: flex; }
+
+/* The invitation: the brand's line in the italic, beside what the place is. */
+.b-invite { padding-top: calc(var(--space) * 0.2); }
+.invite { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px var(--gutter); align-items: end; }
+.invite-title { grid-column: 1 / span 7; margin: 0; font: italic 400 clamp(2.5rem, 1.1rem + 3.9vw, 6rem) / 1.02 var(--serif); letter-spacing: -0.012em; }
+.invite-side { grid-column: 9 / span 4; padding-bottom: 0.4em; }
+.invite-body { margin: 0; font-size: var(--t-lede); line-height: 1.32; }
+.invite-side .actions { margin-top: 26px; }
+
+/* The parts of the land: four equal pictures in a row. */
+.places-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px var(--gutter); align-items: end; margin-bottom: clamp(36px, 4vw, 64px); }
+.places-title { grid-column: 1 / span 7; margin: 0; }
+.places-body { grid-column: 9 / span 4; margin: 0; color: var(--fg-2); }
+.places-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 28px); }
+.place { display: block; color: inherit; text-decoration: none; }
+.place-frame { display: block; aspect-ratio: 4 / 5; }
+.place-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; font-size: clamp(1.15rem, 0.95rem + 0.45vw, 1.55rem); line-height: 1.2; }
+.place-go { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); border-radius: 50%; transition: background-color var(--calm) var(--breath), border-color var(--calm) var(--breath), color var(--calm) var(--breath); }
+.place-go svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+a.place:hover img, a.place:hover video { transform: scale(1.045); }
+a.place:hover .place-go, a.place:focus-visible .place-go { background: var(--copper); border-color: var(--copper); color: var(--ink); }
+
+@media (max-width: 899px) {
+  .b-stage.first { height: 70svh; }
+  .invite, .places-head { grid-template-columns: 1fr; }
+  .invite-title, .invite-side, .places-title, .places-body { grid-column: 1; }
+  .places-list { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
+  .opener-film { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage-film video { filter: none; opacity: 1; }
+}

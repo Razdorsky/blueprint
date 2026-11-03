@@ -64,6 +64,13 @@ em { font-style: italic; }
 .language a:hover { opacity: 1; }
 .header-book { min-height: 40px; padding: 0 18px; }
 .progress { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--copper); transform: scaleX(var(--progress, 0)); transform-origin: left; opacity: 0.9; }
+/* On a narrow or touch screen every control in the header is at least a fingertip wide. */
+@media (max-width: 760px), (pointer: coarse) {
+  .menu-button { min-width: 44px; }
+  .language a { min-width: 44px; }
+  .header-logo { display: flex; align-items: center; min-height: 44px; }
+  .header-book { min-height: 44px; }
+}
 @media (max-width: 760px) {
   :root { --header: 64px; }
   .menu-button span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

@@ -8,7 +8,7 @@
 </script>
 
 <div class="wrap notes" class:pictured={block.media}>
-  {#if block.media}<figure class="frame notes-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 36vw, 92vw" /></figure>{/if}
+  {#if block.media}<figure class="frame notes-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 36vw, 92vw" ratio={0.8} /></figure>{/if}
   <div class="notes-copy">
     <Text as="h2" text={block.title} class="h2" />
     <div class="notes-list" class:single={block.items.length === 1}>
