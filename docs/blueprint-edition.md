@@ -31,25 +31,34 @@ The brand study behind these choices is outside Git, in the raw-source bank: `ma
 | petrol | 062A33 | the Dome and night sky |
 | night | 111111 | true dark |
 
-Where the tone changes, the next block opens with a long gradient from the previous ground. A page therefore moves from day into night the way the property does. The home page runs a whole day: morning water, the day's choices, dinner at dusk, the Dome at night.
+Where the tone changes, it changes at a clean edge, carried by a full-screen picture or by the nightfall arch: the Dome's silhouette rises over the dusk photograph and widens into the night. The gradient bands of the first rebuild were removed after the owner's review of 2026-11-03 (`docs/blueprint-review.md`). The home page runs a whole day, from the morning pool to the Dome at night, and changes ground once. Its storyboard is `docs/blueprint-home.md`.
 
 **Accent.** Copper D57E3D appears only where something is alive: the booking button, the scroll progress line, link underlines. Text on copper stays dark. Green is not used for actions.
 
 **Type.**
-- EB Garamond (variable, OFL) for headings and reading text.
+- EB Garamond (variable, OFL) for headings and reading text. Its x-height is small, so reading text is 19 px on phones, 22 px at 1440 px and 24 px on wide screens, in lines of about 60–65 characters.
 - Roboto for interface, facts, tables and captions.
 - The sizes form one fluid scale in `styles/tokens.css`.
 
-**The arch.** The Dome's silhouette frames portrait photographs, the doors to other pages, the menu preview and the next-chapter link. On every page the hero photograph sits in an arch, and scrolling opens the arch until the picture fills the screen.
+**Space.** Scenes are one gap apart (`--space`, 64–128 px): each pads half a gap above and below, so paddings never stack.
+
+**Pictures.** Every picture has one shape, a rectangle rounded from one scale (`--r-lg`, `--r-md`). A group of pictures shares one proportion: 4:5 upright, 3:2 wide, 16:9 for films. It arrives once from a slightly smaller rounded mask, and pictures that open a page answer the pointer. No text is written over a detailed photograph. The header has a solid ground once the page scrolls, without frosted glass.
+
+**The arch.** The Dome's silhouette is movement, never a picture frame. On every page the hero sits in an arch, and scrolling opens the arch until the picture fills the screen. Night arrives as an arch rising over the dusk photograph. The next-page block opens the next page's own picture from an arch the same way.
 
 **Motion** follows the brand book. It moves at the speed of breath, starts and ends in stillness, arrives from depth rather than from the side, and uses fog as the only transition. It includes:
 - **Page changes:** fog. The page dissolves into mist and the next one surfaces. The language switch only dissolves the words and keeps your place.
 - **Smooth scroll:** Lenis, with scroll scenes in GSAP ScrollTrigger:
   - the hero arch opens;
-  - photographs drift slightly slower than the page;
-  - the page's statement brightens word by word as it is read;
-  - the doors on the home page walk sideways;
-  - in a sequence of steps, the picture holds still and changes as each step is read.
+  - pictures arrive once from a slightly smaller rounded mask;
+  - the home page's land drifts past its title at two depths;
+  - the experiences rail walks sideways;
+  - films grow from inside the page to the edges of the screen;
+  - night arrives as an arch rising over the dusk photograph;
+  - inside the Dome, the projection drifts from one state to the next;
+  - in a sequence of steps, the picture holds still and changes as each step is read;
+  - the next page's picture opens from an arch.
+  Text never animates word by word.
 - **Opening mark:** the first visit opens with the symbol drawn from the bottom up (dome, volcano, light) above the word, as in the official small vertical logo. It plays once per visit.
 - **Reduced motion:** none of this runs. Loops show their posters, and the arch stays still.
 
@@ -58,9 +67,9 @@ Where the tone changes, the next block opens with a long gradient from the previ
 | Path | Contents |
 |---|---|
 | `src/lib/blueprint/site.ts`, `site-data.json` | the 18 pages, groups, tones, routes in both languages, booking link |
-| `src/lib/blueprint/content/pages.ts`, `shared.ts`, `types.ts` | every page as a list of blocks; repeated door sets |
+| `src/lib/blueprint/content/pages.ts`, `shared.ts`, `types.ts` | every page as a list of scenes, written from its storyboard (`docs/blueprint-home.md`, `docs/blueprint-pages.md`); repeated door sets |
 | `src/lib/blueprint/content/es.json` | Spanish, keyed by the English text |
-| `src/lib/blueprint/blocks/` | the block vocabulary: Hero, Statement, Split, Chapter, Doors, Facts, Steps, Gallery, Film, Quote, Founder, Press, Table, Events, Map, Notes, Newsletter |
+| `src/lib/blueprint/blocks/` | the scenes: Hero, Land, Stay, Nightfall, Projection, Voices, Split, Doors, Facts, Steps, Gallery, Film, Table, Events, Map, Notes, Newsletter. Facts, notes, tables and events carry a picture beside their words; the statement, chapter, quote, founder and press blocks were retired on 2026-11-03 |
 | `src/lib/blueprint/components/` | Header, Menu (the index of all 18 chapters), Footer, Next, Intro, Viewer, Picture, Actions, Text |
 | `src/lib/blueprint/motion.ts` | edition-wide behaviour and per-page scroll scenes |
 | `src/lib/blueprint/styles/` | `tokens.css`, `base.css`, `blocks.css`, `motion.css` |
@@ -114,7 +123,7 @@ Where the tone changes, the next block opens with a long gradient from the previ
 - `data/photos.json` holds sizes and a placeholder colour.
 - Images the Figma edition already published (night exteriors, the volcano, the studio, the founder, press marks) are reused read-only from `public/media`.
 
-**Films and loops:** `scripts/blueprint-media/videos.sh` and `videos-pass2.sh`. Encoding: H.264 High, yuv420p, `faststart`.
+**Films and loops:** `scripts/blueprint-media/videos.sh`, `videos-pass2.sh` and `videos-home.sh`. Encoding: H.264 High, yuv420p, `faststart`.
 
 | File | Source | Use |
 |---|---|---|
@@ -126,6 +135,9 @@ Where the tone changes, the next block opens with a long gradient from the previ
 | `loop-stars` | vessyl-web 0:02–0:03.9, slowed, forward and back | Arenal After Dark |
 | `loop-violin` | Overview 1:10.3–1:12.6, crossfaded | The Vessyl Presents |
 | `loop-studio` | Events reel 0:19–0:24.4 | The recording studio |
+| `loop-pool` (2026-11-03) | `VESSYL.mp4` 0:54.5–1:00.5, crossfaded, 2560 px from the 4K master, 1280 px copy for phones | Home hero; replaces the forward-and-back cut |
+| `loop-treehouse` | Overview 1:20.6–1:22.7, slowed by half and crossfaded | Home, the treehouse door |
+| `loop-house` | Overview 1:53.4–1:58.0, crossfaded | Where you sleep hero and the home page's next-page block |
 | `film-vessyl` | VESSYL.mp4, 61 s, music, loudness −16 LUFS | Home film |
 | `film-events` | Events reel 0:05.6–0:55.8, voice and music, −16 LUFS | The Vessyl Presents |
 

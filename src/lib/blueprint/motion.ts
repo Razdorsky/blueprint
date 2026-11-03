@@ -134,7 +134,7 @@ export function install() {
     const dx = event.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 45) show(active + (dx < 0 ? 1 : -1));
   }, {passive: true});
-  // Menu: pointing at a chapter shows its picture.
+  // Menu: pointing at a page shows its picture.
   on('pointerover', event => {
     const link = (event.target as Element).closest?.<HTMLElement>('[data-preview]');
     if (!link) return;
@@ -151,26 +151,6 @@ export function install() {
   };
 }
 
-/** Wrap each word of an element in a span, keeping inline marks such as <em>. */
-function words(element: HTMLElement) {
-  if (element.dataset.words) return [...element.querySelectorAll<HTMLElement>('.w')];
-  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-  const nodes: Text[] = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode as Text);
-  for (const node of nodes) {
-    const parts = node.textContent!.split(/(\s+)/);
-    const fragment = document.createDocumentFragment();
-    for (const part of parts) {
-      if (!part) continue;
-      if (/^\s+$/.test(part)) fragment.append(part);
-      else {const span = document.createElement('span'); span.className = 'w'; span.textContent = part; fragment.append(span);}
-    }
-    node.replaceWith(fragment);
-  }
-  element.dataset.words = 'true';
-  return [...element.querySelectorAll<HTMLElement>('.w')];
-}
-
 /** Scroll scenes for one page. Returns a cleanup. */
 export function scenes(root: HTMLElement) {
   const header = root.querySelector<HTMLElement>('[data-header]');
@@ -182,7 +162,13 @@ export function scenes(root: HTMLElement) {
       else video.pause();
     }
   }, {threshold: 0.05});
-  root.querySelectorAll<HTMLVideoElement>('video[data-loop]').forEach(video => {video.muted = true; io.observe(video);});
+  const near = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const video = entry.target as HTMLVideoElement;
+      if (entry.isIntersecting && !reduced() && video.preload !== 'auto') {video.preload = 'auto'; video.load();}
+    }
+  }, {rootMargin: '0px 0px 100% 0px'});
+  root.querySelectorAll<HTMLVideoElement>('video[data-loop]').forEach(video => {video.muted = true; io.observe(video); near.observe(video);});
   const visibility = () => root.querySelectorAll<HTMLVideoElement>('video[data-loop]').forEach(video => document.hidden && video.pause());
   document.addEventListener('visibilitychange', visibility);
 
@@ -220,17 +206,63 @@ export function scenes(root: HTMLElement) {
 
     if (still) return;
 
+    // Pictures arrive from depth once: a slightly smaller rounded mask opens and the picture
+    // settles from a slight zoom.
+    root.querySelectorAll<HTMLElement>('[data-reveal]').forEach(frame => {
+      gsap.fromTo(frame, {'--reveal': 1}, {'--reveal': 0, duration: 1.7, ease: 'power3.out', scrollTrigger: {trigger: frame, start: 'top 92%', once: true}});
+    });
+
+    // A growing film starts inside the page and reaches the edges of the screen.
+    root.querySelectorAll<HTMLElement>('[data-grow]').forEach(stage => {
+      stage.classList.add('grows');
+      gsap.fromTo(stage, {'--g': 0}, {'--g': 1, ease: 'none', scrollTrigger: {trigger: stage, start: 'top bottom', end: 'center 55%', scrub: 0.6}});
+    });
+
+    // Nightfall: the dark arch rises over the dusk photograph and widens into the night.
+    root.querySelectorAll<HTMLElement>('[data-nightfall] [data-panel]').forEach(panel => {
+      gsap.fromTo(panel, {'--g': 0}, {'--g': 1, ease: 'none', scrollTrigger: {trigger: panel, start: 'top bottom', end: 'top 10%', scrub: 0.6}});
+    });
+
+    // The next page's picture opens from an arch, the way that page's own opening does.
+    root.querySelectorAll<HTMLElement>('[data-next-arch]').forEach(frame => {
+      gsap.fromTo(frame, {'--g': 0}, {'--g': 1, ease: 'none', scrollTrigger: {trigger: frame, start: 'top bottom', end: 'center 62%', scrub: 0.6}});
+    });
+
+    // Inside the Dome: the stage holds still while the projection slowly comes closer and drifts from
+    // one state to the next; the words beside it change with it.
+    root.querySelectorAll<HTMLElement>('[data-projection]').forEach(block => {
+      const stage = block.querySelector<HTMLElement>('[data-stage]');
+      const states = [...block.querySelectorAll<HTMLElement>('[data-state]')];
+      const shots = [...block.querySelectorAll<HTMLElement>('[data-shot]')];
+      if (!stage || !states.length) return;
+      let current = 0;
+      const show = (index: number) => {
+        if (index === current) return;
+        current = index;
+        states.forEach((state, i) => state.classList.toggle('active', i === index));
+        shots.forEach((shot, i) => shot.classList.toggle('active', i === index));
+      };
+      gsap.timeline({scrollTrigger: {trigger: stage, start: 'center center', end: `+=${states.length * 60}%`, pin: true, scrub: 0.8,
+        onUpdate: self => show(Math.min(states.length - 1, Math.floor(self.progress * states.length)))}})
+        .fromTo(shots, {scale: 1}, {scale: 1.1, ease: 'none'});
+    });
+
+    // The land drifts past its title at three depths.
+    media.add('(min-width: 900px)', () => {
+      root.querySelectorAll<HTMLElement>('[data-land]').forEach(land => {
+        land.querySelectorAll<HTMLElement>('[data-depth-layer]').forEach(item => {
+          const depth = Number(item.dataset.depthLayer) || 1;
+          gsap.fromTo(item, {y: () => (depth - 1) * window.innerHeight * 0.35}, {y: () => (1 - depth) * window.innerHeight * 0.35, ease: 'none',
+            scrollTrigger: {trigger: land, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true}});
+        });
+      });
+    });
+
     // Depth: pictures drift a little slower than the page.
     root.querySelectorAll<HTMLElement>('[data-depth]').forEach(frame => {
       const media = frame.querySelector('img,video');
       if (!media) return;
       gsap.fromTo(media, {yPercent: -5, scale: 1.1}, {yPercent: 5, scale: 1.1, ease: 'none', scrollTrigger: {trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true}});
-    });
-
-    // Statements brighten word by word as they are read.
-    root.querySelectorAll<HTMLElement>('.statement-text').forEach(text => {
-      const list = words(text);
-      gsap.fromTo(list, {opacity: 0.18}, {opacity: 1, stagger: 0.08, ease: 'none', scrollTrigger: {trigger: text, start: 'top 82%', end: 'bottom 45%', scrub: 0.4}});
     });
 
     // A rail of doors walks sideways on wide screens.
@@ -256,7 +288,8 @@ export function scenes(root: HTMLElement) {
   }, root);
 
   let refresh = 0;
-  const later = () => {window.clearTimeout(refresh); refresh = window.setTimeout(() => ScrollTrigger.refresh(), 160);};
+  // Scenes are measured in page order, so a pin higher up (the rail) moves everything below it.
+  const later = () => {window.clearTimeout(refresh); refresh = window.setTimeout(() => {ScrollTrigger.sort(); ScrollTrigger.refresh();}, 160);};
   requestAnimationFrame(later);
   root.querySelectorAll('img').forEach(image => image.complete || image.addEventListener('load', later, {once: true}));
   document.fonts?.ready.then(later);
@@ -266,6 +299,7 @@ export function scenes(root: HTMLElement) {
     media.revert();
     context.revert();
     io.disconnect();
+    near.disconnect();
     document.removeEventListener('visibilitychange', visibility);
   };
 }

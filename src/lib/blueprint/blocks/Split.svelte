@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Picture and text side by side. Portrait pictures sit in the arch; an optional small picture overlaps.
+  // Picture and text side by side; an optional small picture overlaps.
   import Text from '../components/Text.svelte';
   import Picture from '../components/Picture.svelte';
   import Actions from '../components/Actions.svelte';
@@ -10,7 +10,7 @@
 </script>
 
 <div class="wrap split" class:flip={block.flip} class:portrait>
-  <figure class="split-media" class:arch={portrait}>
+  <figure class="split-media">
     <div class="frame" data-depth><Picture media={block.media} sizes="(min-width: 900px) 50vw, 100vw" /></div>
     {#if block.aside}<div class="split-aside frame"><Picture media={block.aside} sizes="(min-width: 900px) 18vw, 40vw" /></div>{/if}
   </figure>

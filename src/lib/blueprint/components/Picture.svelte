@@ -15,7 +15,8 @@
     loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async"
     style:background-color={image.color} style:object-position={media.focus} />
 {:else if video}
-  <video class={className} data-loop muted loop playsinline preload="none" poster={video.poster} aria-label={t(media.alt)} style:object-position={media.focus}>
+  <video class={className} data-loop muted loop playsinline preload={eager ? 'auto' : 'none'} poster={video.poster} aria-label={t(media.alt)} style:object-position={media.focus}>
+    {#if video.phone}<source src={video.phone} type="video/mp4" media="(max-width: 899px)" />{/if}
     <source src={video.src} type="video/mp4" />
   </video>
 {/if}

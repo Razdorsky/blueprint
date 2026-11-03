@@ -26,9 +26,22 @@ export function photo(name: string): Photo {
   return {src: url(meta.widths.includes(1600) ? 1600 : largest), srcset: meta.widths.map(w => `${url(w)} ${w}w`).join(', '), w: meta.w, h: meta.h, color: meta.color};
 }
 
-export const loops = ['pool', 'night', 'dome', 'hearth', 'river', 'stars', 'violin', 'studio'] as const;
+export const loops = ['pool', 'night', 'dome', 'hearth', 'river', 'stars', 'violin', 'studio', 'treehouse', 'house',
+  'villas', 'rates', 'sessions', 'day', 'evening', 'listening', 'pasture', 'tents', 'inside'] as const;
 export const films = ['vessyl', 'events'] as const;
 export type LoopName = (typeof loops)[number];
 export type FilmName = (typeof films)[number];
-export const loop = (name: LoopName) => ({src: asset(`/bp/video/loop-${name}.mp4`), poster: asset(`/bp/video/loop-${name}.webp`)});
-export const film = (name: FilmName) => ({src: asset(`/bp/video/film-${name}.mp4`), poster: asset(`/bp/video/film-${name}.webp`)});
+/** Loops cut for full-screen openings also have a 1280 px copy for phones. */
+const phoneCut: LoopName[] = ['pool', 'treehouse', 'house', 'villas', 'rates', 'sessions', 'day', 'evening', 'listening', 'pasture', 'tents', 'inside'];
+export const loop = (name: LoopName) => ({
+  src: asset(`/bp/video/loop-${name}.mp4`),
+  phone: phoneCut.includes(name) ? asset(`/bp/video/loop-${name}-m.mp4`) : undefined,
+  poster: asset(`/bp/video/loop-${name}.webp`)
+});
+/** A film with sound, and the silent 12-second preview that plays until someone opens it. */
+export const film = (name: FilmName) => ({
+  src: asset(`/bp/video/film-${name}.mp4`),
+  preview: asset(`/bp/video/film-${name}-preview.mp4`),
+  previewPhone: asset(`/bp/video/film-${name}-preview-m.mp4`),
+  poster: asset(`/bp/video/film-${name}.webp`)
+});

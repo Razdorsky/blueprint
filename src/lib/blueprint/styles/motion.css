@@ -36,7 +36,5 @@ html[data-vt='locale']::view-transition-new(root) { animation: dissolve-in 0.75s
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   html[data-intro='on'] .intro { display: none; }
-  .press-row { animation: none; flex-wrap: wrap; width: auto; justify-content: center; }
-  .press-row li[aria-hidden] { display: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }

@@ -9,6 +9,10 @@ export const units = (meta = 'From [rate] a night'): Door[] => [
 
 export const otherUnits = (current: string) => units('Four nights or more, [offer]').filter(item => item.to !== current);
 
+/** The three ways to stay, each saying who it suits best (this replaced a side-by-side table). */
+const bestFor = ['Best for couples, four nights or more, and rain.', 'Best for one couple who want the best view on the property.', 'Best for anyone who wants to hear the forest all night.'];
+export const unitsCompared = (): Door[] => units().map((door, index) => ({...door, text: `${door.text} ${bestFor[index]}`}));
+
 export const experiences: Door[] = [
   {to: 'frequency-experience', media: {photo: 'dome-mars', alt: 'Guests lying under a projection of Mars inside the Dome', focus: '50% 30%'}, title: 'The Frequency Experience', text: '[x] minutes in the Dome.'},
   {to: 'arenal-after-dark', media: {photo: 'site:e8e1d1c262ffea471760', alt: 'The Frequency Dome under the Milky Way'}, title: 'Arenal After Dark', text: 'The volcano, the land and the Dome at night, with dinner.'},

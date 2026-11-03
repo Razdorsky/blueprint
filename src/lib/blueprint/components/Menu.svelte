@@ -1,5 +1,5 @@
 <script lang="ts">
-  // The whole site as one index of eighteen chapters. Pointing at a chapter shows its picture.
+  // The whole site as one index. Pointing at a page shows its opening picture.
   import {bp} from '../context.ts';
   import {content} from '../content/pages.ts';
   import {loop, photo} from '../media.ts';
@@ -22,19 +22,19 @@
   </div>
   <div class="menu-body">
     <nav class="menu-index" aria-label={t('All pages')}>
-      <a class="menu-home" href={route('', locale)} aria-current={page.index === 1 ? 'page' : undefined} data-preview="1"><span class="menu-n">01</span>{t('The Vessyl')}</a>
+      <a class="menu-home" href={route('', locale)} aria-current={page.index === 1 ? 'page' : undefined} data-preview="1">{t('The Vessyl')}</a>
       {#each groups as [group, label] (group)}
         <div class="menu-group">
           <p class="menu-group-title">{t(label)}</p>
           <ul>
             {#each groupPages(group) as item (item.index)}
-              <li><a href={route(item.slug, locale)} aria-current={item.index === page.index ? 'page' : undefined} data-preview={item.index}><span class="menu-n">{String(item.index).padStart(2, '0')}</span>{t(item.name)}</a></li>
+              <li><a href={route(item.slug, locale)} aria-current={item.index === page.index ? 'page' : undefined} data-preview={item.index}>{t(item.name)}</a></li>
             {/each}
           </ul>
         </div>
       {/each}
     </nav>
-    <div class="menu-preview arch" aria-hidden="true">
+    <div class="menu-preview" aria-hidden="true">
       {#each sitePages as item (item.index)}
         <img class="menu-shot" class:active={item.index === page.index} data-shot={item.index} src={preview(item.slug)} alt="" loading="lazy" />
       {/each}

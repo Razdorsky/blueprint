@@ -1,6 +1,7 @@
 <script lang="ts">
   // The legacy Blueprint film behaviour: a silent loop while it is on screen; a tap starts it
-  // again from the beginning with sound; then pause and sound controls appear.
+  // again from the beginning with sound; then pause and sound controls appear. The silent loop is a
+  // light 12-second preview, so the full film downloads only when someone opens it.
   import {onMount} from 'svelte';
   import {bp, rich} from '../context.ts';
   import Text from '../components/Text.svelte';
@@ -35,7 +36,8 @@
     activated = true;
     video.muted = false;
     video.loop = false;
-    video.currentTime = 0;
+    video.src = source.src;
+    video.load();
     video.play().catch(() => {});
   }
   function toggle() {
@@ -49,25 +51,29 @@
     <Text as="h2" text={block.title} class="h2" />
     {#if block.body}<p>{@html rich(t(block.body))}</p>{/if}
   </div>
-  <div class="film" class:activated>
-    <video bind:this={video} width="1920" height="1080" poster={source.poster} muted loop={!activated} playsinline preload="none"
-      onplay={() => (playing = true)} onpause={() => (playing = false)} onended={() => (playing = false)}
-      onvolumechange={() => (muted = video.muted)}>
-      <source src={source.src} type="video/mp4" />
-    </video>
-    <button type="button" class="film-action" onclick={activated ? toggle : playFromStart}
-      aria-label={activated ? (playing ? t('Pause film') : t('Resume film')) : t('Play film from the beginning with sound')}>
-      {#if !activated}<span class="film-cue">{t('Watch with sound')}</span>{/if}
-    </button>
-    <div class="film-controls" role="group" aria-label={t('Film controls')}>
-      {#if activated}
-        <button type="button" onclick={toggle} aria-label={playing ? t('Pause film') : t('Play film')}>
-          {#if playing}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>{:else}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" /></svg>{/if}
-        </button>
-      {/if}
-      <button type="button" aria-label={muted ? t('Unmute film') : t('Mute film')} onclick={() => (activated ? (video.muted = !video.muted) : playFromStart())}>
-        {#if muted}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l4 6M21 9l-4 6" /></svg>{:else}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8a5 5 0 0 1 0 8M19.5 5.5a9 9 0 0 1 0 13" /></svg>{/if}
+  <!-- A growing film starts as a rounded frame in the page and reaches the edges of the screen. -->
+  <div class="film-stage" data-grow={block.grow ? '' : undefined}>
+    <div class="film" class:activated>
+      <video bind:this={video} width="1920" height="1080" poster={source.poster} muted loop={!activated} playsinline preload="none"
+        onplay={() => (playing = true)} onpause={() => (playing = false)} onended={() => (playing = false)}
+        onvolumechange={() => (muted = video.muted)}>
+        <source src={source.previewPhone} type="video/mp4" media="(max-width: 899px)" />
+        <source src={source.preview} type="video/mp4" />
+      </video>
+      <button type="button" class="film-action" onclick={activated ? toggle : playFromStart}
+        aria-label={activated ? (playing ? t('Pause film') : t('Resume film')) : t('Play film from the beginning with sound')}>
+        {#if !activated}<span class="film-cue">{t('Watch with sound')}</span>{/if}
       </button>
+      <div class="film-controls" role="group" aria-label={t('Film controls')}>
+        {#if activated}
+          <button type="button" onclick={toggle} aria-label={playing ? t('Pause film') : t('Play film')}>
+            {#if playing}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>{:else}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" /></svg>{/if}
+          </button>
+        {/if}
+        <button type="button" aria-label={muted ? t('Unmute film') : t('Mute film')} onclick={() => (activated ? (video.muted = !video.muted) : playFromStart())}>
+          {#if muted}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9l4 6M21 9l-4 6" /></svg>{:else}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 8a5 5 0 0 1 0 8M19.5 5.5a9 9 0 0 1 0 13" /></svg>{/if}
+        </button>
+      </div>
     </div>
   </div>
 </div>

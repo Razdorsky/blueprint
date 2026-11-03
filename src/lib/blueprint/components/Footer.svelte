@@ -1,7 +1,9 @@
 <script lang="ts">
-  // The close of every page: the brand's own invitation, the index again, and the newsletter.
+  // The close of every page: the brand's own invitation beside the Dome under the night sky,
+  // the index again, and the newsletter.
   import {bp, rich} from '../context.ts';
   import Newsletter from '../blocks/Newsletter.svelte';
+  import Picture from './Picture.svelte';
   import {booking, groupPages, route, type Group} from '../site.ts';
   import symbol from '../assets/symbol.svg?raw';
   const {t, page, locale} = bp();
@@ -12,10 +14,13 @@
 </script>
 
 <footer class="site-footer" data-tone="night">
-  {#if page.slug !== 'the-vessyl-presents'}<Newsletter />{/if}
+  <Newsletter variant={page.slug === 'the-vessyl-presents' ? 'events' : undefined} />
   <div class="wrap footer-close">
-    <p class="footer-line">{@html rich(t('Come for Costa Rica.\nCome for the horses.\nCome for the volcano.'))}<br />{t('Just come curious.')}</p>
-    <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+    <div class="footer-invite">
+      <p class="footer-line">{@html rich(t('Come for Costa Rica.\nCome for the horses.\nCome for the volcano.'))}<br />{t('Just come curious.')}</p>
+      <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+    </div>
+    <figure class="frame footer-night" data-reveal><Picture media={{loop: 'stars', alt: 'The Frequency Dome under the Milky Way'}} sizes="(min-width: 900px) 46vw, 92vw" /></figure>
   </div>
   <div class="wrap footer-columns">
     {#each groups as [group, label] (group)}
