@@ -1,8 +1,13 @@
 // GitHub Pages artifact for one edition, published like the legacy Blueprint:
 // a project site whose URL prefix is the repository name.
 //
-//   node scripts/build-pages.mjs figma      -> outputs/github-pages (served at /figma/)
-//   node scripts/build-pages.mjs blueprint  -> outputs/github-pages (served at /blueprint/)
+//   node scripts/build-pages.mjs figma       -> outputs/github-pages (served at /figma/)
+//   node scripts/build-pages.mjs blueprint   -> outputs/github-pages (served at /blueprint/)
+//   node scripts/build-pages.mjs blueprint4  -> outputs/github-pages (served at /blueprint4/)
+//
+// The argument is the repository's name. A further copy of the Blueprint edition (blueprint4, …)
+// serves the same edition under its own name: its page links, and the client router's route
+// with them, are moved from /blueprint/ to that name.
 //
 // Run after `npm run build`. The normal build keeps every route under /figma/ or
 // /blueprint/, which is exactly the project-site prefix, so page links stay as they
@@ -11,9 +16,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const edition = process.argv[2];
+const target = process.argv[2] || '';
+const edition = /^blueprint\d*$/.test(target) ? 'blueprint' : target;
 if (edition !== 'figma' && edition !== 'blueprint') {
-  console.error('Usage: node scripts/build-pages.mjs figma|blueprint');
+  console.error('Usage: node scripts/build-pages.mjs figma|blueprint|blueprint<n>');
   process.exit(1);
 }
 
@@ -35,20 +41,22 @@ async function* files(dir) {
   }
 }
 
-const prefix = `/${edition}`;
+const prefix = `/${target}`;
+// For a further copy: /blueprint/ wherever it opens a path, in markup and in the client's code.
+const moved = target === edition ? text => text : text => text.replace(new RegExp(`(["'\`(,}=\\s])/${edition}(?=/)`, 'g'), `$1${prefix}`);
 let html = 0;
 let js = 0;
 for await (const file of files(out)) {
   if (file.endsWith('.html')) {
     const source = await fs.readFile(file, 'utf8');
-    const result = source
+    const result = moved(source
       // SvelteKit's relative asset paths (../../_app/...) assume the site root.
       .replace(/(["'(])(?:\.\.\/)+(_app|brand|media|typography|bp)\//g, `$1${prefix}/$2/`)
       // Static media and typography written as root paths by the page components, and font
       // preloads, which take their address from the bundler as a root path.
       .replace(/(["'(,])\/(media|typography|brand|bp|_app)\//g, `$1${prefix}/$2/`)
       // srcset lists: every candidate after a comma and space.
-      .replace(/(, )\/(media|bp)\//g, `$1${prefix}/$2/`);
+      .replace(/(, )\/(media|bp)\//g, `$1${prefix}/$2/`));
     if (result !== source) {
       await fs.writeFile(file, result);
       html += 1;
@@ -56,7 +64,7 @@ for await (const file of files(out)) {
   } else if (file.endsWith('.js') && file.includes(`${path.sep}_app${path.sep}`)) {
     const source = await fs.readFile(file, 'utf8');
     // Client-rendered pages build the same root paths at runtime (`${base}/media/...`).
-    const result = source.replace(/(["'`}])\/(media|typography|brand|bp)\//g, `$1${prefix}/$2/`);
+    const result = moved(source.replace(/(["'`}])\/(media|typography|brand|bp)\//g, `$1${prefix}/$2/`));
     if (result !== source) {
       await fs.writeFile(file, result);
       js += 1;
@@ -92,4 +100,4 @@ if (problems.length) {
 }
 
 await fs.writeFile(path.join(out, '.nojekyll'), '');
-console.log(`GitHub Pages artifact for /${edition}/: outputs/github-pages (${html} pages and ${js} scripts re-rooted, all references resolve)`);
+console.log(`GitHub Pages artifact for ${prefix}/ (the ${edition} edition): outputs/github-pages (${html} pages and ${js} scripts re-rooted, all references resolve)`);

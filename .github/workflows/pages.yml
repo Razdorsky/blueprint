@@ -2,8 +2,9 @@ name: Validate and deploy Vessyl Current
 
 # The same source is pushed to two repositories, as the legacy Blueprint is published:
 # Razdorsky/figma serves https://razdorsky.github.io/figma/ and
-# Razdorsky/blueprint serves https://razdorsky.github.io/blueprint/.
-# The repository name selects the edition.
+# Razdorsky/blueprint serves https://razdorsky.github.io/blueprint/;
+# Razdorsky/blueprint4 serves a further copy of the Blueprint edition at /blueprint4/.
+# The repository name selects the edition and its address.
 
 on:
   push:

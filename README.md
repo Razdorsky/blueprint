@@ -11,6 +11,7 @@ Published like the legacy Blueprint (https://razdorsky.github.io/vessyl-website-
 
 - Figma edition: **https://razdorsky.github.io/figma/** — repository `Razdorsky/figma`
 - Blueprint edition: **https://razdorsky.github.io/blueprint/** — repository `Razdorsky/blueprint`
+- The current Blueprint edition, published on its own at the owner's request on 2026-11-03: **https://razdorsky.github.io/blueprint4/** — repository `Razdorsky/blueprint4`. `/blueprint/` keeps the version published before it.
 
 ## Local preview
 
@@ -64,13 +65,20 @@ User decision, 2026-11-02: publish exactly as the legacy Blueprint is published.
 
 - One local repository on `main` has two remotes: `figma` → `Razdorsky/figma` and `blueprint` → `Razdorsky/blueprint`. Both are public and receive the same commits.
 - In each repository, GitHub Actions (`.github/workflows/pages.yml`) runs on every push to `main`. It installs the locked dependencies, builds both editions and runs `npm run check`. It then prepares the edition named after the repository and deploys it to GitHub Pages. Pull requests are validated but not deployed.
-- `npm run build:pages -- figma|blueprint` writes `outputs/github-pages`. Routes are already `/figma/…` and `/blueprint/…`, which match the project-site prefixes. The script only moves root-level references (`/_app`, `/media`, `/typography`, `/brand`, and for Blueprint `/bp`) under the prefix, then verifies that every reference resolves inside the artifact. Source files are not changed.
+- `npm run build:pages -- figma|blueprint|blueprint4` writes `outputs/github-pages`. Routes are already `/figma/…` and `/blueprint/…`, which match the project-site prefixes. The script only moves root-level references (`/_app`, `/media`, `/typography`, `/brand`, and for Blueprint `/bp`) under the prefix, then verifies that every reference resolves inside the artifact. Source files are not changed.
+- A further copy of the Blueprint edition (`blueprint4`) is the same edition under its repository's name. The script also moves its page links, and the client router's route, from `/blueprint/` to `/blueprint4/`.
 
 To publish, push `main` to both remotes:
 
 ```sh
 git push figma main
 git push blueprint main
+```
+
+The `blueprint4` remote (`Razdorsky/blueprint4`) is pushed only when the owner asks for that address:
+
+```sh
+git push blueprint4 main
 ```
 
 Both editions are versioned together; the original website repositories remain separate.
