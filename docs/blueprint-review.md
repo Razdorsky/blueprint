@@ -303,3 +303,11 @@ After the home page audit the owner asked to roll its level out to every page. E
 - **Project check:** passes for types, all 54 routes, the Figma freeze (246 files) and Spanish (617 strings).
 
 **For the owner to confirm:** the aerial of small pyramid roofs on a curving path (`VESSYL.mp4` 0:24) is read as the glamping tents, because the path matches the tent photographs.
+
+## 11. The next-page block gave no sign it could be clicked
+
+> «рядом с самой надписью нету даже какого-то минималистичного значка ссылки. То есть, ну, непонятно, что туда можно и нужно кликнуть»
+
+Shown on the home page ("Where you sleep") and on the Villas ("The Treehouse") on desktop.
+
+**Update (applied 2026-11-03).** A round arrow follows the next page's name at every size and in both languages. It stays with the last word, so it never wraps onto a line of its own. When the block is pointed at or focused, the arrow fills with copper and the name takes the accent colour.

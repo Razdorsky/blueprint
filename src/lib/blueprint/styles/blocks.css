@@ -244,6 +244,12 @@ a .frame img, a .frame video, button .frame img { transition: transform var(--sl
 .next-media { --g: 1; display: block; height: min(78svh, 56vw); overflow: hidden; background: var(--rule);
   clip-path: inset(0 calc((1 - var(--g)) * 16%) 0 calc((1 - var(--g)) * 16%) round calc((1 - var(--g)) * 34vw + var(--g) * var(--r-lg)) calc((1 - var(--g)) * 34vw + var(--g) * var(--r-lg)) var(--r-lg) var(--r-lg)); }
 .next-media img, .next-media video { width: 100%; height: 100%; object-fit: cover; transition: transform var(--slow) var(--exhale); }
+/* The way through: a round arrow after the name, filled with copper when the block is pointed at. */
+.next-tail { white-space: nowrap; }
+.next-go { display: inline-grid; place-items: center; width: 0.6em; height: 0.6em; margin-left: 0.3em; border: 1px solid color-mix(in srgb, currentColor 45%, transparent); border-radius: 50%; vertical-align: 0.1em; color: var(--fg); transition: background-color var(--calm) var(--breath), border-color var(--calm) var(--breath), color var(--calm) var(--breath); }
+.next-go svg { width: 0.28em; height: 0.28em; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--calm) var(--breath); }
+.next:hover .next-go, .next:focus-visible .next-go { background: var(--copper); border-color: var(--copper); color: var(--ink); }
+.next:hover .next-go svg, .next:focus-visible .next-go svg { transform: translateX(0.04em); }
 .next:hover .next-title { color: var(--accent); }
 .next:hover .next-media img, .next:hover .next-media video { transform: scale(1.04); }
 @media (max-width: 899px) { .next-head { grid-template-columns: 1fr; } .next-title, .next-line { grid-column: 1; } .next-media { height: 64svh; } }

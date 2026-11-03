@@ -8,6 +8,11 @@
   import {next, route} from '../site.ts';
   const {t, page, locale} = bp();
   const following = next(page);
+  // The arrow travels with the last word, so it never wraps onto a line of its own.
+  const name = t(following.index === 1 ? 'The Vessyl' : following.name);
+  const words = name.split(' ');
+  const lead = words.slice(0, -1).join(' ');
+  const last = words[words.length - 1];
   const target = content[following.slug];
   const hero = target.blocks.find(block => block.type === 'hero');
   // The close stays in the light the page ended in.
@@ -18,7 +23,7 @@
 <section class="b b-next" data-tone={tone}>
   <a class="next" href={route(following.slug, locale)} data-next>
     <span class="wrap next-head">
-      <span class="next-title">{t(following.index === 1 ? 'The Vessyl' : following.name)}</span>
+      <span class="next-title">{lead ? `${lead} ` : ''}<span class="next-tail">{last}<span class="next-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 12h14.5M13 6l6 6-6 6" /></svg></span></span></span>
       <span class="next-line">{@html rich(t(target.description))}</span>
     </span>
     {#if hero && hero.type === 'hero'}
