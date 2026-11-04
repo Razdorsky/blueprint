@@ -89,7 +89,6 @@ Result at 1440px: every section height is within ±3px of its frame. The only ex
 | Home combo placeholders `BUTTON` are drawn in #f5ebe7 on white (invisible) | Library master colour #733a11 | Keeps the supplied placeholder visible and readable |
 | Experiences opening label in #d3a079 on white | #a2551b, as on the other paper openings | Text contrast |
 | Card Grid frames are fixed at 508/510px while their copy overflows | Natural height (+3px) | Copy is never clipped or overlapped |
-| Facts values use Roboto Light | Roboto Regular | Light (300) is not among the bundled font files |
 | OFFER ribbon label is 17.5px SemiBold, white on #d57e3d | 18.7px Bold on the same colours | 3.05:1 contrast passes only as WCAG large text |
 | Slider/gallery chevrons and six dots | Chevrons open the full-screen gallery; dots are decorative | Each source supplies one photograph |
 | Some photos differ in aspect from the frame source (Villas/Treehouse/Day sliders, Frequency and For Two 50/50, glamping card) | Cover framing | The frame's crop rectangle cannot be transferred exactly |
@@ -168,7 +167,7 @@ Corrections, added to the change register above:
 Deliberate differences:
 - Card Grid on page 17 is 583px instead of 575px. The frame's copy overflows its fixed height, and the site keeps the copy inside.
 - The hero on page 17 is framed with object-fit cover instead of the frame's 7.7% horizontal stretch.
-- Included values use Roboto Regular (Light is not bundled), so "Vibro-tactile, no furniture" wraps.
+- Included values used Roboto Regular, so "Vibro-tactile, no furniture" wrapped. Since 2026-11-04 they use Roboto Light, as in the frames.
 - The word artwork keeps "twenty-minute" whole, so that heading on page 17 breaks one word earlier than the frame.
 - Combo buttons stay on one row from 1200px, as in the frames, and wrap below that.
 
@@ -178,3 +177,125 @@ Checks:
 - No overflow across 18 pages × 13 widths (360–1920).
 - axe reports 0 violations on pages 14–18 at 1440 and 375px.
 - The Blueprint edition is unchanged: normalized DOM and computed-style fingerprints are identical for all 26 captures.
+
+## Designer update — 2026-11-04 (file `RmyMB2Jd9AuxZ6XRkjqtCm`)
+
+The designer supplied a new file with the same Website 2.0 page `814:6489` and library `748:267`. The source intake is archived outside Git in the raw-source bank at `marketing-site/current-website/2026-11-04-update/`. It holds the user's message, 1:1 renders of all 24 frames, per-page specs, design-context responses and original assets.
+
+### Changes to existing pages
+
+None. 1:1 renders of frames 01–18 are pixel-identical to the previous intake: 0 differing pixels at 2% fuzz. The library holds the same 45 symbols as before.
+
+The library page also holds designer drafts that are not part of this update and were not built: eight variants of page 14 and raster placeholders for pages 25–37 (Weddings to Rates, policies and the fine print).
+
+### New pages 19–24
+
+| Page | Route | Frame |
+| --- | --- | --- |
+| 19 Eating here | `/figma/eating-here/` | `882:8107` |
+| 20 El Rancho | `/figma/el-rancho/` | `884:8330` |
+| 21 Moloka | `/figma/moloka/` | `884:8529` |
+| 22 Take the whole property | `/figma/take-the-whole-property/` | `884:8730` |
+| 23 Retreats | `/figma/retreats/` | `884:8986` |
+| 24 Groups and offsites | `/figma/groups-and-offsites/` | `884:9222` |
+
+The pages reuse the existing roles. New section variants are styled per instance:
+- Hero text only at 226, 234, 239, 286, 295, 302 and 333px.
+- Card grids at 524, 558 and 582px.
+- Callouts at 430 and 547px.
+- 2 Rooms cards on white, 585px, without the price line.
+- included with five columns at 152px.
+- On El Rancho, the rate card keeps the frame's two empty lines after its body, so that section is 516px.
+- 3 col info at 195 and 213px.
+- The Retreats gallery at 696px.
+- The Table master on Retreats without its heading, two rows, 231px.
+
+Photo framing follows the same rule as pages 14–18.
+
+Navigation:
+- The mobile menu has two more groups: "Eating here" (pages 19–21) and "Take the whole property" (22–24).
+- The desktop Stay and Experiences groups and the footer are unchanged. The frames' footer has no place for these pages.
+- On Eating here, "See El Rancho" and "See Moloka" open pages 20 and 21.
+- On Take the whole property, the Retreats and Groups and offsites cards open pages 23 and 24. Weddings has no page yet.
+- On Home, "Reserve a table" opens Eating here. "Plan a retreat" and "Inquire about a group", in the Take the whole property panel, open Retreats and Groups and offsites.
+- Other new buttons have no supplied destination and remain explicit placeholders. These include the generic "button" / "Button" pair on Moloka, the "Button" link arrows on pages 22 and 23, and "The people here" on El Rancho.
+
+Correction, added to the change register above:
+
+| Source | Presentation |
+| --- | --- |
+| `ompany, dates, headcount…` (24) | `Company, dates, headcount…` |
+
+Deliberate differences:
+- The heroes on pages 22 and 24 and the photo in Moloka's "The other room" use object-fit cover. The frames stretch them by about 12.5%.
+- The "Button" link arrows on pages 21–23 are brown and readable, like every link arrow on the site. In the frames they are `#f5ebe7` on white and nearly invisible.
+- The Retreats table's DETAILS buttons stay inside their rows. In the frame they hang about 48px into the right padding.
+
+Checks:
+- At 1440px every new section is within ±2px of its frame.
+- All 182 Figma text nodes of pages 19–24 appear on the site; the one corrected string appears in its corrected form.
+- No overflow across 24 pages × 13 widths (360–1920).
+- axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on pages 19–24 and Home at 1440 and 375px.
+- The Blueprint edition is unchanged: 72 captures (36 routes at 1440 and 375px) have identical normalized DOM. Computed styles are identical too, except for one script-set margin on The Frequency Dome stage. That margin also varies between two loads of the same build.
+
+### Deep QA against the current file — 2026-11-04
+
+The owner asked for a full check before publishing: every page against the current file, in text, design, elements and components, and every resolution.
+
+What was compared:
+- **Code.** A fresh `get_design_context` of all 24 frames and all 45 library components was captured. It is archived in the intake's `existing-frames/context/` and `library/children/`.
+  - Frames 02–08 and 13–18 are line-for-line identical to the responses the pages were built from, including node ids, styles and image hashes.
+  - Frames 01 and 09–12 and four components differ only by the 52/60 → 42/46 copy-block heading. That change was already implemented on 2026-11-02.
+  - A second capture later in the day matched the first for frames 19–24, the page structure and the library.
+- **Text.** Every text node of the 24 frames (614 unique strings) was checked against the rendered pages with word boundaries. It was also passed through the macOS spelling and grammar checker and read in full.
+- **Design.**
+  - All 211 sections were compared at 1440px with the frames' 1:1 renders: height, pixels, and every text line located by Vision OCR (2,073 lines matched after the fixes). Shifts were confirmed on pixel row profiles.
+  - Explicit frame line breaks and paragraph gaps were checked one by one.
+
+Corrections added to the change register:
+
+| Source | Presentation |
+| --- | --- |
+| `[Fans, air conditioning, cross ven]` (03–05) | `[Fans, air conditioning, cross ventilation]` |
+| `[Which tents are most private, and which are the easiest walk.` (05) | closing `]` added |
+| `Free Up to [hours] before` (08) | `Free up to [hours] before` |
+| `if you are pregnant, …` (09) | `If you are pregnant, …` |
+
+Fixed to match the frames:
+- **Missing line breaks.** These are now applied at 1101px and wider:
+  - the Treehouse and Glamping hero ledes;
+  - the Day, Frequency Experience and Horses and the River H1s.
+- **Hero ledes.** The Treehouse and Glamping ledes are 22/32, not 18/30.
+- **Paragraph gaps.** The Treehouse and Glamping gallery overlays use one empty line (30px), not 60px. For Two's description uses 30px, and its paragraphs are 666px wide.
+- **Wrapping.** Figma breaks a line a few pixels before the browser does. Widths reproduce its breaks in five places:
+  - Home "Fourteen units": 492px;
+  - Where you sleep "cannot decide?": 538px;
+  - Villas hero lede: 570px;
+  - Hearth description: 662px;
+  - the river 50/50: 492px.
+- **Events newsletter.** The copy is 544px and the form runs 15px into the padding.
+- **Groups and offsites.** The 50/50 body has no extra line before its button.
+- **Press logos.** Each logo has its frame size (for example dwell 61×26, NYT 119×20). They keep those proportions on tablet (one row) and mobile.
+- **Property map.** The aerial photograph uses the frame's crop, so the pins sit on their buildings.
+- **Events and retreats tables.**
+  - The columns are the frames' 123/319/491/230px.
+  - At 1440px and wider the button runs into the row padding, as in the frames.
+- **Facts values.** They use Roboto Light (`src/assets/fonts/roboto-300.woff2`, from `@fontsource/roboto` 5.3.0). Before, the browser fell back to Regular.
+- **Footer.** It reads "Rates and Offers" and "Privacy • Terms & Conditions", as in the frames.
+
+Remaining differences:
+- **Wraps from corrections.** "cross ventilation]" wraps in the 275px amenity cell, so the lower amenity rows sit 29px lower. "Glamping Tents Gallery" takes two lines in its overlay.
+- **Heading position.** Word-art headings sit 2–4px lower than Figma's text, within the ±3px section tolerance except one 4px case (Sound and movement opening).
+- **Minimum width.** The edition is laid out for 360px and wider (`body { min-width: 360px }`). At 320–359px the page scrolls sideways.
+- **Shell.** The newsletter field keeps the frames' placeholder `ronnie@aave.com`.
+
+Checks:
+- At 1440px all 211 sections are within ±3px of their frames. The exception is Card Grid on page 17 (+8px), which is deliberate.
+- Layout was audited on 24 pages × 69 widths (360–2560) in Chrome, WebKit and Firefox. The audit looked for page overflow, elements outside the viewport, clipped text, overlapping text lines, text at the screen edge and broken images. The only findings are intentional hidden elements:
+  - the skip link;
+  - the 0px "Menu" label below 681px;
+  - visually hidden table headers below 761px.
+- axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 24 pages at 1440, 768 and 375px.
+- On pages 19–24 at 1440 and 375px, the gallery opens and closes, Esc works and focus returns. The menu opens and closes, and the newsletter shows its local-preview status.
+- `npm run build` and `npm run check` pass.
+- The Blueprint edition is unchanged on all 72 captures, the one script-set stage margin aside.

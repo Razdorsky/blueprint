@@ -1,3 +1,4 @@
+@font-face{font-family:Roboto;src:url('./assets/fonts/roboto-300.woff2') format('woff2');font-weight:300;font-display:swap}
 /* Faithful Website 2.0 edition. Every rule is scoped to this edition.
    The common shell and the Blueprint edition own their separate styles. */
 body[data-edition="figma"] {
@@ -816,4 +817,126 @@ body[data-edition="figma"] .current-page[data-index="18"] img[src$="/47578277701
      below 1200px the narrower column would push it past the viewport, so it wraps there. */
   body[data-edition="figma"] .current-page [data-variant="editorial"] [data-part="actions"] { flex-wrap: nowrap; }
   body[data-edition="figma"] .current-page [data-variant="editorial"] [data-part="actions"] > * { flex-shrink: 0; }
+}
+
+/* Designer update, 2026-11-04 (file RmyMB2Jd9AuxZ6XRkjqtCm) — pages 19–24 (Eating here, El Rancho,
+   Moloka, Take the whole property, Retreats, Groups and offsites). Section variants follow the
+   frames; text values are the archived get_design_context of each frame. */
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page:is([data-index="19"], [data-index="20"], [data-index="21"], [data-index="22"], [data-index="23"], [data-index="24"]) [data-name^="Section - 50/50"] { min-height: 900px; }
+
+  /* Hero text only: heights per instance. */
+  body[data-edition="figma"] .current-page [data-node-id="882:8111"] { min-height: 239px; }
+  body[data-edition="figma"] .current-page [data-node-id="882:8114"] { min-height: 333px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8734"] { min-height: 226px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8738"] { min-height: 234px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8990"] { min-height: 302px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8995"] { min-height: 295px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:9227"] { min-height: 286px; }
+
+  /* Card grids, callouts, included, 3 col info, gallery and table variants. */
+  body[data-edition="figma"] .current-page [data-node-id="882:8112"] { min-height: 558px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8739"] { min-height: 582px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:9228"] { min-height: 524px; }
+  body[data-edition="figma"] .current-page [data-node-id="882:8113"] { min-height: 547px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8736"] { min-height: 430px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8333"] { min-height: 516px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8333"] [data-part="rate"] > p[data-part="paragraph"] { margin-bottom: 60px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:9226"] { min-height: 152px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8991"] { min-height: 195px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8992"] { min-height: 213px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8993"] { min-height: 696px; }
+  body[data-edition="figma"] .current-page [data-node-id="884:8996"] { min-height: 231px; padding-bottom: 45px; }
+  body[data-edition="figma"] .current-page [data-name="2 Rooms cards"][data-tone="white"] { padding-top: 0; }
+}
+
+/* Photo framing for pages 19–24 (generated from the frames' crop rectangles). */
+body[data-edition="figma"] .current-page[data-index="19"] img[src$="/7ba65499fa40075f896d.webp"] { object-position: 0.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="19"] img[src$="/f7101a7eeba11a40b98b.webp"] { object-position: 39.5% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="19"] img[src$="/ccb8ccfbee5fdb416fc6.webp"] { object-position: 50.0% 58.4%; }
+body[data-edition="figma"] .current-page[data-index="19"] img[src$="/09cc93d75115d2f71e88.webp"] { object-position: 50.0% 63.2%; }
+body[data-edition="figma"] .current-page[data-index="20"] img[src$="/f5ec5ec1897cef56ade3.webp"] { object-position: 50.0% 55.4%; }
+body[data-edition="figma"] .current-page[data-index="20"] img[src$="/066ec7071e7864c3e801.webp"] { object-position: 50.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="20"] img[src$="/8fcbf81c59ccd93340e9.webp"] { object-position: 50.0% 36.9%; }
+body[data-edition="figma"] .current-page[data-index="21"] img[src$="/9203238de1f599aa3053.webp"] { object-position: 50.0% 30.4%; }
+body[data-edition="figma"] .current-page[data-index="21"] img[src$="/9772fed083830cf825f9.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="21"] img[src$="/3e390fdd0c298aaed49e.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="22"] img[src$="/11358b370ad895b42644.webp"] { object-position: 50.0% 56.6%; }
+body[data-edition="figma"] .current-page[data-index="22"] img[src$="/61ff1c47f37719166a70.webp"] { object-position: 0.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="22"] img[src$="/9772fed083830cf825f9.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="22"] img[src$="/72884796e0c3334ec3ef.webp"] { object-position: 50.0% 75.8%; }
+body[data-edition="figma"] .current-page[data-index="23"] img[src$="/d9f40ebd73fab0a92370.webp"] { object-position: 50.0% 98.6%; }
+body[data-edition="figma"] .current-page[data-index="23"] img[src$="/9772fed083830cf825f9.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="24"] img[src$="/698de65973782acf1018.webp"] { object-position: 50.0% 49.9%; }
+body[data-edition="figma"] .current-page[data-index="24"] img[src$="/fb2fb92538ca4c2ce0c1.webp"] { object-position: 41.0% 50.0%; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page[data-index="19"] img[src$="/7ba65499fa40075f896d.webp"] { position: absolute; inset: auto; width: 165.56%; height: 100%; max-width: none; left: -0.03%; top: 0%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="19"] img[src$="/f7101a7eeba11a40b98b.webp"] { position: absolute; inset: auto; width: 149.98%; height: 100%; max-width: none; left: -19.74%; top: 0%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="19"] img[src$="/ccb8ccfbee5fdb416fc6.webp"] { position: absolute; inset: auto; width: 100%; height: 185.86%; max-width: none; left: 0%; top: -50.1%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="19"] img[src$="/09cc93d75115d2f71e88.webp"] { position: absolute; inset: auto; width: 100%; height: 370.99%; max-width: none; left: 0%; top: -171.35%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="20"] img[src$="/f5ec5ec1897cef56ade3.webp"] { position: absolute; inset: auto; width: 100%; height: 274.29%; max-width: none; left: 0%; top: -96.57%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="20"] img[src$="/066ec7071e7864c3e801.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -13.05%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="20"] img[src$="/8fcbf81c59ccd93340e9.webp"] { position: absolute; inset: auto; width: 100%; height: 274.67%; max-width: none; left: 0%; top: -64.48%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="21"] img[src$="/9203238de1f599aa3053.webp"] { position: absolute; inset: auto; width: 100.72%; height: 138.15%; max-width: none; left: -0.42%; top: -11.72%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="21"] img[src$="/9772fed083830cf825f9.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -26.1%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="22"] img[src$="/61ff1c47f37719166a70.webp"] { position: absolute; inset: auto; width: 133.33%; height: 100%; max-width: none; left: -0.01%; top: -0.09%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="22"] img[src$="/9772fed083830cf825f9.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -26.1%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="22"] img[src$="/72884796e0c3334ec3ef.webp"] { position: absolute; inset: auto; width: 100%; height: 133.29%; max-width: none; left: 0%; top: -25.23%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="23"] img[src$="/d9f40ebd73fab0a92370.webp"] { position: absolute; inset: auto; width: 100.72%; height: 138.15%; max-width: none; left: -0.42%; top: -38.15%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="23"] img[src$="/9772fed083830cf825f9.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -26.1%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="24"] img[src$="/fb2fb92538ca4c2ce0c1.webp"] { position: absolute; inset: auto; width: 277.58%; height: 156.14%; max-width: none; left: -77.89%; top: -28.14%; object-fit: fill; }
+}
+
+/* Deep QA against the current file, 2026-11-04: what the 1440px frames draw and the build did not. */
+@media (min-width: 1101px) {
+  /* Paragraph gaps: one empty line in the Treehouse and Glamping overlays and in For Two's description. */
+  body[data-edition="figma"] .current-page :is([data-node-id="814:7260"], [data-node-id="814:7270"]) [data-part="copy"] > p + p { margin-top: -10px; }
+  body[data-edition="figma"] .current-page [data-node-id="814:7327"] > [data-part="copy"] > p[data-part="paragraph"] { max-width: 666px; }
+  body[data-edition="figma"] .current-page [data-node-id="814:7327"] > [data-part="copy"] > p[data-part="paragraph"] + p[data-part="paragraph"] { margin-top: -10px; }
+
+  /* Figma wraps these lines a few pixels before the browser does; the widths reproduce its breaks. */
+  body[data-edition="figma"] .current-page [data-node-id="857:15228"] [data-part="copy"] > p[data-part="paragraph"] { max-width: 492px; }
+  body[data-edition="figma"] .current-page [data-node-id="754:598"] { max-width: 538px; }
+  body[data-edition="figma"] .current-page [data-part="hero-copy"] p[data-node-id="I814:7247;756:1067"] { width: 570px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15947"] > [data-part="copy"] > p.current-lede { max-width: 662px; }
+  body[data-edition="figma"] .current-page [data-node-id="862:15963"] [data-part="copy"] > p[data-part="paragraph"] { max-width: 492px; }
+
+  /* Groups and offsites: the 50/50 body has no trailing empty line before its button. */
+  body[data-edition="figma"] .current-page [data-node-id="884:9229"][data-variant="editorial"] [data-part="copy"] > p:not([data-part="eyebrow"]):has(+ [data-part="actions"]) { margin-bottom: 0; }
+
+  /* The property map uses the frame's crop of the aerial photograph, so the pins sit on their buildings. */
+  body[data-edition="figma"] .current-page [data-role="map"] [data-part="media"] { position: relative; overflow: hidden; }
+  body[data-edition="figma"] .current-page [data-role="map"] [data-part="media"] img { position: absolute; inset: auto; width: 129.64%; height: 147.24%; max-width: none; left: -3.87%; top: -19.01%; object-fit: fill; }
+
+  /* Event and retreat rows keep the frame's column widths and give way only where the row is narrower. */
+  body[data-edition="figma"] .current-page [data-part="event"] { grid-template-columns: minmax(0, 123px) minmax(0, 319px) minmax(0, 491px) minmax(0, 230px) max-content; }
+}
+@media (min-width: 1440px) {
+  /* As in the frames, the button runs into the row's right padding rather than squeezing the columns. */
+  body[data-edition="figma"] .current-page [data-part="event"] { grid-template-columns: 123px 319px 491px 230px max-content; }
+  /* The events newsletter copy keeps its 544px and the form runs 15px into the padding, as in the frame. */
+  body[data-edition="figma"] .current-page .newsletter-events .newsletter-inner { gap: 0; }
+  body[data-edition="figma"] .current-page .newsletter-events .newsletter-inner > div { flex: 0 0 544px; }
+}
+
+/* Press logos keep the frames' relative sizes at every width; the desktop strip uses them exactly. */
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(1) { width: 100px; height: 23px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(2) { width: 100px; height: 28.777px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(3) { width: 119px; height: 20px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(4) { width: 61px; height: 26px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(5) { width: 100px; height: 23px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(6) { width: 100px; height: 15px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(7) { width: 88px; height: 37.081px; }
+body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(8) { width: 70px; height: 35.792px; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page [data-role="logos"] [data-part="artwork"] { flex-wrap: nowrap; gap: 0; max-width: 1330px; }
+  body[data-edition="figma"] .current-page [data-role="logos"] img { max-width: none; max-height: none; object-fit: contain; }
+}
+@media (max-width: 1100px) {
+  body[data-edition="figma"] .current-page [data-role="logos"] img { max-height: none; object-fit: contain; }
+}
+@media (min-width: 681px) and (max-width: 1100px) {
+  /* Tablet: one row, each logo scaled down from its frame size. */
+  body[data-edition="figma"] .current-page [data-role="logos"] [data-part="artwork"] { flex-wrap: nowrap; justify-content: space-between; gap: 16px; }
+  body[data-edition="figma"] .current-page [data-role="logos"] img { max-width: 11%; min-width: 0; }
 }

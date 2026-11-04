@@ -124,5 +124,47 @@
     "name": "The recording studio",
     "slug": "the-recording-studio",
     "photo": true
+  },
+  {
+    "index": 19,
+    "id": "882:8107",
+    "name": "Eating here",
+    "slug": "eating-here",
+    "photo": true
+  },
+  {
+    "index": 20,
+    "id": "884:8330",
+    "name": "El Rancho",
+    "slug": "el-rancho",
+    "photo": true
+  },
+  {
+    "index": 21,
+    "id": "884:8529",
+    "name": "Moloka",
+    "slug": "moloka",
+    "photo": true
+  },
+  {
+    "index": 22,
+    "id": "884:8730",
+    "name": "Take the whole property",
+    "slug": "take-the-whole-property",
+    "photo": true
+  },
+  {
+    "index": 23,
+    "id": "884:8986",
+    "name": "Retreats",
+    "slug": "retreats",
+    "photo": true
+  },
+  {
+    "index": 24,
+    "id": "884:9222",
+    "name": "Groups and offsites",
+    "slug": "groups-and-offsites",
+    "photo": true
   }
 ]

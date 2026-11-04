@@ -36,7 +36,19 @@
     </section>
     <section class="menu-column">
       <h2>The Property</h2>
-      {#each pages.slice(13) as item (item.index)}
+      {#each pages.slice(13, 18) as item (item.index)}
+        <a href={route(edition, item.slug, base)}>{item.name}</a>
+      {/each}
+    </section>
+    <section class="menu-column">
+      <h2>Eating here</h2>
+      {#each pages.slice(18, 21) as item (item.index)}
+        <a href={route(edition, item.slug, base)}>{item.name}</a>
+      {/each}
+    </section>
+    <section class="menu-column">
+      <h2>Take the whole property</h2>
+      {#each pages.slice(21, 24) as item (item.index)}
         <a href={route(edition, item.slug, base)}>{item.name}</a>
       {/each}
     </section>

@@ -18,6 +18,8 @@
     ['The studio', 'the-recording-studio'],
     ['The gallery', null]
   ];
+  // The frames' footer writes one page name differently from the page itself.
+  const footerNames: Record<string, string> = { 'rates-and-offers': 'Rates and Offers' };
   const visitLinks = ['Getting here', 'Things to do in Arenal', 'When to visit', 'FAQ', 'Policies'];
   const contactLinks = ['WhatsApp Contact', 'Phone Contact', 'Address Info'];
 </script>
@@ -56,7 +58,7 @@
       <section class="footer-group">
         <h2><a href={route(edition, 'where-you-sleep', base)}>Stay</a></h2>
         {#each pages.slice(2, 6) as item (item.index)}
-          <a href={route(edition, item.slug, base)}>{item.name}</a>
+          <a href={route(edition, item.slug, base)}>{footerNames[item.slug] ?? item.name}</a>
         {/each}
       </section>
       <section class="footer-group">
@@ -80,7 +82,7 @@
     </div>
     <div class="footer-bottom">
       <p>© The Vessyl 2026 • La Fortuna, Costa Rica</p>
-      <p>{@render pending('Privacy')} · {@render pending('Terms & Conditions')}</p>
+      <p>{@render pending('Privacy')} • {@render pending('Terms & Conditions')}</p>
     </div>
   </div>
 </footer>
