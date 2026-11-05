@@ -3,7 +3,7 @@
 Two independent visual executions of the 18-page Vessyl website:
 
 - `/blueprint/` — the free edition: the same 18 pages rebuilt as one story with one design system, new layout, photography, film and motion, in English and Spanish (`/blueprint/es/…`). See [docs/blueprint-edition.md](docs/blueprint-edition.md).
-- `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file, property pages 14–18 from the designer's update of 2026-11-02, and the eating and whole-property pages 19–24 from the update of 2026-11-04. Changed only on owner request.
+- `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file, property pages 14–18 from the designer's update of 2026-11-02, the eating and whole-property pages 19–24 from the update of 2026-11-04, and Weddings and Arenal (25–26) from the update of 2026-11-05. Changed only on owner request.
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 
@@ -43,7 +43,7 @@ The two editions share no source. They were separated on 2026-11-02; the separat
 | | Figma edition (frozen) | Blueprint edition (free) |
 |---|---|---|
 | Route and layout | `src/routes/figma/` | `src/routes/blueprint/` (English and `/es/`) |
-| Pages | `src/lib/pages/P01`–`P24` | data: `src/lib/blueprint/content/pages.ts`, Spanish in `content/es.json` |
+| Pages | `src/lib/pages/P01`–`P26` | data: `src/lib/blueprint/content/pages.ts`, Spanish in `content/es.json` |
 | Building blocks and shell | `src/lib/components/` | `src/lib/blueprint/blocks/`, `src/lib/blueprint/components/` |
 | Site data | `src/lib/site.ts`, `site-data.json`, `src/data/media.json` | `src/lib/blueprint/site.ts`, `site-data.json`, `data/photos.json` |
 | Interactions and motion | `src/lib/interactions.js` | `src/lib/blueprint/motion.ts` (GSAP, Lenis) |

@@ -940,3 +940,39 @@ body[data-edition="figma"] .current-page [data-role="logos"] img:nth-child(8) { 
   body[data-edition="figma"] .current-page [data-role="logos"] [data-part="artwork"] { flex-wrap: nowrap; justify-content: space-between; gap: 16px; }
   body[data-edition="figma"] .current-page [data-role="logos"] img { max-width: 11%; min-width: 0; }
 }
+
+/* Designer update, 2026-11-05 (file Scz6tT11lH8yDhtz20EGXj) — pages 25 Weddings and 26 Arenal. */
+/* The Rooms Comparison master as an accordion of topics (Weddings "The paperwork"). */
+body[data-edition="figma"] .current-page [data-role="topics"] { padding: 56px 16px; }
+body[data-edition="figma"] .current-page [data-role="topics"] [data-part="topics"] { list-style: none; margin: 0 auto; padding: 0; max-width: 1328px; }
+body[data-edition="figma"] .current-page [data-role="topics"] [data-part="topics"]::before { content: ""; display: block; height: 42px; border-bottom: 2px solid #dabfb6; border-radius: 10px 10px 0 0; }
+body[data-edition="figma"] .current-page [data-role="topics"] li { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 15px 16px; border-bottom: 1px solid #f5ebe7; color: #262626; }
+body[data-edition="figma"] .current-page [data-role="topics"] li:last-child { border-bottom: 0; }
+body[data-edition="figma"] .current-page [data-role="topics"] h3 { margin: 0; font-size: 20px; line-height: 38px; color: #262626; }
+body[data-edition="figma"] .current-page [data-role="topics"] [data-part="expand"] { flex: none; min-width: 44px; min-height: 38px; padding: 0; border: 0; background: none; color: #262626; font: 400 28px/38px var(--font-display); text-align: right; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page [data-role="topics"] { padding: 80px 55px; }
+  body[data-edition="figma"] .current-page [data-role="topics"] li { padding: 15px 126px 15px 50px; }
+  body[data-edition="figma"] .current-page:is([data-index="25"], [data-index="26"]) [data-name^="Section - 50/50"] { min-height: 900px; }
+  body[data-edition="figma"] .current-page [data-node-id="944:7527"] { min-height: 370px; }
+  body[data-edition="figma"] .current-page :is([data-node-id="944:7532"], [data-node-id="944:7748"]) { min-height: 450px; }
+  body[data-edition="figma"] .current-page [data-node-id="944:7746"] { min-height: 148px; }
+  body[data-edition="figma"] .current-page [data-node-id="944:7749"] { min-height: 612px; }
+  body[data-edition="figma"] .current-page [data-node-id="944:7745"] { min-height: 576px; }
+  /* Arenal's rate card keeps the frame's four empty lines after its text. */
+  body[data-edition="figma"] .current-page [data-node-id="944:7745"] [data-part="rate"] > p[data-part="paragraph"] { margin-bottom: 120px; }
+}
+
+/* Photo framing for pages 25–26 (generated from the frames' crop rectangles). */
+body[data-edition="figma"] .current-page[data-index="25"] img[src$="/c52099090a2b2ca82d49.webp"] { object-position: 50.0% 34.1%; }
+body[data-edition="figma"] .current-page[data-index="25"] img[src$="/eba6f9c7897a9601a45f.webp"] { object-position: 50.0% 81.3%; }
+body[data-edition="figma"] .current-page[data-index="25"] img[src$="/d75bc426cf9e80910e69.webp"] { object-position: 50.0% 53.4%; }
+body[data-edition="figma"] .current-page[data-index="26"] img[src$="/21ac2d49d2ab56699e04.webp"] { object-position: 50.0% 30.2%; }
+body[data-edition="figma"] .current-page[data-index="26"] img[src$="/86c4e0468e78057c7107.webp"] { object-position: 50.0% 12.2%; }
+body[data-edition="figma"] .current-page[data-index="26"] img[src$="/bc1c3e7f217cc52b0c86.webp"] { object-position: 50.0% 50.1%; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page[data-index="25"] img[src$="/c52099090a2b2ca82d49.webp"] { position: absolute; inset: auto; width: 109.86%; height: 150.69%; max-width: none; left: -0.42%; top: -18.83%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="25"] img[src$="/d75bc426cf9e80910e69.webp"] { position: absolute; inset: auto; width: 100%; height: 366.22%; max-width: none; left: 0%; top: -142.25%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="26"] img[src$="/86c4e0468e78057c7107.webp"] { position: absolute; inset: auto; width: 100%; height: 115.88%; max-width: none; left: 0%; top: -1.94%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="26"] img[src$="/bc1c3e7f217cc52b0c86.webp"] { position: absolute; inset: auto; width: 100%; height: 133.29%; max-width: none; left: 0%; top: -16.69%; object-fit: fill; }
+}

@@ -299,3 +299,66 @@ Checks:
 - On pages 19–24 at 1440 and 375px, the gallery opens and closes, Esc works and focus returns. The menu opens and closes, and the newsletter shows its local-preview status.
 - `npm run build` and `npm run check` pass.
 - The Blueprint edition is unchanged on all 72 captures, the one script-set stage margin aside.
+
+## Designer update — 2026-11-05 (file `Scz6tT11lH8yDhtz20EGXj`)
+
+The designer supplied another copy of the file with the same Website 2.0 page `814:6489` and library `748:267`. The intake is archived outside Git in the raw-source bank at `marketing-site/current-website/2026-11-05-update/`.
+
+### What changed in the file
+
+- **Existing pages: no content change.**
+  - A fresh `get_design_context` of frames 01–24 is line-for-line identical to the 2026-11-04 capture.
+  - 1:1 renders show 0 differing pixels.
+- **Frame bounds.** The designer resized frames to their content:
+  - 01, 03, 04 and 05 now include the footer they used to clip;
+  - 20–23 lost empty canvas below the footer.
+- **Library.** All 45 components are identical, and the 47 symbols keep their ids and geometry. The library page lost drafts: the raster placeholders for pages 25 and 26, a copy of 03 and two page-14 variants.
+- **New pages** 25 Weddings (`944:7523`) and 26 Arenal (`944:7742`).
+
+The Figma MCP allows 10 calls a minute on this seat. Parallel captures hit that limit, and the remaining 21 components were captured one at a time.
+
+### New pages 25–26
+
+| Page | Route | Frame |
+| --- | --- | --- |
+| 25 Weddings | `/figma/weddings/` | `944:7523` |
+| 26 Arenal | `/figma/arenal/` | `944:7742` |
+
+New section variants:
+- Hero text only at 370 and 450px.
+- 3 col info with the frames' line breaks.
+- included at 148px.
+- Card Grid at 612px.
+- Arenal's rate card keeps the frame's four empty lines after its text, so that section is 576px.
+- **Weddings "The paperwork".** The Rooms Comparison master is used as a list of three topics, each with a "+". The rows have no content yet, so each "+" is a placeholder control: it is focusable and announces "details not supplied".
+
+Navigation:
+- The mobile menu adds Weddings to "Take the whole property" and a "Plan your visit" group with Arenal.
+- The footer's "Plan your visit" heading opens Arenal, as Stay and Experiences open their overview pages.
+- Home's "plan your visit" button, in the "Where you actually are" section, opens Arenal. Arenal's own hero heading is "Where you actually are".
+- The Weddings card on Take the whole property opens Weddings.
+- Arenal's "Getting here", "Things to do around here" and "When to come" have no pages yet and stay unlinked.
+
+Corrections, added to the change register:
+
+| Source | Presentation |
+| --- | --- |
+| `or the night before and the morning after.` (25) | `For the night before and the morning after.` |
+| `san jose (sjo)` (26) | `san josé (sjo)`, as the same page writes San José |
+
+Kept as supplied, for the owner to decide:
+- Arenal's "Hero text only" lede repeats the Rates text "Booking here directly is always the cheapest way to stay…".
+- Arenal gives travel times as `[x] hours` in its description, `[x] minutes` in its facts, and "Three hours by car… two and a half from Liberia" in its Getting here card.
+- Weddings keeps the visible note "TO SUPPLY: legal requirements, residency rules…".
+
+Deliberate differences:
+- The Weddings 50/50 photo and the Arenal hero use object-fit cover. The frames stretch them by about 18% and 4%.
+
+Checks:
+- At 1440px every section of all 26 pages is within ±3px of its frame, except the deliberate Card Grid on page 17. Vision OCR matched 2,249 text lines.
+- Every text node of pages 25–26 appears on the site, except the two corrections. Their explicit line breaks and paragraph gaps match the frames.
+- axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 26 pages at 1440, 768 and 375px.
+- Layout passes 26 pages × 69 widths (360–2560) in Chrome, WebKit and Firefox. The only findings are the known intentional hidden elements.
+- On pages 25–26 the gallery, menu and newsletter work at 1440 and 375px.
+- The Blueprint edition is unchanged on all 72 captures, the one script-set stage margin aside.
+- `npm run build` and `npm run check` pass. The freeze manifest covers 347 files.

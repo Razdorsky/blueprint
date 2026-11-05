@@ -166,5 +166,19 @@
     "name": "Groups and offsites",
     "slug": "groups-and-offsites",
     "photo": true
+  },
+  {
+    "index": 25,
+    "id": "944:7523",
+    "name": "Weddings",
+    "slug": "weddings",
+    "photo": true
+  },
+  {
+    "index": 26,
+    "id": "944:7742",
+    "name": "Arenal",
+    "slug": "arenal",
+    "photo": true
   }
 ]

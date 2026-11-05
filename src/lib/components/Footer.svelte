@@ -72,7 +72,7 @@
         {#each propertyLinks as [label, slug] (label)}{#if slug}<a href={route(edition, slug, base)}>{label}</a>{:else}{@render pending(label)}{/if}{/each}
       </section>
       <section class="footer-group">
-        <h2>Plan your visit</h2>
+        <h2><a href={route(edition, 'arenal', base)}>Plan your visit</a></h2>
         {#each visitLinks as label (label)}{@render pending(label)}{/each}
       </section>
       <section class="footer-group">
