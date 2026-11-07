@@ -32,7 +32,7 @@
 <div class="page" data-page-root data-page={page.slug || 'home'} data-index={page.index} data-of={sitePages.length}>
   <a class="skip-link" href="#content">{t('Skip to content')}</a>
   <Header />
-  <main id="content" class="page-main" class:staged={data.blocks.some(block => block.type === 'stage')}><Blocks blocks={data.blocks} /><Next /></main>
+  <main id="content" class="page-main"><Blocks blocks={data.blocks} /><Next /></main>
   <Footer />
   <Menu />
   <Viewer />

@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {content} from '../src/lib/blueprint/content/pages.ts';
 
-const skip = new Set(['photo', 'loop', 'to', 'focus', 'type', 'tone', 'film', 'id', 'by', 'variant', 'rail', 'flip', 'primary', 'place']);
+const skip = new Set(['photo', 'loop', 'to', 'focus', 'type', 'tone', 'film', 'id', 'by', 'variant', 'rail', 'flip', 'primary']);
 const strings = new Set();
 const walk = (value, key = '') => {
   if (typeof value === 'string') { if (!skip.has(key) && value.trim()) strings.add(value); return; }

@@ -16,7 +16,7 @@
   <div class="steps-body">
     <div class="steps-stage" aria-hidden="true">
       {#each block.items as step, index (step.title)}
-        {#if step.media}<div class="steps-shot" class:active={index === 0} data-shot={index}><Picture media={step.media} sizes="(min-width: 900px) 40vw, 90vw" ratio={0.8} /></div>{/if}
+        {#if step.media}<div class="steps-shot" class:active={index === 0} data-shot={index}><Picture media={step.media} sizes="(min-width: 900px) 40vw, 90vw" /></div>{/if}
       {/each}
     </div>
     <ol class="steps-list">
@@ -25,7 +25,7 @@
           {#if block.numbered !== false}<span class="step-number">{index + 1}</span>{/if}
           <Text as="h3" text={step.title} class="h3" />
           <Text text={step.text} />
-          {#if step.media}<div class="step-media frame"><Picture media={step.media} sizes="90vw" ratio={0.8} /></div>{/if}
+          {#if step.media}<div class="step-media frame"><Picture media={step.media} sizes="90vw" /></div>{/if}
         </li>
       {/each}
     </ol>

@@ -16,7 +16,7 @@
       {@const full = 'photo' in media ? photo(media.photo) : null}
       <li class="gallery-item">
         <button type="button" class="frame" data-gallery-item data-full={full?.src} data-srcset={full?.srcset} data-alt={t(media.alt)} aria-label={`${t('Open photo')}: ${t(media.alt)}`}>
-          <Picture {media} sizes="(min-width: 900px) 33vw, 50vw" ratio={0.8} />
+          <Picture {media} sizes="(min-width: 900px) 33vw, 50vw" />
         </button>
       </li>
     {/each}

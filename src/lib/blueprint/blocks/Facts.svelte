@@ -21,5 +21,5 @@
       <div><dt>{t(term)}</dt><dd>{@html rich(t(value))}</dd></div>
     {/each}
   </dl>
-  {#if block.media}<figure class="frame facts-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 36vw, 92vw" ratio={0.8} /></figure>{/if}
+  {#if block.media}<figure class="frame facts-media" data-reveal><Picture media={block.media} sizes="(min-width: 900px) 36vw, 92vw" /></figure>{/if}
 </div>

@@ -13,5 +13,5 @@
     {#each block.body || [] as paragraph}<Text text={paragraph} />{/each}
     <ul class="map-legend">{#each block.items as item}<li>{t(item)}</li>{/each}</ul>
   </div>
-  <div class="map-media frame"><Picture media={block.media} sizes="(min-width: 900px) 60vw, 100vw" ratio={4 / 3} /></div>
+  <div class="map-media frame"><Picture media={block.media} sizes="(min-width: 900px) 60vw, 100vw" /></div>
 </div>

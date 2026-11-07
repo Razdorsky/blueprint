@@ -1,36 +1,31 @@
 // The eighteen Blueprint pages. Meaning and facts follow the approved Figma pages; layout,
 // wording, photographs and film are this edition's own. Bracketed text such as [x] or [rate]
 // marks a fact the owner has not supplied yet and must stay visible as a placeholder.
-import type {Media, PageContent} from './types.ts';
+import type {PageContent} from './types.ts';
 import {experiences, otherUnits, unitFacts, units, unitsCompared} from './shared.ts';
 
 const book = (label = 'Check availability') => ({label, to: 'booking', primary: true});
-
-/** A page's opening picture, for the menu and the next-page block: its hero, or the pool for the home page. */
-// i18n: ["A guest in the infinity pool facing Arenal Volcano"]
-export const opening = (slug: string): Media => {
-  const hero = content[slug].blocks.find(block => block.type === 'hero');
-  return hero && hero.type === 'hero' ? hero.media : {loop: 'pool', alt: 'A guest in the infinity pool facing Arenal Volcano'};
-};
 
 export const content: Record<string, PageContent> = {
   '': {
     title: 'The Vessyl',
     description: 'A hotel on 118 acres above Arenal, Costa Rica, built around a dome made for sound.',
-    // Told in places: the pool at first light, a minute of film, the Dome, the table at dusk.
-    // Between them, sheets carry the words. The storyboard is docs/blueprint-home.md.
+    // One day, morning to night: the land, the ways to stay or visit, then nightfall and the Dome.
+    // The storyboard is docs/blueprint-home.md.
     blocks: [
-      {type: 'stage', place: 'arrival'},
-      {type: 'invite', tone: 'paper', title: 'Just come curious.\nThe rest is between you and The Vessyl.',
-        body: 'A dome made for sound, a river and fourteen places to sleep, on 118 acres of forest above Arenal, Costa Rica.',
+      {type: 'hero', tone: 'paper', media: {loop: 'pool', alt: 'A guest in the infinity pool facing Arenal Volcano', focus: '37% 50%'},
+        title: 'A dome, a river and fourteen places to sleep, on 118 acres above Arenal.',
+        lede: 'Just come curious. The rest is between you and The Vessyl.',
         actions: [book(), {label: 'Book an experience', to: 'experiences'}]},
-      {type: 'places', tone: 'paper', title: 'A hotel built around a dome made for sound',
+      {type: 'land', tone: 'paper', title: 'A hotel built around a dome made for sound',
         body: 'Fourteen units sit apart from one another across 118 acres, so getting from your bed to dinner is a walk through forest rather than a hallway.',
         items: [
-          {media: {photo: 'dome-mars', alt: 'Mars projected across the Dome ceiling above the guests', focus: '50% 30%'}, caption: 'The Frequency Dome', to: 'the-frequency-dome'},
-          {media: {photo: 'river-horse', alt: 'A guest swimming beside a horse in the river'}, caption: 'The river, with the horses', to: 'horses-and-the-river'},
+          {media: {photo: 'dome-garden', alt: 'The Frequency Dome in its garden, its copper scales catching the light'}, caption: 'The Frequency Dome', to: 'the-frequency-dome'},
+          {media: {photo: 'river-horse', alt: 'A guest swimming beside a horse in the river'}, caption: 'A river you can swim in, with the horses', to: 'horses-and-the-river'},
+          {media: {photo: 'plate-fish', alt: 'Fish with herbs on a woven placemat'}, caption: 'A menu written every night'},
           {media: {photo: 'lr-hearth-smoke', alt: 'Guests watching smoke rise from the Harmonic Hearth'}, caption: 'The Harmonic Hearth', to: 'the-harmonic-hearth'},
-          {media: {photo: 'horses-road', alt: 'Horses walking the road through the property'}, caption: 'Riding the land', to: 'horses-and-the-land'}
+          {media: {photo: 'horses-road', alt: 'Horses walking the road through the property'}, caption: 'Riding the land', to: 'horses-and-the-land'},
+          {media: {photo: 'pool-mountains', alt: 'A guest in the infinity pool looking toward the mountains'}, caption: 'The pool, facing the mountains', to: 'day-and-half-day'}
         ]},
       {type: 'stay', tone: 'paper', title: 'Fourteen units, no two the same',
         body: ['Six villas, one treehouse and seven glamping tents, placed so that each one faces something different. Choose by the view, by how much privacy you want, and by how far you feel like walking to dinner.'],
@@ -40,11 +35,16 @@ export const content: Record<string, PageContent> = {
           {to: 'treehouse', media: {loop: 'treehouse', alt: 'The Treehouse on its stone trunk, filmed from the air', focus: '62% 50%'}, title: 'One treehouse', text: 'Built up into the canopy. It books out first, every season.', action: 'See the treehouse'},
           {to: 'glamping-tents', media: {photo: 'tent', alt: 'A glamping tent on its platform, with a path through the garden'}, title: 'Seven glamping tents', text: 'Canvas, a real bed, a private bathroom, forest on three sides.', action: 'See the glamping tents'}
         ]},
-      {type: 'stage', place: 'film', caption: 'A minute on the land'},
       {type: 'doors', tone: 'paper', rail: true, title: 'You do not have to stay here to come here',
         body: ['Six things you can book online, with a date and a card, whether you are staying with us or at a hotel in town.'],
         items: experiences, actions: [{label: 'Book an experience', to: 'experiences'}]},
-      {type: 'stage', place: 'sound'},
+      {type: 'film', tone: 'paper', film: 'vessyl', grow: true, title: 'A minute on the land',
+        body: 'Filmed across the property. It plays quietly; tap it to watch from the start with sound.'},
+      {type: 'nightfall', tone: 'night', media: {photo: 'dinner-two', alt: 'Dinner for two on a terrace above the forest at sunset'},
+        title: 'You find out what is for dinner when you sit down',
+        body: ['The kitchen cooks what came out of the garden that morning and what arrived from the valley that afternoon, so the menu is written late and it changes every night.', 'You eat at a long table with whoever else is here. If you would rather not, tell us and we will seat you on your own, and nobody will make it strange.'],
+        aside: {photo: 'table-chef', alt: 'Dinner served at a table on the terrace'},
+        actions: [{label: 'Reserve a table', to: 'pending:table'}]},
       {type: 'projection', tone: 'night', title: 'Sound you stand inside',
         states: [
           {media: {photo: 'dome-mars', alt: 'Mars projected across the Dome ceiling above the guests', focus: '50% 24%'}, text: 'The Frequency Dome sits at the high point of the property. It is the reason this place exists.'},
@@ -58,11 +58,6 @@ export const content: Record<string, PageContent> = {
         {to: 'pending:visit', media: {photo: 'site:9772fed083830cf825f9', alt: 'Arenal Volcano above the rainforest, seen from the pool'}, title: 'Where you actually are',
           text: 'Arenal is a volcano, a lake, hot springs, waterfalls and a town called La Fortuna at the foot of all of it. Most people fly into San José and drive [hours].', action: 'Plan your visit'}
       ]},
-      {type: 'stage', place: 'table'},
-      {type: 'split', tone: 'night', flip: true, media: {photo: 'table-chef', alt: 'Dinner served at a table on the terrace'},
-        title: 'You find out what is for dinner when you sit down',
-        body: ['The kitchen cooks what came out of the garden that morning and what arrived from the valley that afternoon, so the menu is written late and it changes every night.', 'You eat at a long table with whoever else is here. If you would rather not, tell us and we will seat you on your own, and nobody will make it strange.'],
-        actions: [{label: 'Reserve a table', to: 'pending:table'}]},
       {type: 'voices', tone: 'night', media: {photo: 'site:475782777018244eff8a', alt: 'Josh Stanley, the founder, in the garden'},
         founder: 'The Vessyl was designed and is run by Josh Stanley, who lives on the property.',
         quote: ['The Vessyl is a sanctuary on the edge of the Arenal volcano, where nature, sound, and sensory experience are composed with intention.', 'It is less a place you visit than a set of conditions, carefully made, for feeling like yourself again.'],

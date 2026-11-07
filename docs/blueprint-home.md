@@ -1,90 +1,114 @@
-# Blueprint home: the stage and the sheets
+# Blueprint home: the storyboard
 
-The home page as rebuilt on 2026-11-03, after the owner accepted the direction found in the references (`docs/blueprint-references.md`) and asked for it "much more carefully, at a perfect level". It replaces the earlier storyboard of scenes on one ground.
+The home page is rebuilt scene by scene after the owner's review of 2026-11-03 (`docs/blueprint-review.md`). Each scene below was designed before any code: what the visitor sees, what they learn, and why they keep going. The other seventeen pages follow once the owner accepts this one.
 
-## The idea
+## The story
 
-The page is told in places. Each place plays on a fixed, full-screen stage, and its word stands between the subject and what is behind it. The woman in the pool, the Dome and the couple at dinner stand in front of their words.
+The page lives one day at The Vessyl, from the morning pool to the Dome at night. The Brand Bible asks the site to "sell the world, then make it easy to book". So the page first shows the land and what happens on it, then the ways to stay or visit, then the evening and the Dome. It ends on the people behind it and an open door to the next page.
 
-The words sit on sheets that slide over the stage:
-- paper by day, night after the Dome;
-- the top edge of each sheet is the Dome's curve.
+Day and night are two grounds:
+- The day scenes sit on paper (F5EBE7).
+- The night scenes sit on true dark (111111).
+- The page changes ground once. Night arrives as the Dome's silhouette: a dark arch rises over the dusk photograph and widens until it fills the screen. There is no gradient and no empty band.
 
-Between sheets an opening shows the next place. It surfaces from mist, the brand's only transition.
+## Rules the scenes keep
 
-| Place | Word (es) | Picture | Subject in front of the word |
-|---|---|---|---|
-| Arrival | ARENAL (Arenal) | `VESSYL.mp4` 0:54.5–1:00.5, the pool facing the volcano, a 5-second crossfaded loop | the woman, matted frame by frame |
-| Film | none | the brand film's silent preview; a tap starts the full film with sound | none |
-| Sound | SOUND (Sonido) | Dome Extensions 13, the copper scales against the sky, 45 MP | the Dome |
-| Table | TABLE (Mesa) | Z92_8400, dinner for two at sunset, 45 MP | the couple |
+These rules come from the review.
+- Every screen holds a picture or a film. Text sits next to the picture it belongs to and never over a detailed photograph.
+- Space between scenes is one gap, about half the old one. A scene's heading and its text stay in one column.
+- Reading text is large: 19 px on phones, 22 px at 1440 px, 24 px at 2000 px. Lines are about 60–65 characters long.
+- Every picture has one shape, a rectangle rounded from one scale, and one group of pictures shares one proportion: 4:5 upright, 3:2 wide. The Dome's arch is movement only: the opening, nightfall and the next page.
+- No counters, chapter numbers or labels above headings.
+- Motion shows something about the place. Text does not animate word by word.
 
-## Order
+## Scenes
 
-1. **Arrival.** ARENAL stands over the treeline beside the woman, whose raised arms reach toward its first letter. The first sheet rises over the water.
-2. **Paper sheet:**
-   - the invitation: "Just come curious. The rest is between you and The Vessyl." in the italic, beside what the place is and the two ways in;
-   - the parts of the land: four equal pictures, each opening its page;
-   - the three ways to stay.
-3. **Film.** "A minute on the land", playing quietly, with "Watch the film with sound" and, after the tap, pause and sound controls.
-4. **Paper sheet.** The six experiences walk sideways as the page scrolls.
-5. **Sound.** SOUND above the curve of the Dome. The sky is deepened by a polariser on everything behind the Dome, so the word reads.
-6. **Night sheet:**
-   - inside the Dome, the ceiling's projection drifts from Mars to waves to blue as the words change;
-   - taking the whole property;
-   - where you actually are.
-7. **Table.** TABLE over the forest at sunset, the couple in front of it.
-8. **Night sheet:**
-   - dinner;
-   - Robert Patterson's words and Josh Stanley;
-   - the press marks.
-9. **The next page.** "Where you sleep", with its round arrow and the main house breathing in an arch that opens.
-10. **Footer.**
+### 1. Arrival · morning
 
-## How a place is drawn
+**Sees.** The title on the left. On the right, an arch with the pool at first light: a woman in the infinity pool facing Arenal, filmed in 4K. Scrolling opens the arch until the pool fills the screen. Nothing is written over the open picture.
 
-`src/lib/blueprint/stage.ts` draws the active place in one WebGL pass: the picture, the word behind the subject, mist while the place surfaces, a light shade under the header, and grain.
-- **Matte.** The subject's matte travels with its picture in one opaque file, so the two can never drift apart:
-  - films side by side, the matte on the right half;
-  - stills one above the other, the matte below. Side by side they would pass the 4096-pixel texture limit of older phones.
-  - Not in an alpha channel: Safari decodes alpha premultiplied, which turned the sky black behind SOUND and TABLE.
-- **The word reads.** Behind the subject each crop is dimmed (`dim` in `stages.ts`) until the word stands at least 3:1 against the picture right around its letters, measured on the drawn place at seven sizes. The subject keeps its own light. Bright skies are also deepened by a polariser, and a soft shade sits just behind the letters.
-- **Word placement.** The word is placed in the picture's own coordinates (`src/lib/blueprint/stages.ts`), so it keeps its place on the picture at any screen size. Phones have their own upright crops.
-- **One letter height.** Every word has the same capital height: 13.5 % of the picture's height on wide screens and 6.6 % on phones. They read as one set of inscriptions, and Spanish words keep the same letter height as English ones.
-- **Pointer.** The picture and the word move at different depths.
-- **Breathing.** A still breathes: an eased push toward its subject and back, sixteen seconds each way.
-- **The first word.** As the reader scrolls on, the word rises out of its place.
-- **Sleeping.** While a sheet covers the screen nothing is drawn and the films pause. The stage changes place unseen, so the next place is already there when the sheet ends.
-- **Plain layers.** Without WebGL, under reduced motion, and if the WebGL context is lost or a place fails to load, plain layers stand in: the picture deepened by the same polariser and dimming, the word, and the subject cut out on top. Each crop is framed on its own focus. Their pictures load only when needed; the first place's picture loads at once, for a page without scripts.
-- **Resizing.** A resize reloads a place only when its crop changes (a phone turned, a window made upright). A place that has not loaded for the new crop leaves the stage dark rather than show the place before.
-- **The film.** The preview plays silently while the opening is in view. After "Watch the film with sound" the film starts from the beginning with sound, focus moves to its controls, and from then on only the controls play it: scrolling away pauses it, coming back does not resume it, and at its end it stops and waits. The pause button names what it will do next ("Pause the film" or "Play the film") and shows the matching icon; "Mute the film" is a pressed toggle.
+**Learns.** "A dome, a river and fourteen places to sleep, on 118 acres above Arenal." and the Brand Bible's invitation, "Just come curious. The rest is between you and The Vessyl."
 
-Mattes come from macOS Vision (`scripts/blueprint-media/matte.swift`).
-- For the pool, every frame takes the stronger of the person matte (fine hair) and the subject matte (the whole figure when the arms are raised), averaged over neighbouring frames so the edge does not shimmer.
-- A still's matte is drawn in along hard edges (3 pixels on the Dome, 1 on the couple), so the sky caught along the edge goes with the sky; once the sky is dimmed, a caught edge would shine as an outline. The lens's green fringe along the Dome's rim is taken out.
-- `scripts/blueprint-media/stage-media.sh` makes every file in `public/bp/stage/`.
+**Acts.** Check availability, or Book an experience.
 
-## Checked on 2026-11-03
+**Media.** `loop-pool`, recut from `VESSYL.mp4` 0:54.5–1:00.5 as a crossfade loop at 2560 px. The earlier forward-and-back loop made the water run backwards.
 
-After the deep QA (`docs/blueprint-review.md`, "Deep QA of the home page"):
-- **Every size.** 18 screen sizes from 320 × 568 to 3440 × 1440, phones both ways up, tablets, and five sizes under reduced motion. The word stays inside the screen's margins, below the header and above the sheet at every size; it is read from the page itself.
-- **Every engine.** Chrome, WebKit (Safari's engine) and Firefox, on desktop, phone and tablet sizes. All places are drawn in each.
-- **Word contrast.** At least 3:1 against the picture right around the letters, at seven sizes; at least 2:1 against the brightest tenth of it.
-- **Smoothness.** No frame over 20 ms at 1440 × 900 (ratio 1 and 2), 2000 × 1143, 2560 × 1440 at ratio 2, and with the CPU slowed four times at 1440 × 900, 768 × 1024 and 390 × 844 (ratio 3).
-- **Layout shift: 0.** Largest paint: 0.5 s on a fast connection, 2.5 s on slow 4G with the CPU slowed four times. Blocking time: under 35 ms.
-- **Behaviour.** 35 checks pass:
-  - resizing and turning a phone;
-  - ten round trips between pages;
-  - a lost WebGL context;
-  - a hidden tab;
-  - a slow network and no JavaScript;
-  - the film by keyboard, to its end and back;
-  - a place still loading;
-  - the language switch;
-  - the Frequency Dome page's projection;
-  - which file each screen loads.
-- **Interactions** (14 checks), **accessibility** (axe-core, 54 runs) and **all 36 pages** in both languages, read to the end at two sizes with and without reduced motion: no errors, no violations, no failed requests.
-- **Weight of the first screen**, with the other places loaded while the browser is idle:
-  - desktop: 6.2 MB, or 7.2 MB at ratio 2;
-  - tablet held upright: 5.5 MB;
-  - phone: 3.9 MB, or 4.6 MB at ratio 3.
+### 2. The land · day
+
+**Sees.** A short title stays in the middle of the screen. Six photographs of the land drift past it at three depths: the Dome in its garden, swimming with a horse in the river, horses on the road, the kitchen's food, smoke over the Harmonic Hearth, and the pool facing the mountains. Each photograph has a caption of a few words and opens its page.
+
+**Learns.** The Vessyl is a hotel built around a dome made for sound, on land you can swim, ride and eat from. The Brand Bible's rule "No portal outranks another" is why the six pictures are equal.
+
+**Phone.** The title comes first, then the pictures in a staggered two-column grid.
+
+### 3. Stay · day
+
+**Sees.** "Fourteen units, no two the same" with its paragraph. Below it are three equal doors:
+- six villas, a wide photograph;
+- one treehouse, filmed from the drone;
+- seven glamping tents, a wide photograph.
+
+Each door names the count, gives one line and opens its page.
+
+**Media.** `loop-treehouse`, from Overview 1:20.6–1:22.7, the Sky Tree House from the drone, slowed and crossfaded.
+
+### 4. Experiences · day
+
+**Sees.** "You do not have to stay here to come here", its line, and the booking button in the first panel of a horizontal rail. The six experiences follow as tall pictures with their titles. Scrolling down walks the rail sideways, and a copper line shows how far along it is. On phones the rail scrolls by touch.
+
+### 5. A minute on the land · afternoon
+
+**Sees.** The brand film starts as a rounded frame inside the page. It grows to the full width of the screen as it reaches the middle, and its corners straighten. It plays silently while visible. A tap restarts it with sound, as in the legacy Blueprint.
+
+### 6. Nightfall · dusk to night
+
+**Sees.** Dinner for two above the forest at sunset fills the screen. As the page moves on, a dark arch rises from the bottom over the photograph and widens until night covers it. Inside the arch: "You find out what is for dinner when you sit down", the kitchen's two short paragraphs, and a photograph of the table from above.
+
+**Why.** The light changes the way it does on the property, and the Dome's silhouette carries it. The ground changes at a clean edge.
+
+### 7. The Dome · night
+
+**Sees.** On the left, "Sound you stand inside", a line from the brand's own posters. On the right, a large circle: the Dome's ceiling seen from the floor. As the visitor scrolls, the projection drifts from red Mars to blue waves to the room lit blue. Beside each state, one fact appears:
+- sound arrives through the floor as much as through the air;
+- the ceiling is one projection surface;
+- sessions run most days, and you do not have to stay here to sit in one.
+
+Then come "The Dome is the reason this place exists", the equipment credits and the two links.
+
+**Media.** The photographs `dome-mars`, `dome-waves` and `dome-blue`. The circle never has text over it.
+
+### 8. Two more ways in · night
+
+**Sees.** Two large doors side by side:
+- **Take the whole property:** a group sitting in a circle in the Dome, the group facts, and Plan a retreat.
+- **Where you actually are:** Arenal from the pool, the valley in one sentence, and Plan your visit.
+
+### 9. The people · night
+
+**Sees.** Josh Stanley's portrait, with the line that he designed The Vessyl and lives on the property. Beside it is Robert Patterson's quote set large. Below them is a row of the publications that wrote about it.
+
+### 10. The next page · night
+
+**Sees.** The main house, pool and Dome filmed from the drone, almost the full width of the screen in an arch that opens as it scrolls into view. Beside it are "Where you sleep" and the line "Six villas, one treehouse and seven glamping tents, spread across 118 acres in Arenal." The whole block is one link. The picture responds to the pointer. The opening arch continues into the next page's own opening.
+
+**Media.** `loop-house`, from Overview 1:53.4–1:58.0, crossfaded. It also becomes the opening loop of Where you sleep.
+
+### Footer
+
+The newsletter, the brand's closing lines "Come for Costa Rica. Come for the horses. Come for the volcano. Just come curious.", the index and the contacts. All of it sits on the night ground.
+
+## Motion
+
+| Moment | What it shows |
+|---|---|
+| The opening mark, once per visit | The symbol draws from the bottom up, as in the logo |
+| The arch opening, scene 1 | Entering the place through the Dome's silhouette |
+| Depth, scene 2 | The land moving around the visitor at three distances |
+| The rail, scene 4 | Walking along the day's options |
+| The film growing, scene 5 | Stepping into the film |
+| Nightfall, scene 6 | Night arriving as the Dome |
+| The drifting projection, scene 7 | Being inside the Dome |
+| The next arch, scene 10 | The next page's opening, started from this one |
+| Fog between pages | The brand's only transition |
+
+Pictures arrive from depth: they open from a slightly smaller rounded mask and settle from a slight zoom, once. Pictures that open a page respond to the pointer. With reduced motion, everything stands still, loops show their posters, and the scenes become ordinary sections in the same order.

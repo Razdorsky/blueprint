@@ -10,7 +10,7 @@
 </script>
 
 <div class="projection" data-projection>
-  <div class="wrap projection-stage" data-pin>
+  <div class="wrap projection-stage" data-stage>
     <div class="projection-copy">
       <Text as="h2" text={block.title} class="h2" />
       <ul class="projection-states">
@@ -23,7 +23,7 @@
     <div class="projection-dome">
       <div class="projection-circle" data-circle>
         {#each block.states as state, index (state.text)}
-          <div class="projection-shot" class:active={index === 0} data-shot={index}><Picture media={state.media} sizes="(min-width: 900px) 46vw, 88vw" ratio={1} /></div>
+          <div class="projection-shot" class:active={index === 0} data-shot={index}><Picture media={state.media} sizes="(min-width: 900px) 46vw, 88vw" /></div>
         {/each}
       </div>
     </div>

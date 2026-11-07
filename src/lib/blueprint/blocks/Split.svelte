@@ -11,8 +11,8 @@
 
 <div class="wrap split" class:flip={block.flip} class:portrait>
   <figure class="split-media">
-    <div class="frame" data-depth><Picture media={block.media} sizes="(min-width: 900px) 50vw, 100vw" ratio={portrait ? 0.8 : 1.5} /></div>
-    {#if block.aside}<div class="split-aside frame"><Picture media={block.aside} sizes="(min-width: 900px) 18vw, 40vw" ratio={0.8} /></div>{/if}
+    <div class="frame" data-depth><Picture media={block.media} sizes="(min-width: 900px) 50vw, 100vw" /></div>
+    {#if block.aside}<div class="split-aside frame"><Picture media={block.aside} sizes="(min-width: 900px) 18vw, 40vw" /></div>{/if}
   </figure>
   <div class="split-copy">
     {#if block.title}<Text as="h2" text={block.title} class="h2" />{/if}

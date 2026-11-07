@@ -30,7 +30,7 @@
         <li class="door">
           <svelte:element this={url ? 'a' : 'button'} class="door-link" href={url || undefined} type={url ? undefined : 'button'} data-pending={url ? undefined : ''}
             target={door.to === 'booking' ? '_blank' : undefined} rel={door.to === 'booking' ? 'noopener noreferrer' : undefined}>
-            <span class="frame door-media" data-reveal><Picture media={door.media} sizes={block.wide ? '(min-width: 900px) 46vw, 92vw' : '(min-width: 900px) 30vw, 80vw'} ratio={block.wide ? 1.5 : 0.8} /></span>
+            <span class="frame door-media" data-reveal><Picture media={door.media} sizes={block.wide ? '(min-width: 900px) 46vw, 92vw' : '(min-width: 900px) 30vw, 80vw'} /></span>
             <span class="door-title">{@html rich(t(door.title))}</span>
             {#if door.meta}<span class="door-meta">{@html rich(t(door.meta))}</span>{/if}
             <span class="door-text">{@html rich(t(door.text))}</span>

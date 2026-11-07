@@ -11,7 +11,7 @@
 
 <div class="wrap stay">
   <div class="stay-head">
-    <Text as="h2" text={block.title} class="h1" />
+    <Text as="h2" text={block.title} class="h2" />
     {#each block.body as paragraph}<Text text={paragraph} />{/each}
     <Actions actions={block.actions} />
   </div>
@@ -21,7 +21,7 @@
       <li class="stay-door">
         <a class="stay-link" href={url}>
           <span class="frame stay-frame" data-reveal>
-            <Picture media={door.media} sizes="(min-width: 900px) 30vw, 92vw" ratio={0.8} />
+            <Picture media={door.media} sizes="(min-width: 900px) 30vw, 92vw" />
           </span>
           <span class="stay-title">{@html rich(t(door.title))}</span>
           <span class="stay-text">{@html rich(t(door.text))}</span>

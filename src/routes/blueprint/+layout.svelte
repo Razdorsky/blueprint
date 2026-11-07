@@ -11,14 +11,9 @@
   import '@fontsource/roboto/300.css';
   import '@fontsource/roboto/400.css';
   import '@fontsource/roboto/500.css';
-  // The faces the first screen sets in, fetched with the page so the words do not move when they arrive.
-  import serif from '@fontsource-variable/eb-garamond/files/eb-garamond-latin-wght-normal.woff2?url';
-  import serifItalic from '@fontsource-variable/eb-garamond/files/eb-garamond-latin-wght-italic.woff2?url';
-  import sans from '@fontsource/roboto/files/roboto-latin-500-normal.woff2?url';
   import '#lib/blueprint/styles/tokens.css';
   import '#lib/blueprint/styles/base.css';
   import '#lib/blueprint/styles/blocks.css';
-  import '#lib/blueprint/styles/stage.css';
   import '#lib/blueprint/styles/motion.css';
 
   let {children}: {children: Snippet} = $props();
@@ -38,7 +33,6 @@
   onMount(() => {
     edition = install();
     // The language switch keeps your place: same scroll, text dissolves into the other language.
-    // It listens before the router does (capture), so the router leaves the click to it.
     const switchLanguage = (event: MouseEvent) => {
       const link = (event.target as Element).closest?.<HTMLAnchorElement>('a[data-locale]');
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
@@ -48,8 +42,8 @@
       keep = window.scrollY;
       goto(link.href, {reset: false});
     };
-    document.addEventListener('click', switchLanguage, true);
-    return () => {document.removeEventListener('click', switchLanguage, true); edition?.destroy();};
+    document.addEventListener('click', switchLanguage);
+    return () => {document.removeEventListener('click', switchLanguage); edition?.destroy();};
   });
 
   beforeNavigate(() => edition?.closeOverlays());
@@ -82,7 +76,6 @@
 </script>
 
 <svelte:head>
-  {#each [serif, serifItalic, sans] as href (href)}<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" {href} />{/each}
   {@html `<script>try{if(!sessionStorage.getItem('vessyl:intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.intro='on'}catch(e){}</script>`}
 </svelte:head>
 

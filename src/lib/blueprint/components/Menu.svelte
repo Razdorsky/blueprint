@@ -1,7 +1,7 @@
 <script lang="ts">
   // The whole site as one index. Pointing at a page shows its opening picture.
   import {bp} from '../context.ts';
-  import {opening} from '../content/pages.ts';
+  import {content} from '../content/pages.ts';
   import {loop, photo} from '../media.ts';
   import {booking, groupPages, route, sitePages, type Group} from '../site.ts';
   import logo from '../assets/logo.svg?raw';
@@ -9,8 +9,9 @@
   // i18n: ["Stay", "Experiences", "The property"]
   const groups: [Group, string][] = [['stay', 'Stay'], ['experiences', 'Experiences'], ['property', 'The property']];
   const preview = (slug: string) => {
-    const media = opening(slug);
-    return 'photo' in media ? photo(media.photo).src : loop(media.loop).poster;
+    const hero = content[slug].blocks.find(block => block.type === 'hero');
+    if (!hero || hero.type !== 'hero') return '';
+    return 'photo' in hero.media ? photo(hero.media.photo).src : loop(hero.media.loop).poster;
   };
 </script>
 

@@ -3,7 +3,6 @@
 // from content/es.json. Inline marks: *italic*, and a line break as "\n".
 import type {Tone} from '../site.ts';
 import type {FilmName, LoopName} from '../media.ts';
-import type {PlaceName} from '../stages.ts';
 
 export type Media =
   | {photo: string; alt: string; focus?: string}
@@ -18,16 +17,13 @@ export type Glimpse = {media: Media; caption: string; to?: string};
 type Base = {tone?: Tone; id?: string};
 export type Block = Base & (
   | {type: 'hero'; media: Media; title: string; lede?: string; actions?: Action[]}
-  /** An opening onto the fixed stage; the blocks after it, up to the next opening, form one sheet. */
-  | {type: 'stage'; place: PlaceName; caption?: string}
-  | {type: 'invite'; title: string; body: string; actions?: Action[]}
-  | {type: 'places'; title: string; body?: string; items: Glimpse[]}
   | {type: 'split'; media: Media; title?: string; body: string[]; actions?: Action[]; flip?: boolean; aside?: Media}
   | {type: 'doors'; title?: string; body?: string[]; items: Door[]; actions?: Action[]; rail?: boolean; wide?: boolean}
   | {type: 'facts'; title: string; body?: string[]; actions?: Action[]; items: [string, string][]; media?: Media}
   | {type: 'steps'; title: string; body?: string[]; items: {title: string; text: string; media?: Media}[]; actions?: Action[]; numbered?: boolean}
   | {type: 'gallery'; title?: string; items: Media[]}
   | {type: 'film'; film: FilmName; title: string; body?: string; grow?: boolean}
+  | {type: 'land'; title: string; body?: string; items: Glimpse[]}
   | {type: 'stay'; title: string; body: string[]; items: Door[]; actions?: Action[]}
   | {type: 'nightfall'; media: Media; title: string; body: string[]; aside: Media; actions?: Action[]}
   | {type: 'projection'; title: string; states: {media: Media; text: string}[]; actions?: Action[]}
