@@ -11,8 +11,9 @@
 //
 // Run after `npm run build`. The normal build keeps every route under /figma/ or
 // /blueprint/, which is exactly the project-site prefix, so page links stay as they
-// are. Only references that point at the site root (/_app, /media, /typography,
-// /brand) are moved under the prefix. Source files of either edition are untouched.
+// are. Only references that point at the site root (/_app, /media, /brand, /bp) are
+// moved under the prefix. Source files of either edition are untouched. (Headings are live
+// text since 2026-11-07, so there is no /typography folder any more.)
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -26,7 +27,7 @@ if (edition !== 'figma' && edition !== 'blueprint') {
 const dist = path.resolve('dist');
 const out = path.resolve('outputs/github-pages');
 // bp holds the Blueprint edition's own photographs and films.
-const roots = ['_app', 'media', 'typography', 'brand', ...(edition === 'blueprint' ? ['bp'] : [])];
+const roots = ['_app', 'media', 'brand', ...(edition === 'blueprint' ? ['bp'] : [])];
 
 await fs.rm(out, { recursive: true, force: true });
 await fs.mkdir(out, { recursive: true });
