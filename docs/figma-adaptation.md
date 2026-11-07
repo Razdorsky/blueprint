@@ -419,3 +419,46 @@ Checks:
 - On pages 27–28 and Arenal, the menu (28 links) and the newsletter work at 1440 and 375px, and so does Arenal's gallery. All 28 internal routes answer 200.
 - Blueprint does not import any changed file: it has its own site data, menu and footer, and `src/figma.css` loads only in the `/figma/` layout.
 - `npm run build` and `npm run check` pass (64 routes). The freeze manifest covers 371 files.
+
+## Typefaces — 2026-11-07 (owner decision)
+
+The owner replaced the frames' typefaces in this edition: «EB Garamond для заголовков, Lato для текста… Именно в этом пункте сам фигма-макет мы игнорируем». Everything else still follows the frames: sizes, line heights, tracking, case, colours and layout. This section supersedes the earlier mentions of Telugu MN, Roboto and word-art headings above.
+
+| Role in the frames | Before | Now |
+| --- | --- | --- |
+| Headings, display prose, rate values, menu and newsletter headings | Telugu MN Regular | EB Garamond Regular 400 |
+| Body text, lists, tables, footer | Roboto Regular 400 | Lato Regular 400 |
+| Facts values | Roboto Light 300 | Lato Light 300 |
+| Buttons and small calls to action | Roboto Medium 500 | Lato Medium 500 |
+| Labels and eyebrows | Roboto SemiBold 600 | Lato Semibold 600 |
+| Bold text (pages 13 and 23, the Table master) | Roboto Bold 700 | Lato Bold 700 |
+
+The frames use no italics, underlines or strikethroughs. Bold appears only in the "[Date]" column of the event rows (pages 13 and 23, the Table master). Uppercase and tracking follow the frames.
+
+Corrected in the same pass:
+- **Fact labels.** The labels of the "included" rows (DISTANCE, CHECK IN…) had 3px tracking since the first build; the frames use 4.48px, as on every other label, and so does the site now.
+- **One line at the frame width.** From 1366px fact labels do not wrap, as in the frames. Lato Semibold is slightly wider than Roboto, so "LA FORTUNA" in Arenal's 127px column would otherwise take two lines. Below 1366px the columns are too narrow, and labels wrap as before.
+
+Kept, as before: the OFFER ribbon on Rates is Bold 18.7px rather than the frames' SemiBold 17.5px. White on #d57e3d is 3.05:1, which passes only as large bold text (see "Deliberate differences").
+
+Files:
+- `src/assets/fonts/eb-garamond-latin-wght-normal.woff2` and `…-latin-ext-…`: EB Garamond variable 400–800 from `@fontsource-variable/eb-garamond` 5.3.0, split by Unicode range.
+- `src/assets/fonts/lato-{light,regular,medium,semibold,bold}.woff2`: Lato 2.015 by tyPoland Łukasz Dziedzic, unmodified, from the `lato-font` 3.0.0 package. Google Fonts' Lato 1 has no Medium or Semibold, so Lato 2 keeps the frames' five weights distinct. "Lato" is a Reserved Font Name under the OFL, so the files are used as distributed, not subset.
+- Licences: `EB-Garamond-OFL.txt`, `Lato-OFL.txt` beside the files. Both are SIL OFL 1.1.
+- `src/figma.css` declares the faces and sets `--font-display` and `--font-body` on `body[data-edition="figma"]`. The shell, the chooser page and the Blueprint edition keep their own fonts.
+
+Headings:
+- Telugu MN is an Apple system font that may not be served on the web. Headings were therefore drawn as SVG word outlines.
+- EB Garamond is free to serve, so all 207 headings on the 28 pages are live text again.
+- The frames' 17 explicit line breaks inside headings are kept.
+- `text-wrap: pretty` keeps a heading from ending on a single word. EB Garamond sets about 20% narrower than Telugu MN, at the same cap height.
+- The outline assets were removed: `public/typography/` (194 SVG files, 5 MB), `src/data/type-art.json`, `scripts/type-art.mjs` and `scripts/outline-headings.swift`, as well as `src/assets/fonts/roboto-300.woff2`. They are in Git history. `scripts/convert-pages-to-svelte.mjs`, the one-time intake utility, read that catalog and no longer runs as is.
+
+Checks:
+- Chrome's own report of the fonts that render each node lists only EB Garamond and Lato Light, Regular, Medium, Semibold and Bold on all 28 pages: no fallback and no synthesised bold.
+- 457 text nodes carry a frame id. Each one's family, weight, italic and case match the frame under the mapping above.
+- Every text run of the 28 frames (2,114 runs) was looked up on the site by its words. The change register's corrections were applied first. For each word, family, weight, italic, case, tracking (±0.5px) and decoration were compared. 2,074 runs match; the five OFFER ribbons differ as kept above. The other 35 are the newsletter field's placeholder (an attribute, not text) and six corrected labels whose site text differs from the frame. Those six were checked one by one and match.
+- At 1440px, 255 of 256 sections keep their height. "Heading title" on page 13 is 236px instead of 274px, because its statement now takes two lines instead of three.
+- axe-core 4.14 reports 0 violations on all 28 pages at 1440, 768 and 375px.
+- Layout passes 28 pages × 69 widths (360–2560) in Chrome, WebKit and Firefox. The only findings are the known intentional hidden elements.
+- `npm run build` and `npm run check` pass. The freeze manifest covers 200 files: the 194 outline SVGs left it, and the new font files joined it.

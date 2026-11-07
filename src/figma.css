@@ -1,7 +1,20 @@
-@font-face{font-family:Roboto;src:url('./assets/fonts/roboto-300.woff2') format('woff2');font-weight:300;font-display:swap}
+/* Typefaces, by the owner's decision of 2026-11-07 (the frames use Telugu MN and Roboto):
+   EB Garamond for headings, Lato 2.015 for text, both SIL OFL 1.1 (licences beside the files).
+   Each of the frames' weights has its own face: Roboto Light 300, Regular 400, Medium 500 (buttons),
+   SemiBold 600 (labels) and Bold 700 become Lato Light, Regular, Medium, Semibold and Bold; the
+   headings' Telugu MN Regular becomes EB Garamond Regular. The frames use no italics. */
+@font-face{font-family:'EB Garamond';src:url('./assets/fonts/eb-garamond-latin-wght-normal.woff2') format('woff2-variations');font-weight:400 800;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'EB Garamond';src:url('./assets/fonts/eb-garamond-latin-ext-wght-normal.woff2') format('woff2-variations');font-weight:400 800;font-style:normal;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Lato;src:url('./assets/fonts/lato-light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:Lato;src:url('./assets/fonts/lato-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Lato;src:url('./assets/fonts/lato-medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:Lato;src:url('./assets/fonts/lato-semibold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:Lato;src:url('./assets/fonts/lato-bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 /* Faithful Website 2.0 edition. Every rule is scoped to this edition.
    The common shell and the Blueprint edition own their separate styles. */
 body[data-edition="figma"] {
+  --font-display: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: Lato, Arial, sans-serif;
   --figma-paper: #fff;
   --figma-ink: #262626;
   --figma-copper: #a2551b;
@@ -26,6 +39,14 @@ body[data-edition="figma"] .current-page :where(section, div, article, figure, d
 body[data-edition="figma"] .current-page :where(h1, h2, h3, p, figure, dl, dd) { margin: 0; }
 body[data-edition="figma"] .current-page :where(p, dd, td) { font: 400 18px/30px var(--font-body); }
 body[data-edition="figma"] .current-page :where(h1, h2, h3) { font-family: var(--font-display); font-weight: 400; }
+/* EB Garamond sets narrower than the frames' Telugu MN, so a heading can end on one word; avoid that. */
+body[data-edition="figma"] :where(h1, h2, h3) { text-wrap: pretty; }
+/* Fact labels sit on one line in the frames; Lato Semibold at the frames' 4.48px tracking is a little
+   wider than Roboto, so near the frame width ("LA FORTUNA" in a 127px column) it must not wrap.
+   Below 1366px the columns are too narrow for that, and labels wrap as before. */
+@media (min-width: 1366px) {
+  body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] > p:first-child { white-space: nowrap; }
+}
 body[data-edition="figma"] .current-page h1 { font-size: 52px; line-height: 60px; }
 body[data-edition="figma"] .current-page h2 { font-size: 52px; line-height: 60px; }
 body[data-edition="figma"] .current-page h3 { font-size: 32px; line-height: 1.4; }
@@ -194,7 +215,7 @@ body[data-edition="figma"] .current-page :where([data-role="facts"], [data-role=
 body[data-edition="figma"] .current-page [data-part="facts"] { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; gap: 40px; }
 body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] { padding-top: 14px; border-top: 4px solid var(--figma-copper); }
 body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] > :first-child { margin-bottom: 10px; }
-body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] > p:first-child { color: var(--figma-copper); font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; }
+body[data-edition="figma"] .current-page [data-role="facts"] [data-part="fact"] > p:first-child { color: var(--figma-copper); font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 4.48px; text-transform: uppercase; }
 body[data-edition="figma"] .current-page [data-role="facts"] h3 { color: var(--figma-copper); font-size: 28px; line-height: 38px; }
 body[data-edition="figma"] .current-page [data-name="3 col info"] [data-part="facts"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 body[data-edition="figma"] .current-page [data-name="included"] [data-part="facts"]:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -596,7 +617,6 @@ body[data-edition="figma"] .current-page [data-part="gallery-dots"] i { display:
 body[data-edition="figma"] .site-newsletter { background-size: 1440px auto; background-position: 50% 0; }
 
 @media (min-width: 1101px) {
-  body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero"] h1 .type-word { margin-block: -2.8px; }
   body[data-edition="figma"] .current-page [data-role="quote"] .display-prose + .display-prose { margin-top: -60px; }
   body[data-edition="figma"] .current-page [data-part="gallery-prev"] { left: 30px; }
   body[data-edition="figma"] .current-page [data-name="included"] [data-part="fact"]:last-child { flex-basis: 304px; }
@@ -716,10 +736,8 @@ body[data-edition="figma"] .current-page[data-index="01"] [data-role="photo-hero
    50/50 sections and the Home overlay panels is now Heading-3xl, Telugu MN 42/46.
    40/60, 60/40 and the slider panels keep 52/60. */
 body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 42px; line-height: 46px; }
-body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 .type-word { margin-block: -1.36px; }
 @media (max-width: 1100px) {
   body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 38px; line-height: 44px; }
-  body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 .type-word { margin-block: 0; }
 }
 @media (max-width: 760px) {
   body[data-edition="figma"] .current-page :is([data-name="Section - 50/50 text image"], [data-name="Section - 50/50 image text"], [data-name="Overlay panel"], [data-name="Overlay panel rigth"]) h2 { font-size: 32px; line-height: 38px; }

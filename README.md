@@ -3,7 +3,7 @@
 Two independent visual executions of the 18-page Vessyl website:
 
 - `/blueprint/` — the free edition: the same 18 pages rebuilt as one story with one design system, new layout, photography, film and motion, in English and Spanish (`/blueprint/es/…`). See [docs/blueprint-edition.md](docs/blueprint-edition.md).
-- `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file, property pages 14–18 from the designer's update of 2026-11-02, the eating and whole-property pages 19–24 from the update of 2026-11-04, Weddings and Arenal (25–26) from the update of 2026-11-05, and Getting here and Things to do around here (27–28) from the update of 2026-11-07. Changed only on owner request.
+- `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file, property pages 14–18 from the designer's update of 2026-11-02, the eating and whole-property pages 19–24 from the update of 2026-11-04, Weddings and Arenal (25–26) from the update of 2026-11-05, and Getting here and Things to do around here (27–28) from the update of 2026-11-07. Its typefaces follow the owner's decision of 2026-11-07, not the frames: EB Garamond for headings and Lato for text. Changed only on owner request.
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 
@@ -47,13 +47,13 @@ The two editions share no source. They were separated on 2026-11-02; the separat
 | Building blocks and shell | `src/lib/components/` | `src/lib/blueprint/blocks/`, `src/lib/blueprint/components/` |
 | Site data | `src/lib/site.ts`, `site-data.json`, `src/data/media.json` | `src/lib/blueprint/site.ts`, `site-data.json`, `data/photos.json` |
 | Interactions and motion | `src/lib/interactions.js` | `src/lib/blueprint/motion.ts` (GSAP, Lenis) |
-| Styles, fonts and media | `src/shared.css`, `src/figma.css`, `src/assets/`, `public/media` | `src/lib/blueprint/styles/`, EB Garamond and Roboto packages, `public/bp/` |
+| Styles, fonts and media | `src/shared.css`, `src/figma.css` (EB Garamond and Lato in `src/assets/fonts`), `src/assets/`, `public/media` | `src/lib/blueprint/styles/`, EB Garamond and Roboto packages, `public/bp/` |
 
 Each edition's layout imports only its own CSS and JavaScript, so neither edition's stylesheet reaches the other. The root layout is edition-neutral. The chooser page (`src/routes/+page.svelte`, `src/lib/chooser.css`) links to each edition with a full page load. `src/hooks.server.ts` takes page lists and canvas colours from each edition's own site module. Media in `public/` is shared read-only: add new files rather than changing existing ones. `npm run check` includes `scripts/figma-freeze.mjs`, which fails on any change to a Figma-edition file.
 
 SvelteKit manages client navigation, pre-rendered HTML and hydration. Each edition's layout connects transitions and delegated controls with lifecycle cleanup. The source metadata, actual media and all supplied placeholders are retained.
 
-The original Figma JSX was used only during the preliminary intake. It is excluded from production source and dependencies. `scripts/convert-pages-to-svelte.mjs` is an optional one-time intake utility, not part of the normal build.
+The original Figma JSX was used only during the preliminary intake. It is excluded from production source and dependencies. `scripts/convert-pages-to-svelte.mjs` was a one-time intake utility, not part of the normal build. It needs the word-art catalog that was removed on 2026-11-07 (see Git history).
 
 See `docs/qa.md`, `docs/placeholders.md` and the two adaptation notes for verification and remaining source placeholders.
 
