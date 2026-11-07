@@ -3,6 +3,7 @@
 //
 //   node scripts/build-pages.mjs figma       -> outputs/github-pages (served at /figma/)
 //   node scripts/build-pages.mjs blueprint   -> outputs/github-pages (served at /blueprint/)
+//   node scripts/build-pages.mjs figma-enhanced -> outputs/github-pages (served at /figma-enhanced/)
 //   node scripts/build-pages.mjs blueprint4  -> outputs/github-pages (served at /blueprint4/)
 //
 // The argument is the repository's name. A further copy of the Blueprint edition (blueprint4, …)
@@ -19,8 +20,8 @@ import path from 'node:path';
 
 const target = process.argv[2] || '';
 const edition = /^blueprint\d*$/.test(target) ? 'blueprint' : target;
-if (edition !== 'figma' && edition !== 'blueprint') {
-  console.error('Usage: node scripts/build-pages.mjs figma|blueprint|blueprint<n>');
+if (edition !== 'figma' && edition !== 'blueprint' && edition !== 'figma-enhanced') {
+  console.error('Usage: node scripts/build-pages.mjs figma|figma-enhanced|blueprint|blueprint<n>');
   process.exit(1);
 }
 
