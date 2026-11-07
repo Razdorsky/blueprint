@@ -37,6 +37,10 @@ export function installInteractions() {
   const gallery = () => document.querySelector('.gallery-dialog');
 
   resetPendingMenu=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=undefined;menu()?.classList.remove('closing');};
+  // Owner's request, 2026-11-07: page text cannot be selected or copied (see also figma.css).
+  // Form fields stay editable: their text can be selected, copied, cut and pasted.
+  const editable = target => target instanceof Element && !!target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
+  for (const name of ['selectstart', 'copy', 'cut']) on(name, event => {if (!editable(event.target)) event.preventDefault();}, {capture:true});
   function notify(message) {
     document.querySelectorAll('.preview-toast').forEach(item=>item.hidden=true);
     const toast = menu()?.open ? menu().querySelector('.dialog-toast') : document.querySelector('.preview-toast:not(.dialog-toast)');

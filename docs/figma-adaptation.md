@@ -422,43 +422,59 @@ Checks:
 
 ## Typefaces — 2026-11-07 (owner decision)
 
-The owner replaced the frames' typefaces in this edition: «EB Garamond для заголовков, Lato для текста… Именно в этом пункте сам фигма-макет мы игнорируем». Everything else still follows the frames: sizes, line heights, tracking, case, colours and layout. This section supersedes the earlier mentions of Telugu MN, Roboto and word-art headings above.
+The owner replaced the frames' heading typeface in this edition. A first pass also set text in Lato (published as f8b3205). The owner then kept the frames' Roboto for text: «заменяем заголовки Telugu на EB Garamond, для текстов остаётся Roboto». Everything else follows the frames: sizes, line heights, weights, tracking, case, colours and layout. This section supersedes earlier mentions of Telugu MN and of word-art headings above.
 
-| Role in the frames | Before | Now |
+| Role in the frames | Frames | Site |
 | --- | --- | --- |
 | Headings, display prose, rate values, menu and newsletter headings | Telugu MN Regular | EB Garamond Regular 400 |
-| Body text, lists, tables, footer | Roboto Regular 400 | Lato Regular 400 |
-| Facts values | Roboto Light 300 | Lato Light 300 |
-| Buttons and small calls to action | Roboto Medium 500 | Lato Medium 500 |
-| Labels and eyebrows | Roboto SemiBold 600 | Lato Semibold 600 |
-| Bold text (pages 13 and 23, the Table master) | Roboto Bold 700 | Lato Bold 700 |
+| Body text, lists, tables, footer | Roboto Regular 400 | Roboto Regular 400 |
+| Facts values | Roboto Light 300 | Roboto Light 300 |
+| Buttons and small calls to action | Roboto Medium 500 | Roboto Medium 500 |
+| Labels and eyebrows | Roboto SemiBold 600 | Roboto SemiBold 600 |
+| The "[Date]" column of the event rows (pages 13 and 23, the Table master) | Roboto Bold 700 | Roboto Bold 700 |
 
-The frames use no italics, underlines or strikethroughs. Bold appears only in the "[Date]" column of the event rows (pages 13 and 23, the Table master). Uppercase and tracking follow the frames.
+The frames use no italics, underlines or strikethroughs. Uppercase and tracking follow the frames.
+
+Files:
+- `src/assets/fonts/eb-garamond-latin-wght-normal.woff2` and `…-latin-ext-…` hold EB Garamond, variable 400–800, from `@fontsource-variable/eb-garamond` 5.3.0, split by Unicode range. Its SIL OFL 1.1 licence is `EB-Garamond-OFL.txt`, beside them.
+- `src/figma.css` declares EB Garamond and Roboto Light and sets `--font-display` on `body[data-edition="figma"]`. Roboto Regular, Medium, SemiBold and Bold come from `src/shared.css`, as before.
+- The shell, the chooser page and the Blueprint edition keep their own fonts.
+
+Headings:
+- Telugu MN is an Apple system font that may not be served on the web, so headings were drawn as SVG word outlines. EB Garamond is free to serve, so all 207 headings on the 28 pages are live text again.
+- The frames' 17 explicit line breaks inside headings are kept.
+- EB Garamond sets about 20% narrower than Telugu MN at the same cap height. `text-wrap: pretty` keeps a heading from ending on a single word.
+- The outline assets were removed: `public/typography/` (194 SVG files, 5 MB), `src/data/type-art.json`, `scripts/type-art.mjs` and `scripts/outline-headings.swift`. They are in Git history.
+- `scripts/build-pages.mjs` no longer copies `typography`. `scripts/convert-pages-to-svelte.mjs`, the one-time intake utility, read that catalog and no longer runs as is.
 
 Corrected in the same pass:
-- **Fact labels.** The labels of the "included" rows (DISTANCE, CHECK IN…) had 3px tracking since the first build; the frames use 4.48px, as on every other label, and so does the site now.
-- **One line at the frame width.** From 1366px fact labels do not wrap, as in the frames. Lato Semibold is slightly wider than Roboto, so "LA FORTUNA" in Arenal's 127px column would otherwise take two lines. Below 1366px the columns are too narrow, and labels wrap as before.
+- **Fact labels.** The labels of the "included" rows (DISTANCE, CHECK IN…) had 3px tracking since the first build. The frames use 4.48px, as on every other label, and so does the site now.
+- **One line at the frame width.** Fact labels sit on one line in the frames. At 4.48px the browser also spaces out the last letter, which Figma does not, so "LA FORTUNA" in Arenal's 127px column would wrap. From 1366px fact labels do not wrap. Below that the columns are too narrow for this, and labels wrap as before.
 
 Kept, as before: the OFFER ribbon on Rates is Bold 18.7px rather than the frames' SemiBold 17.5px. White on #d57e3d is 3.05:1, which passes only as large bold text (see "Deliberate differences").
 
-Files:
-- `src/assets/fonts/eb-garamond-latin-wght-normal.woff2` and `…-latin-ext-…`: EB Garamond variable 400–800 from `@fontsource-variable/eb-garamond` 5.3.0, split by Unicode range.
-- `src/assets/fonts/lato-{light,regular,medium,semibold,bold}.woff2`: Lato 2.015 by tyPoland Łukasz Dziedzic, unmodified, from the `lato-font` 3.0.0 package. Google Fonts' Lato 1 has no Medium or Semibold, so Lato 2 keeps the frames' five weights distinct. "Lato" is a Reserved Font Name under the OFL, so the files are used as distributed, not subset.
-- Licences: `EB-Garamond-OFL.txt`, `Lato-OFL.txt` beside the files. Both are SIL OFL 1.1.
-- `src/figma.css` declares the faces and sets `--font-display` and `--font-body` on `body[data-edition="figma"]`. The shell, the chooser page and the Blueprint edition keep their own fonts.
+Checks (Roboto text, EB Garamond headings):
+- Chrome's report of the fonts that render each node lists only EB Garamond and Roboto Light, Regular, Medium, SemiBold and Bold on all 28 pages. There is no fallback and no synthesised bold.
+- 457 text nodes carry a frame id, and each one's family, weight, italic and case match the frame.
+- Every text run of the 28 frames (2,114 runs) was looked up on the site by its words, after applying the change register's corrections. For each word, family, weight, italic, case, tracking (±0.5px) and decoration were compared.
+  - 2,074 runs match.
+  - The five OFFER ribbons differ, as kept above.
+  - The other 35 are the newsletter field's placeholder, which is an attribute rather than text, and six corrected labels. Those six were checked one by one and match.
+- At 1440px every section keeps its height from the Telugu MN build, except page 13's "Heading title". It is 236px instead of 274px, because its statement now takes two lines instead of three.
+- axe-core 4.14 reports 0 violations on all 28 pages at 1440, 768 and 375px.
 
-Headings:
-- Telugu MN is an Apple system font that may not be served on the web. Headings were therefore drawn as SVG word outlines.
-- EB Garamond is free to serve, so all 207 headings on the 28 pages are live text again.
-- The frames' 17 explicit line breaks inside headings are kept.
-- `text-wrap: pretty` keeps a heading from ending on a single word. EB Garamond sets about 20% narrower than Telugu MN, at the same cap height.
-- The outline assets were removed: `public/typography/` (194 SVG files, 5 MB), `src/data/type-art.json`, `scripts/type-art.mjs` and `scripts/outline-headings.swift`, as well as `src/assets/fonts/roboto-300.woff2`. They are in Git history. `scripts/convert-pages-to-svelte.mjs`, the one-time intake utility, read that catalog and no longer runs as is.
+## Text selection and copying — 2026-11-07 (owner request)
+
+The owner asked that the edition's text cannot be selected with the mouse or copied.
+
+- `src/figma.css` sets `user-select: none` (and `-webkit-user-select`) on `body[data-edition="figma"]`, which stops mouse, keyboard and select-all selection. It also sets `-webkit-touch-callout: none`, which hides the iOS long-press menu.
+- `src/lib/interactions.js` cancels `selectstart`, `copy` and `cut` events outside form fields. A selection made some other way still copies nothing.
+- The newsletter's e-mail field stays fully editable: its text can be selected, copied, cut and pasted. Links, buttons, the menu, the gallery and keyboard focus work as before. Screen readers still read every text, since only selection and the clipboard are affected.
+- The Blueprint edition is unaffected.
+- **Limits.** This stops casual copying only. The text is still in the page source, in the browser's reader mode, in the developer tools and in screenshots, and a visitor who switches off JavaScript and styles can copy it.
 
 Checks:
-- Chrome's own report of the fonts that render each node lists only EB Garamond and Lato Light, Regular, Medium, Semibold and Bold on all 28 pages: no fallback and no synthesised bold.
-- 457 text nodes carry a frame id. Each one's family, weight, italic and case match the frame under the mapping above.
-- Every text run of the 28 frames (2,114 runs) was looked up on the site by its words. The change register's corrections were applied first. For each word, family, weight, italic, case, tracking (±0.5px) and decoration were compared. 2,074 runs match; the five OFFER ribbons differ as kept above. The other 35 are the newsletter field's placeholder (an attribute, not text) and six corrected labels whose site text differs from the frame. Those six were checked one by one and match.
-- At 1440px, 255 of 256 sections keep their height. "Heading title" on page 13 is 236px instead of 274px, because its statement now takes two lines instead of three.
-- axe-core 4.14 reports 0 violations on all 28 pages at 1440, 768 and 375px.
-- Layout passes 28 pages × 69 widths (360–2560) in Chrome, WebKit and Firefox. The only findings are the known intentional hidden elements.
-- `npm run build` and `npm run check` pass. The freeze manifest covers 200 files: the 194 outline SVGs left it, and the new font files joined it.
+- In Chrome, WebKit and Firefox, on Home, Getting here, Where you sleep and The Vessyl Presents, nothing is selected by dragging, by triple-clicking a paragraph, by double-clicking a heading or by select-all. Copy and cut are cancelled.
+- In Chrome with the real clipboard, page text never reaches the clipboard, even after a forced selection. Text selected in the e-mail field does.
+- After in-site navigation the block stays.
+- The gallery, menu and newsletter work at 1440 and 375px. axe reports no violations.
