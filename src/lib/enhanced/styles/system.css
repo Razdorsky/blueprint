@@ -326,6 +326,8 @@ body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter
 body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form button:hover { background: var(--surface); }
 body[data-edition="figma-enhanced"] .current-page .newsletter-status { position: static; grid-column: 1 / -1; min-height: 1.6em; margin: 0; font: 400 var(--t-small) / var(--lh-small) var(--font-body); color: color-mix(in srgb, var(--on-dark) 86%, transparent); }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form[data-state="error"] .newsletter-status { color: #f6c4a2; }
+/* Header and footer content sit on the page's outer margin at every width. */
+body[data-edition="figma-enhanced"] .site-header .header-inner { max-width: none; padding-inline: var(--edge); }
 body[data-edition="figma-enhanced"] .site-footer { padding-inline: 0; background: var(--surface-night); }
 body[data-edition="figma-enhanced"] .footer-inner { max-width: none; padding-inline: var(--edge); }
 body[data-edition="figma-enhanced"] :is(.footer-top, .footer-columns, .footer-bottom) { padding-inline: 0; }

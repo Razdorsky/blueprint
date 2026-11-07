@@ -1,6 +1,6 @@
 # Figma edition — design-system audit and work brief (2026-11-07)
 
-Status: **brief for later work, nothing applied.** The owner asked for an audit of the Figma edition ("the design feels unfinished, the design system could be better"). They said that no brief for the designer is needed and that we will take this into work ourselves later. Do not start until the owner says so. When they do, ask where it goes: into `/figma/`, which is frozen and changes only on the owner's request, or tried first in `/blueprint/`.
+Status: **taken into work in `/figma-enhanced/`, not in `/figma/`** (owner, 2026-11-07). Step 1 of `docs/figma-enhanced-plan.md` applied the design-system part on 2026-11-08; the results are in `docs/figma-enhanced-system.md`. The original status was: brief for later work, nothing applied. The owner asked for an audit of the Figma edition ("the design feels unfinished, the design system could be better"). They said that no brief for the designer is needed and that we will take this into work ourselves later. Do not start until the owner says so. When they do, ask where it goes: into `/figma/`, which is frozen and changes only on the owner's request, or tried first in `/blueprint/`.
 
 State at the time of the audit: commit 15af5dd, published at https://razdorsky.github.io/figma/. The site has 28 pages. Headings are EB Garamond and text is Roboto, by the owner's decision. Text selection and copying are blocked. Typos in the frames are already corrected (see the change register in `docs/figma-adaptation.md`).
 

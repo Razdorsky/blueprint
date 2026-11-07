@@ -73,6 +73,7 @@ On 28 pages at 1440 this gives 11 text styles; the frames had 20. Body text grow
 ### Grid and spacing
 
 - **Grid:** 12 columns at every width. The outer margin `--edge` is `max(5.55vw clamped 20–104px, centring at 1680px)`. The gutter runs from 16 to 32px.
+  The header, the newsletter and the footer use the same outer margin, so the menu button, the header actions and the footer columns line up with the page at every width.
 - **Section rhythm:**
   - `--section` (64–128px, 106 at 1440) between two sections' content. Each section has half of it above and below.
   - Bands use `--section-band` (56–112px) inside.
