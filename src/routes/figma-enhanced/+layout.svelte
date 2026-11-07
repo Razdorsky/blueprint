@@ -6,7 +6,10 @@
   import {canvas, pages} from '#lib/enhanced/site.ts';
   import {installInteractions, enhancePage, closeOverlays} from '#lib/enhanced/interactions.js';
   import '#lib/enhanced/styles/shell.css';
-  import '#lib/enhanced/styles/edition.css';
+  import '#lib/enhanced/styles/shell-edition.css';
+  import '#lib/enhanced/styles/tokens.css';
+  import '#lib/enhanced/styles/system.css';
+  import '#lib/enhanced/styles/focus.css';
 
   let {children}: {children:Snippet} = $props();
   onMount(installInteractions);

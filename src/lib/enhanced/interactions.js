@@ -8,7 +8,22 @@ export function closeOverlays() {
   document.querySelectorAll('.nav-group[open]').forEach(group => group.open = false);
 }
 
+// Card rows that scroll sideways on phones (styles/system.css) take keyboard focus when nothing inside them can.
+function markRails() {
+  document.querySelectorAll('.current-page [data-part="card-grid"]').forEach(rail => {
+    const scrolls = rail.scrollWidth > rail.clientWidth + 1 && /auto|scroll/.test(getComputedStyle(rail).overflowX);
+    if (scrolls && !rail.querySelector('a[href], button, input, [tabindex]')) {
+      rail.tabIndex = 0;
+      rail.setAttribute('role', 'region');
+      rail.setAttribute('aria-label', (rail.closest('section')?.querySelector('h2')?.textContent.trim() || 'Cards') + ', scrolls sideways');
+    } else if (rail.hasAttribute('tabindex')) {
+      rail.removeAttribute('tabindex'); rail.removeAttribute('role'); rail.removeAttribute('aria-label');
+    }
+  });
+}
+
 export function enhancePage() {
+  markRails();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
     img.setAttribute('role', 'button');
@@ -36,8 +51,10 @@ export function installInteractions() {
   const menu = () => document.querySelector('#site-menu');
   const gallery = () => document.querySelector('.gallery-dialog');
 
+  let railFrame = 0;
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(markRails);}, {signal});
   resetPendingMenu=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=undefined;menu()?.classList.remove('closing');};
-  // Owner's request, 2026-11-07: page text cannot be selected or copied (see also styles/edition.css).
+  // Owner's request, 2026-11-07: page text cannot be selected or copied (see also styles/shell-edition.css).
   // Form fields stay editable: their text can be selected, copied, cut and pasted.
   const editable = target => target instanceof Element && !!target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
   for (const name of ['selectstart', 'copy', 'cut']) on(name, event => {if (!editable(event.target)) event.preventDefault();}, {capture:true});

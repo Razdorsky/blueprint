@@ -5,7 +5,7 @@ Three independent editions of the Vessyl website:
 - `/blueprint/` — the free edition: the same 18 pages rebuilt as one story with one design system, new layout, photography, film and motion, in English and Spanish (`/blueprint/es/…`). See [docs/blueprint-edition.md](docs/blueprint-edition.md).
 - `/figma/` — a close match of the designer's supplied frames: 13 pages from the first file, property pages 14–18 from the designer's update of 2026-11-02, the eating and whole-property pages 19–24 from the update of 2026-11-04, Weddings and Arenal (25–26) from the update of 2026-11-05, and Getting here and Things to do around here (27–28) from the update of 2026-11-07. Its headings are set in EB Garamond by the owner's decision of 2026-11-07, instead of the frames' Telugu MN; text stays in the frames' Roboto. By the owner's request its text cannot be selected or copied, except in form fields. Changed only on owner request.
 
-- `/figma-enhanced/` — the Figma edition improved step by step: started on 2026-11-07 as an exact copy of `/figma/` (`src/lib/enhanced/`, `src/routes/figma-enhanced/`) and grows its own design system and features. Plan: [docs/figma-enhanced-plan.md](docs/figma-enhanced-plan.md).
+- `/figma-enhanced/` — the Figma edition improved step by step: started on 2026-11-07 as an exact copy of `/figma/` (`src/lib/enhanced/`, `src/routes/figma-enhanced/`) and grows its own design system and features. Plan: [docs/figma-enhanced-plan.md](docs/figma-enhanced-plan.md); the design system from step 1: [docs/figma-enhanced-system.md](docs/figma-enhanced-system.md).
 
 This project is separate from `vessyl-website-blueprint` and `vessyl-website`.
 

@@ -51,6 +51,20 @@ Every step below is reviewed by the owner before the next one starts. Every step
 
 Goal: one system under all 28 pages, so that pages stop looking assembled from hand-sized templates. The audit's numbers are the before state.
 
+**Done 2026-11-08, waiting for the owner's review (Checkpoint 1).** The system is described in `docs/figma-enhanced-system.md`, with the before and after numbers. In short:
+- tokens in `tokens.css`; one page stylesheet, `system.css`, written by section role;
+- three hero types: photograph, split and text;
+- white, beige, forest and night bands;
+- the closing night photograph melts into the footer, and the newsletter sits under it;
+- 11 text styles, text on column lines, 24 labels instead of 250, three photo proportions;
+- states for buttons and the newsletter;
+- `alt` texts that describe the photographs.
+
+Decisions taken during the step, for the owner to review:
+- Every opener with a paragraph became a split hero (pages 03–05, 08–12, 23–25), because no paragraph may sit over a photograph.
+- Fact terms are sentence-case Roboto 500 instead of tracked capitals.
+- The newsletter sits under the closing photograph rather than over it, for the same reason.
+
 1.1 **Tokens**, written in `src/lib/enhanced/styles/tokens.css` and described in `docs/figma-enhanced-system.md`:
 - **Grid:** 12 columns at 1440 with fixed outer margins; the same grid at 1024, 768 and 375.
 - **Spacing:** a scale of section paddings (3–4 steps) and stack gaps.

@@ -1,0 +1,82 @@
+/* Figma Enhanced — design tokens (step 1.1 of docs/figma-enhanced-plan.md).
+   Every page style in system.css is written in these terms. Values are fluid between 375 and
+   about 2000 CSS px, the width the owner reviews at. */
+body[data-edition="figma-enhanced"] {
+  /* Colour roles. Contrast on white: ink 15.1, ink-soft 7.9, heading 9.9, accent 5.5. On beige: 12.9, 6.8, 8.4, 4.7.
+     On-dark: 8.4 on forest, 15.1 on night; accent-on-dark: 5.4 on forest, 9.6 on night (all :1). */
+  --ink: #262626;
+  --ink-soft: #57504a;
+  --heading: #364830;
+  --heading-deep: #1a3013;
+  --accent: #a2551b;
+  --accent-on-dark: #e3b791;
+  --surface: #ffffff;
+  --surface-warm: #f5ebe7;
+  --surface-forest: #364830;
+  --surface-night: #161a11;  /* footer and the foot of the closing photograph: the darkest tone of the night photos */
+  --on-dark: #f5ebe7;
+  --rule: #ecdfd8;
+  --rule-strong: #dabfb6;
+
+  /* Type: EB Garamond for headings and statements, Roboto for text, as decided by the owner. */
+  --font-display: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: Roboto, Arial, sans-serif;
+  --t-display: clamp(42px, 26px + 2.9vw, 80px);    /* H1: 68px at 1440 */
+  --t-h2: clamp(32px, 22px + 1.75vw, 56px);        /* 47px at 1440 */
+  --t-h3: clamp(24px, 18px + 0.75vw, 32px);        /* 29px at 1440 */
+  --t-statement: clamp(24px, 18px + 1.2vw, 40px);  /* display prose and statement headings: 35px at 1440 */
+  --t-lede: clamp(18px, 14.8px + 0.5vw, 24px);     /* 22/32 at 1440 */
+  --t-body: clamp(16px, 13.68px + 0.3vw, 20px);    /* 18/30 at 1440, 19.7 at 2000 */
+  --t-small: clamp(14px, 12.84px + 0.15vw, 16px);  /* 15/24 at 1440 */
+  --t-label: clamp(12px, 11px + 0.12vw, 14px);
+  --t-button: clamp(13px, 12px + 0.1vw, 15px);
+  --lh-display: 1.04;
+  --lh-heading: 1.1;
+  --lh-title: 1.2;
+  --lh-statement: 1.25;
+  --lh-lede: 1.455;
+  --lh-body: 1.667;
+  --lh-small: 1.6;
+  --tracking-label: 0.14em;
+  --measure: 62ch;
+
+  /* Grid: 12 columns inside fluid outer margins, content at most 1680px wide. */
+  --margin: clamp(20px, 5.55vw, 104px);
+  --gutter: clamp(16px, 1.67vw, 32px);
+  --max: 1680px;
+  --header: 96px;
+  --edge: max(var(--margin), calc((100% - var(--max)) / 2)); /* outer margin of full-width sections */
+
+  /* Spacing scale (8px base) and the section rhythm built from it. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --section: clamp(64px, 48px + 4vw, 128px);       /* between two sections' content: 106px at 1440 */
+  --section-band: clamp(56px, 40px + 3.2vw, 112px); /* inside a coloured band */
+  --inset: clamp(8px, 0.85vw, 16px);               /* edge of inset panels (heroes, galleries) */
+  --panel-pad: clamp(24px, 3.3vw, 48px);           /* inside every panel: rate card, callout, overlay panel */
+
+  /* Shape: the owner's liked radii from the Legacy Blueprint. */
+  --r-photo: 10px;
+  --r-control: 12px;
+  --r-panel: 18px;
+  --shadow-panel: 0 1px 2px rgb(38 38 38 / 0.05), 0 22px 48px -28px rgb(38 38 38 / 0.32);
+
+  /* Motion. Only user-triggered changes animate in step 1; reduced motion removes them. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-1: 160ms;
+  --dur-2: 320ms;
+  --dur-3: 700ms;
+}
+@media (max-width: 680px) {
+  body[data-edition="figma-enhanced"] { --header: 92px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-edition="figma-enhanced"] { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; }
+}
