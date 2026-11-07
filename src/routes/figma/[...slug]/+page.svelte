@@ -32,8 +32,10 @@ import P23 from '#lib/pages/P23.svelte';
 import P24 from '#lib/pages/P24.svelte';
 import P25 from '#lib/pages/P25.svelte';
 import P26 from '#lib/pages/P26.svelte';
+import P27 from '#lib/pages/P27.svelte';
+import P28 from '#lib/pages/P28.svelte';
 let {data}: {data:PageData}=$props();
-const components=[P01,P02,P03,P04,P05,P06,P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26];
+const components=[P01,P02,P03,P04,P05,P06,P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,P24,P25,P26,P27,P28];
 let Content=$derived(components[data.page.index-1]);
 </script>
 <svelte:head><title>{data.page.name} — The Vessyl</title><meta name="description" content={`${data.page.name} — The Vessyl in Arenal, Costa Rica`}/><meta name="theme-color" content={canvas(data.edition,data.page.index)}/></svelte:head>

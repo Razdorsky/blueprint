@@ -20,7 +20,14 @@
   ];
   // The frames' footer writes one page name differently from the page itself.
   const footerNames: Record<string, string> = { 'rates-and-offers': 'Rates and Offers' };
-  const visitLinks = ['Getting here', 'Things to do in Arenal', 'When to visit', 'FAQ', 'Policies'];
+  // The designer's pages 27–28 supply the first two destinations.
+  const visitLinks: [string, string | null][] = [
+    ['Getting here', 'getting-here'],
+    ['Things to do in Arenal', 'things-to-do-around-here'],
+    ['When to visit', null],
+    ['FAQ', null],
+    ['Policies', null]
+  ];
   const contactLinks = ['WhatsApp Contact', 'Phone Contact', 'Address Info'];
 </script>
 
@@ -73,7 +80,7 @@
       </section>
       <section class="footer-group">
         <h2><a href={route(edition, 'arenal', base)}>Plan your visit</a></h2>
-        {#each visitLinks as label (label)}{@render pending(label)}{/each}
+        {#each visitLinks as [label, slug] (label)}{#if slug}<a href={route(edition, slug, base)}>{label}</a>{:else}{@render pending(label)}{/if}{/each}
       </section>
       <section class="footer-group">
         <h2>Contact</h2>

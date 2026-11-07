@@ -54,7 +54,7 @@
     </section>
     <section class="menu-column">
       <h2>Plan your visit</h2>
-      {#each pages.slice(25, 26) as item (item.index)}
+      {#each pages.slice(25, 28) as item (item.index)}
         <a href={route(edition, item.slug, base)}>{item.name}</a>
       {/each}
     </section>

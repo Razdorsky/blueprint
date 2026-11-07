@@ -180,5 +180,19 @@
     "name": "Arenal",
     "slug": "arenal",
     "photo": true
+  },
+  {
+    "index": 27,
+    "id": "965:7503",
+    "name": "Getting here",
+    "slug": "getting-here",
+    "photo": false
+  },
+  {
+    "index": 28,
+    "id": "965:7711",
+    "name": "Things to do around here",
+    "slug": "things-to-do-around-here",
+    "photo": true
   }
 ]

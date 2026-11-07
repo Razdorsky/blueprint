@@ -362,3 +362,60 @@ Checks:
 - On pages 25–26 the gallery, menu and newsletter work at 1440 and 375px.
 - The Blueprint edition is unchanged on all 72 captures, the one script-set stage margin aside.
 - `npm run build` and `npm run check` pass. The freeze manifest covers 347 files.
+
+## Designer update — 2026-11-07 (file `EpZtYw0Tb4P4N714QcXfDM`)
+
+The designer supplied another copy of the file with the same Website 2.0 page `814:6489` and library `748:267`. The intake is archived outside Git in the raw-source bank at `marketing-site/current-website/2026-11-07-update/`.
+
+### What changed in the file
+
+- **Existing pages: no visual change.**
+  - 1:1 renders of frames 01–26 show 0 differing pixels against the 2026-11-05 capture, at the same sizes.
+  - In the design context of 19 frames, only type-token names changed and every value stayed the same. For example, the 50/50 heading `size/8xl,42px` became `size/6xl,42px`, and `size/8xl,36px` became `size/5xl,36px`. With tokens resolved, the code is identical apart from class order.
+- **Library.** All 45 components keep their values. Four of them (750:1923, 750:1924, 750:966, 750:968) carry the same token renames. The drafts of pages 27 and 28 and their raster placeholders left the library page.
+- **New pages:** 27 Getting here (`965:7503`) and 28 Things to do around here (`965:7711`).
+
+### New pages 27–28
+
+| Page | Route | Frame |
+| --- | --- | --- |
+| 27 Getting here | `/figma/getting-here/` | `965:7503` |
+| 28 Things to do around here | `/figma/things-to-do-around-here/` | `965:7711` |
+
+New section variants:
+- Getting here opens on white: the menu sits above a 248px "Hero text only", whose content is centred 2px above the frame's padding as in the frame.
+- Hero text only at 408px with top padding, and at 216px without.
+- The Liberia rate card keeps the frame's two empty lines after its text.
+- Card Grids at 644 and 612px.
+- Callout at 430px.
+- "Driving yourself" keeps its two lines in one paragraph, with no empty line between them.
+- The address keeps one empty line before the GPS line, no trailing line before its button, and the frame's break "The pin that / actually works".
+
+Navigation:
+- The mobile menu's "Plan your visit" group lists Arenal, Getting here and Things to do around here.
+- The footer's "Getting here" and "Things to do in Arenal" now open the new pages. "When to visit", "FAQ" and "Policies" have no pages yet.
+- On Arenal, the "Getting here" button and the "Getting here" and "Things to do around here" cards open the new pages. "When to come" stays unlinked.
+- The new pages' own buttons ("Book a transfer", "Open in Google Maps", "Ask us to book any of this") have no destination in the file and stay placeholders.
+
+Correction, added to the change register:
+
+| Source | Presentation |
+| --- | --- |
+| `raTransfer from San Josétes` (27) | `Transfer from San José`, as the card above reads "Transfer from Liberia" |
+
+Kept as supplied, for the owner to decide:
+- Getting here says "Three hours by car from San José, two and a half from Liberia" in its lede and "[x] hours by road" from Liberia below.
+- On page 28 the card photos do not show their subjects. Waterfalls reuses the hero photo of the river. Hanging bridges shows horses, Lake Arenal the property from above, Caves a ginger flower, and La Fortuna town a riding arena.
+
+Deliberate differences:
+- **Early arrival.** On page 27, "We hold your bags; use the Hearth, the river and the trails" takes three lines. The frame clips the third line ("the trails") at the row's 100px height. The site shows the whole value, so that row is 24px taller.
+- **Stretched photos.** The frames stretch four photos: the golf cart, about 16% vertically; the aerial view, 12% horizontally; the hot springs, 16%; and the Waterfalls card, about 2.4 times. The site keeps their proportions with object-fit cover. The hot-springs photo keeps the frame's 135% width and its centre.
+
+Checks:
+- At 1440px every section of pages 27–28 is within ±3px of its frame, except the early-arrival row. Rows of ink in every section match to ±3px, and Vision OCR matched 209 text lines. Pages 01–26 are unchanged: Home and Arenal screenshots match the previous build to the pixel, and the other pages' files are untouched.
+- Every text node of pages 27–28 appears on the site, except the one correction. NSSpellChecker flags only that typo and the Spanish names Río, Tabacón and Venado.
+- axe-core 4.14 (WCAG 2A/2AA/2.1AA/2.2AA) reports 0 violations on all 28 pages at 1440, 768 and 375px.
+- Layout passes 28 pages × 69 widths (360–2560) in Chrome, WebKit and Firefox. The only findings are the known intentional hidden elements. Port 4190 is on the browsers' blocked-port list, so WebKit and Firefox run against a second preview on 8090.
+- On pages 27–28 and Arenal, the menu (28 links) and the newsletter work at 1440 and 375px, and so does Arenal's gallery. All 28 internal routes answer 200.
+- Blueprint does not import any changed file: it has its own site data, menu and footer, and `src/figma.css` loads only in the `/figma/` layout.
+- `npm run build` and `npm run check` pass (64 routes). The freeze manifest covers 371 files.

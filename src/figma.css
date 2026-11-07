@@ -976,3 +976,37 @@ body[data-edition="figma"] .current-page[data-index="26"] img[src$="/bc1c3e7f217
   body[data-edition="figma"] .current-page[data-index="26"] img[src$="/86c4e0468e78057c7107.webp"] { position: absolute; inset: auto; width: 100%; height: 115.88%; max-width: none; left: 0%; top: -1.94%; object-fit: fill; }
   body[data-edition="figma"] .current-page[data-index="26"] img[src$="/bc1c3e7f217cc52b0c86.webp"] { position: absolute; inset: auto; width: 100%; height: 133.29%; max-width: none; left: 0%; top: -16.69%; object-fit: fill; }
 }
+
+/* Designer update, 2026-11-07 (file EpZtYw0Tb4P4N714QcXfDM) — pages 27 Getting here and
+   28 Things to do around here. Frames 01–26 and the library are unchanged in value. */
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page:is([data-index="27"], [data-index="28"]) [data-name^="Section - 50/50"] { min-height: 900px; }
+  /* Hero text only: the Getting here opening is 248px under the 96px menu, its content 2px above centre as in the frame. */
+  body[data-edition="figma"] .current-page[data-index="27"] [data-role="text-hero"]:first-child { min-height: 344px; padding-top: 194px; margin-bottom: -2px; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7511"] { min-height: 408px; padding-top: 100px; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7718"] { min-height: 216px; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7719"] { min-height: 644px; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7720"] { min-height: 612px; }
+  /* The Liberia rate card keeps the frame's two empty lines after its text. */
+  body[data-edition="figma"] .current-page [data-node-id="965:7507"] [data-part="rate"] > p[data-part="paragraph"] { margin-bottom: 60px; }
+  /* The address: one empty line between the address and the GPS line. */
+  body[data-edition="figma"] .current-page [data-node-id="965:7513"] [data-part="copy"] > p[data-part="paragraph"] + p[data-part="paragraph"] { margin-top: -10px; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7513"][data-variant="editorial"] [data-part="copy"] > p:not([data-part="eyebrow"]):has(+ [data-part="actions"]) { margin-bottom: 0; }
+  body[data-edition="figma"] .current-page [data-node-id="965:7721"] { min-height: 430px; }
+  /* The early-arrival value takes three lines; the frame clips the third ("the trails") at its
+     100px height, the site shows it and the row is 24px taller. */
+}
+
+/* Photo framing for pages 27–28 (generated from the frames' crop rectangles). */
+body[data-edition="figma"] .current-page[data-index="27"] img[src$="/bc1c3e7f217cc52b0c86.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="27"] img[src$="/11358b370ad895b42644.webp"] { object-position: 50.0% 50.0%; }
+body[data-edition="figma"] .current-page[data-index="28"] img[src$="/9772fed083830cf825f9.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="28"] img[src$="/50ec394cef65e5d3d539.webp"] { object-position: 50.0% 100.0%; }
+body[data-edition="figma"] .current-page[data-index="28"] img[src$="/96aad99ec0ad155dbaa5.webp"] { object-position: 50.0% 100.0%; }
+@media (min-width: 1101px) {
+  body[data-edition="figma"] .current-page[data-index="28"] img[src$="/9772fed083830cf825f9.webp"] { position: absolute; inset: auto; width: 100.05%; height: 126.1%; max-width: none; left: -0.02%; top: -26.1%; object-fit: fill; }
+  body[data-edition="figma"] .current-page[data-index="28"] img[src$="/96aad99ec0ad155dbaa5.webp"] { position: absolute; inset: auto; width: 140%; height: 155.56%; max-width: none; left: -37.78%; top: -37.96%; object-fit: fill; }
+  /* Hot springs: the frame stretches this portrait photo to 135.28% × 170.5%; the site keeps its
+     proportions at the same width and the same centre (70.7% down the photo). */
+  body[data-edition="figma"] .current-page[data-index="28"] img[src$="/50ec394cef65e5d3d539.webp"] { position: absolute; inset: auto; width: 135.28%; height: 202.03%; max-width: none; left: -0.02%; top: -92.8%; object-fit: fill; }
+}
