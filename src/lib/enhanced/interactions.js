@@ -39,6 +39,89 @@ function openMega(trigger, focusFirst) {
 
 // Step 2.1: the header floats, takes the tone of the section under it, steps away while you read downwards and
 // returns on the way up, and shows reading progress (as on /blueprint/ 452c7d0).
+// Step 2.3 (docs/figma-enhanced-step2.md): films. Silent loops play only while on screen, in a visible tab and
+// without reduced motion. The Home film plays from the start with sound when asked (Legacy reference 12), and
+// then only the visitor's own taps play it.
+let filmObserver;
+function syncVideo(video) {
+  const visible = video.dataset.visible === 'true' && !document.hidden;
+  if (!visible) {video.pause();return;}
+  if (video.dataset.activated === 'true') return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) video.pause();
+  else video.play().catch(() => {});
+}
+function setupFilms() {
+  filmObserver?.disconnect();
+  filmObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      entry.target.dataset.visible = String(entry.isIntersecting && entry.intersectionRatio >= 0.15);
+      syncVideo(entry.target);
+    }
+  }, {threshold: [0, 0.15]});
+  document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(video => {video.muted = true;filmObserver.observe(video);});
+  setupArch();
+}
+function filmControls(arch) {
+  const video = arch.querySelector('video[data-film]');
+  const toggle = arch.querySelector('[data-film-toggle]');
+  const mute = arch.querySelector('[data-film-mute]');
+  if (!video || !toggle || !mute) return;
+  toggle.dataset.paused = String(video.paused);
+  toggle.setAttribute('aria-label', video.paused ? 'Play the film' : 'Pause the film');
+  mute.dataset.muted = String(video.muted);
+  mute.setAttribute('aria-label', video.muted ? 'Turn the sound on' : 'Mute the film');
+}
+function playFilm(button) {
+  const arch = button.closest('[data-part="arch"]');
+  const video = arch?.querySelector('video[data-film]');
+  if (!arch || !video?.dataset.full) return;
+  video.dataset.activated = 'true';
+  video.querySelectorAll('source').forEach(source => source.remove());
+  video.src = video.dataset.full;
+  video.loop = false;
+  video.muted = false;
+  video.removeAttribute('aria-hidden');
+  video.currentTime = 0;
+  video.play().catch(() => {});
+  button.hidden = true;
+  const controls = arch.querySelector('[data-film-controls]');
+  if (controls) controls.hidden = false;
+  filmControls(arch);
+  controls?.querySelector('[data-film-toggle]')?.focus();
+}
+
+// The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
+// with a short lag (scrub), on screens from 900px and without reduced motion.
+const arch = {el: null, target: 0, current: 0, frame: 0};
+function setupArch() {
+  cancelAnimationFrame(arch.frame);
+  arch.frame = 0;
+  arch.el = document.querySelector('.current-page > [data-hero="arch"]');
+  arch.current = arch.target = 0;
+  if (!arch.el) return;
+  const opens = !matchMedia('(prefers-reduced-motion: reduce)').matches && innerWidth >= 900;
+  arch.el.classList.toggle('is-opening', opens);
+  if (!opens) {arch.el.style.removeProperty('--open');delete arch.el.dataset.open;return;}
+  updateArch(true);
+}
+function updateArch(jump = false) {
+  const el = arch.el;
+  if (!el?.isConnected || !el.classList.contains('is-opening')) return;
+  const box = el.getBoundingClientRect();
+  const span = box.height - innerHeight;
+  arch.target = span > 0 ? Math.min(1, Math.max(0, -box.top / span)) : 0;
+  if (jump) arch.current = arch.target;
+  const step = () => {
+    arch.current += (arch.target - arch.current) * 0.16;
+    if (Math.abs(arch.target - arch.current) < 0.001) arch.current = arch.target;
+    el.style.setProperty('--open', arch.current.toFixed(4));
+    const open = String(arch.current > 0.55);
+    if (el.dataset.open !== open) {el.dataset.open = open;updateHeader();}
+    arch.frame = arch.current !== arch.target ? requestAnimationFrame(step) : 0;
+  };
+  if (!arch.frame) arch.frame = requestAnimationFrame(step);
+}
+
 const DARK = '[data-role="photo-hero"], [data-role="overlay"], [data-role="gallery"], [data-role="map"], .site-newsletter, .site-footer';
 let lastY = 0;
 let refreshHeader = () => {};
@@ -48,7 +131,10 @@ function toneUnder(header) {
   const sections = document.querySelectorAll('.current-page > section, .site-footer');
   for (const section of sections) {
     const box = section.getBoundingClientRect();
-    if (box.top <= y && box.bottom > y) return section.matches(DARK) ? 'dark' : 'light';
+    if (box.top <= y && box.bottom > y) {
+      if (section.matches('[data-hero="arch"]')) return section.dataset.open === 'true' ? 'dark' : 'light';
+      return section.matches(DARK) ? 'dark' : 'light';
+    }
   }
   return header.dataset.theme || 'light';
 }
@@ -82,6 +168,7 @@ function markRails() {
 
 export function enhancePage() {
   markRails();
+  setupFilms();
   refreshHeader();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
@@ -111,8 +198,13 @@ export function installInteractions() {
 
   if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
-  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();updateHeader();});}, {signal});
-  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateHeader();});}, {passive:true, signal});
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateHeader();});}, {signal});
+  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateHeader();});}, {passive:true, signal});
+  on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(syncVideo));
+  for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
+    const arch = event.target instanceof HTMLVideoElement ? event.target.closest('[data-part="arch"]') : null;
+    if (arch) filmControls(arch);
+  }, {capture:true});
   refreshHeader = () => {lastY = scrollY;document.querySelector('[data-header]')?.classList.remove('is-away');updateHeader();};
   on('focusin', event => {
     const target = event.target instanceof Element ? event.target : null;
@@ -171,6 +263,16 @@ export function installInteractions() {
   on('click', event => {
     const target = event.target instanceof Element ? event.target : null;
     if (!target) return;
+    const filmPlay = target.closest('[data-film-play]');
+    if (filmPlay) {playFilm(filmPlay);return;}
+    const filmToggle = target.closest('[data-film-toggle]');
+    if (filmToggle) {
+      const video = filmToggle.closest('[data-part="arch"]')?.querySelector('video[data-film]');
+      if (video?.paused) {if (video.ended) video.currentTime = 0;video.play().catch(() => {});} else video?.pause();
+      return;
+    }
+    const filmMute = target.closest('[data-film-mute]');
+    if (filmMute) {const video = filmMute.closest('[data-part="arch"]')?.querySelector('video[data-film]');if (video) video.muted = !video.muted;return;}
     const megaTrigger = target.closest('[data-mega-trigger]');
     if (megaTrigger) {if (megaTrigger.getAttribute('aria-expanded') === 'true') closeMegas(); else openMega(megaTrigger, false);return;}
     if (!target.closest('[data-mega]')) closeMegas();
@@ -218,5 +320,5 @@ export function installInteractions() {
   on('touchstart', event => {if (event.target.closest('.gallery-stage')) touchX = event.changedTouches[0].clientX;}, {passive:true});
   on('touchend', event => {if (event.target.closest('.gallery-stage')) {const dx = event.changedTouches[0].clientX - touchX;if (Math.abs(dx) > 45) show(active + (dx < 0 ? 1 : -1));}}, {passive:true});
   enhancePage();
-  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
+  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);cancelAnimationFrame(arch.frame);filmObserver?.disconnect();lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
 }

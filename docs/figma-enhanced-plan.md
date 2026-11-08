@@ -103,7 +103,7 @@ One at a time, each reviewed before the next. References are numbered as in `doc
 - Lenis inertia (452c7d0).
 - View Transitions between pages, with the hero arriving smoothly (Legacy reference 11).
 
-2.3 **Films.**
+2.3 **Films** (built 2026-11-08, waiting for review; see `docs/figma-enhanced-step2.md`).
 - Silent loops that restart with sound on click (Legacy reference 12).
 - The Home opening: a film in the Dome's arch that opens to full screen as you scroll (reference 2).
 
