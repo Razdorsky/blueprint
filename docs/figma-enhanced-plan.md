@@ -97,7 +97,7 @@ Goal: one system under all 28 pages, so that pages stop looking assembled from h
 
 One at a time, each reviewed before the next. References are numbered as in `docs/figma-design-audit.md`.
 
-2.1 **Header** from `/blueprint/` 452c7d0 (reference 1): floating, takes the light of the section beneath, steps away while you scroll down, with a reading-progress line. Add the Legacy mega menu (reference 10) for Where you sleep and Experiences, with an Overview link to pages 02 and 07.
+2.1 **Header** (built 2026-11-08, waiting for review; study and decisions in `docs/figma-enhanced-step2.md`) from `/blueprint/` 452c7d0 (reference 1): floating, takes the light of the section beneath, steps away while you scroll down, with a reading-progress line. Add the Legacy mega menu (reference 10) for Where you sleep and Experiences, with an Overview link to pages 02 and 07.
 
 2.2 **Smooth scrolling and page transitions.**
 - Lenis inertia (452c7d0).

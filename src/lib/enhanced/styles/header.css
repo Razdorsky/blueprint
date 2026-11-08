@@ -1,0 +1,98 @@
+/* Figma Enhanced — step 2.1 (docs/figma-enhanced-step2.md): the designer's header, floating as on /blueprint/
+   452c7d0, with the Legacy Blueprint mega menu. Behaviour: interactions.js (updateHeader, openMega). */
+
+/* ---- The floating header ------------------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .site-header {
+  position: fixed; z-index: 60; color: var(--on-dark);
+  transition: transform var(--dur-2) var(--ease), color var(--dur-2) var(--ease);
+}
+/* It takes the tone of the section under it: copper over light sections, light over photographs. */
+body[data-edition="figma-enhanced"] .site-header[data-theme] { background: none; }
+body[data-edition="figma-enhanced"] .site-header[data-theme="light"] { color: var(--accent); }
+body[data-edition="figma-enhanced"] .site-header[data-theme="dark"] { color: var(--on-dark); }
+@media (max-width: 760px) {
+  body[data-edition="figma-enhanced"] .site-header[data-theme="dark"]:not(.is-scrolled) { background: linear-gradient(180deg, rgb(0 0 0 / 0.55), transparent); }
+}
+/* After 40px it gets a background; while you read downwards it steps away, and returns on the way up. */
+body[data-edition="figma-enhanced"] .site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; pointer-events: none;
+  background: rgb(255 255 255 / 0.92); border-bottom: 1px solid var(--rule);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  transition: opacity var(--dur-2) var(--ease), background-color var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .site-header[data-theme="dark"]::before { background: rgb(22 26 17 / 0.86); border-bottom-color: rgb(245 235 231 / 0.08); }
+body[data-edition="figma-enhanced"] .site-header.is-scrolled::before { opacity: 1; }
+body[data-edition="figma-enhanced"] .site-header.is-away { transform: translateY(-101%); }
+/* With a mega panel open, header and panel become one sheet of the frames' dark brown glass. */
+body[data-edition="figma-enhanced"] .site-header:has(.mega[data-open="true"])::before { opacity: 1; background: rgb(38 17 1 / 0.86); border-bottom-color: transparent; }
+
+/* The logo changes colour without loading: both versions are in the markup. */
+body[data-edition="figma-enhanced"] .site-header .brand { display: grid; }
+body[data-edition="figma-enhanced"] .site-header .brand img { grid-area: 1 / 1; transition: opacity var(--dur-2) var(--ease); }
+body[data-edition="figma-enhanced"] .site-header[data-theme="dark"] .logo-copper,
+body[data-edition="figma-enhanced"] .site-header[data-theme="light"] .logo-light { opacity: 0; }
+/* The designer's booking button: copper on light, beige on photographs. */
+body[data-edition="figma-enhanced"] .site-header[data-theme="light"] .nav-book { background: var(--accent); color: #fff; }
+body[data-edition="figma-enhanced"] .site-header[data-theme="dark"] .nav-book { background: var(--on-dark); color: #121310; }
+body[data-edition="figma-enhanced"] .site-header .nav-book { transition: background-color var(--dur-2) var(--ease), color var(--dur-2) var(--ease); }
+body[data-edition="figma-enhanced"] .site-header[data-theme="light"] :is(a, button):focus-visible { outline-color: var(--accent); box-shadow: none; }
+
+/* The copper reading-progress line. */
+body[data-edition="figma-enhanced"] .header-progress {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent); opacity: 0.9; pointer-events: none;
+  transform: scaleX(var(--progress, 0)); transform-origin: left;
+}
+
+/* ---- Navigation beside MENU on wide screens ----------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .site-header .header-start { display: flex; align-items: center; gap: clamp(24px, 2.6vw, 48px); }
+body[data-edition="figma-enhanced"] .site-header .header-nav { display: none; align-items: center; gap: clamp(20px, 2.1vw, 40px); }
+@media (min-width: 1180px) {
+  body[data-edition="figma-enhanced"] .site-header .header-nav { display: flex; }
+}
+body[data-edition="figma-enhanced"] .site-header .nav-trigger {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer;
+  font: 400 13px / 20px var(--font-body); letter-spacing: 0.26px; text-transform: uppercase; white-space: nowrap;
+}
+body[data-edition="figma-enhanced"] .site-header .nav-trigger::after { content: none; }
+body[data-edition="figma-enhanced"] .site-header .nav-trigger span { padding-bottom: 2px; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size var(--dur-2) var(--ease); }
+body[data-edition="figma-enhanced"] .site-header .nav-trigger:is(:hover, [aria-expanded="true"]) span { background-size: 100% 1px; }
+body[data-edition="figma-enhanced"] .site-header .nav-trigger svg { width: 10px; height: 6px; transition: transform var(--dur-2) var(--ease); }
+body[data-edition="figma-enhanced"] .site-header .nav-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* ---- The mega menu panels (Legacy reference 10) ---------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .site-header .mega {
+  position: absolute; top: 100%; left: 0; right: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: var(--s6);
+  max-height: calc(100svh - var(--header)); overflow-y: auto; overscroll-behavior: contain; padding: 28px var(--edge) 34px;
+  border-top: 1px solid rgb(245 235 231 / 0.12); border-radius: 0 0 var(--r-panel) var(--r-panel);
+  background: rgb(38 17 1 / 0.86); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); color: var(--on-dark);
+  box-shadow: 0 22px 45px -32px rgb(17 17 17 / 0.4);
+  opacity: 0; visibility: hidden; transform: translateY(-10px); pointer-events: none;
+  transition: opacity 300ms var(--ease), transform 440ms var(--ease), visibility 0s 440ms;
+}
+body[data-edition="figma-enhanced"] .site-header .mega[data-open="true"] { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0s; }
+body[data-edition="figma-enhanced"] .site-header .mega-cards { display: grid; grid-template-columns: repeat(var(--count), minmax(0, 1fr)); gap: 24px; }
+body[data-edition="figma-enhanced"] .site-header .mega-card { display: flex; flex-direction: column; gap: 12px; color: inherit; text-decoration: none; font: 400 14px / 1.4 var(--font-body); }
+body[data-edition="figma-enhanced"] .site-header .mega-image { display: block; overflow: hidden; aspect-ratio: 4 / 3; border-radius: var(--r-photo); background: rgb(245 235 231 / 0.06); }
+body[data-edition="figma-enhanced"] .site-header .mega-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 480ms var(--ease), filter 300ms var(--ease); }
+body[data-edition="figma-enhanced"] .site-header .mega-card:is(:hover, :focus-visible) img { transform: scale(1.06); filter: brightness(1.04); }
+body[data-edition="figma-enhanced"] .site-header .mega-label { align-self: flex-start; padding-bottom: 3px; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 400ms var(--ease); }
+body[data-edition="figma-enhanced"] .site-header .mega-card:is(:hover, :focus-visible) .mega-label { background-size: 100% 1px; }
+body[data-edition="figma-enhanced"] .site-header .mega-overview {
+  grid-column: auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 0 0; color: inherit; text-decoration: none; white-space: nowrap;
+  font: 500 13px / 20px var(--font-body); letter-spacing: 0.26px; text-transform: uppercase; transform-origin: left center; transition: transform 480ms var(--ease);
+}
+body[data-edition="figma-enhanced"] .site-header .mega-overview svg { width: 12px; height: 12px; }
+body[data-edition="figma-enhanced"] .site-header .mega-overview:is(:hover, :focus-visible) { transform: scale(1.06); }
+body[data-edition="figma-enhanced"] .site-header .mega :is(a):focus-visible { outline: 2px solid var(--on-dark); outline-offset: 4px; box-shadow: none; }
+body[data-edition="figma-enhanced"] .site-header .mega-card:focus-visible { outline-offset: 6px; border-radius: var(--r-photo); }
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-edition="figma-enhanced"] .site-header,
+  body[data-edition="figma-enhanced"] .site-header::before,
+  body[data-edition="figma-enhanced"] .site-header .mega,
+  body[data-edition="figma-enhanced"] .site-header .mega-image img,
+  body[data-edition="figma-enhanced"] .site-header .mega-overview,
+  body[data-edition="figma-enhanced"] .site-header .nav-trigger svg { transition: none; }
+  body[data-edition="figma-enhanced"] .site-header.is-away { transform: none; }
+  body[data-edition="figma-enhanced"] .site-header .mega { transform: none; }
+}
