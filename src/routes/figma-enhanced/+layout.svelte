@@ -15,6 +15,7 @@
   import '#lib/enhanced/styles/header.css';
   import '#lib/enhanced/styles/motion.css';
   import '#lib/enhanced/styles/films.css';
+  import '#lib/enhanced/styles/drift.css';
 
   let {children}: {children:Snippet} = $props();
   onMount(installInteractions);

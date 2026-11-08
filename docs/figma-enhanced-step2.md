@@ -235,3 +235,27 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
 - **The founder on Home** (owner's choice, 2026-11-08: the third fragment, 11 s). "Hear Josh" on the callout's photograph plays the end of the Events reel with sound: the Dome and the hills under his voice, then Josh on camera. His last words run over the reel's closing logo, which the portrait frame would crop, so the photograph returns for them while the sound plays on (`data-photo-after`). `film-events.mp4` now runs to the reel's end instead of stopping mid-sentence at 55.8 s.
 - **The closing photograph** (`components/Newsletter.svelte`, `styles/closing.css`): it belongs to the page's world and never repeats a photograph already on the page. Arenal After Dark, Eating here and El Rancho close on Moloka's candlelit table, Moloka on the long table under lanterns, Weddings on a candlelit table, the Frequency Dome on the musician by lamplight, Getting here and Things to do on Arenal, the rest on the Dome at night. Each has a dark lower edge; the newsletter and the footer take that edge's colour (night, candle, amber).
 - **Checked:** layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the 56 shell items); axe 0 on all 28 pages at 1440, 768 and 375; gallery, menu and newsletter tests; scenes play, pause and return to the loop in all three engines; reduced motion keeps the loops on their posters and the arches closed; every sound button is reachable at 1440 and 390.
+
+## 2.4 The drifting gallery (2026-11-08)
+
+### What the reference does
+
+`/blueprint/` 452c7d0, the `land` block on Home (owner's reference 3): `blocks/Land.svelte`, `styles/blocks.css` 265–291, `motion.ts` 209–212 and 250–258.
+- A short title and lede hold the middle of the screen (sticky, 100svh tall, centred, 34vw of padding on each side) while six 4:5 photographs, 24vw wide, pass along the edges, alternating left and right at 0/10/33/43/66/76% of a 212svh run.
+- Each photograph moves from (depth − 1) to (1 − depth) × 35% of the screen's height as the run crosses the screen (GSAP ScrollTrigger, scrub); depths are 1.2, 1.2, 0.8, 0.8, 1.2, 1.2, so the first and last rows are nearer and never drift into the neighbouring blocks. Lenis gives the motion its inertia. The owner: "you feel the motion, the inertia, the text flies between the photo cards".
+- Each photograph arrives once from a slightly smaller rounded mask (clip-path inset 7% → 0, scale 1.14 → 1, 1.7 s) when its top passes 92% of the screen.
+- Below 900px the run is a static grid of two columns.
+
+### Decisions
+
+- **Where** (placement map): every heading with a run of card photographs under it. Home "You do not have to stay here to come here" with the six experience cards; Sound and movement "Private sessions"; Eating here "Breakfast, lunch and one dinner"; Take the whole property, both runs; Groups and offsites "Small groups, whole teams…". Horses and the land waits for photographs that match its cards (they show a massage and headphones). Places with a single photograph are not galleries (owner, 2026-11-08).
+- **The designer's parts stay**: the eyebrow, heading and lede become the held title; the cards keep their square photograph, title and text. Only their placement and motion change.
+- **Positions and depths as in the reference**: six cards at 0/22/72.6/94.6/145.2/167.2 svh of a 220svh run; three cards at 0/45/90 svh of 150svh, depths 1.2, 0.8, 1.2. Cards are min(24vw, 44svh) wide and sit on the page's edges; the title column is min(32vw, 30em), so text never runs under a card.
+- **Phones and narrow screens** keep the designer's grid with the photographs' arrival. A shift inside one column would push the cards into each other, so below 900px they do not drift (the reference does not drift there either).
+
+### Built (2026-11-08), waiting for the owner's review
+
+- Markup: each heading and its card grids are wrapped in `<div class="drift" data-drift>`; cards carry `data-depth`, `data-side` and `--y` (`pages/P01, P16, P19, P22, P24`). The section rules of `styles/system.css` also reach sections inside a drift, and the header reads its tone from it.
+- Styles: `styles/drift.css`. The arrival is armed by the script, so without it the photographs show plainly; reduced motion keeps cards still and unmasked.
+- Behaviour: `setupDrift` and `updateDrift` in `interactions.js`, on the same scroll frame as the arch and the header.
+- Checked: layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the shell items); axe 0; drift, held title, arrival and header tone identical in the three engines; phones, 899px and reduced motion.

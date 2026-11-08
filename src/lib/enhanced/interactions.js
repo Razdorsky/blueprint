@@ -148,6 +148,42 @@ function sceneTime(video) {
   if (video.currentTime < end - 0.9) video._fading = false;
 }
 
+// Step 2.4 (docs/figma-enhanced-step2.md): the drifting gallery, as on /blueprint/ 452c7d0. From 900px, while a run
+// crosses the screen, each card moves from (depth - 1) to (1 - depth) times 35% of the screen's height: the nearer
+// cards (1.2) rise past the heading, the farther ones (0.8) sink, and Lenis gives the motion its inertia. Each
+// photograph opens from its mask once, when its top passes 92% of the screen. Reduced motion keeps both still.
+let driftObserver;
+function setupDrift() {
+  driftObserver?.disconnect();
+  const drifts = document.querySelectorAll('.current-page [data-drift]');
+  if (drifts.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    driftObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.closest('[data-part="card"]')?.setAttribute('data-revealed', '');
+        driftObserver.unobserve(entry.target);
+      }
+    }, {rootMargin: '0px 0px -8% 0px'});
+    drifts.forEach(drift => {
+      drift.setAttribute('data-armed', '');
+      drift.querySelectorAll('[data-part="card"]:not([data-revealed]) > [data-part="media"]').forEach(media => driftObserver.observe(media));
+    });
+  }
+  updateDrift();
+}
+function updateDrift() {
+  const moving = matchMedia('(min-width: 900px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const vh = innerHeight;
+  document.querySelectorAll('.current-page [data-drift]').forEach(drift => {
+    const cards = drift.querySelectorAll('[data-depth]');
+    if (!moving) {cards.forEach(card => card.style.removeProperty('--drift'));return;}
+    const box = drift.getBoundingClientRect();
+    if (box.bottom < -vh || box.top > 2 * vh) return;
+    const progress = Math.min(1, Math.max(0, (vh - box.top) / (box.height + vh)));
+    cards.forEach(card => card.style.setProperty('--drift', `${((Number(card.dataset.depth) - 1) * vh * 0.35 * (1 - 2 * progress)).toFixed(1)}px`));
+  });
+}
+
 // The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
 // with a short lag (scrub), on screens from 900px and without reduced motion.
 const arch = {el: null, target: 0, current: 0, frame: 0};
@@ -186,7 +222,7 @@ let refreshHeader = () => {};
 function toneUnder(header) {
   if (header.querySelector('[data-mega][data-open="true"]')) return 'dark';
   const y = header.offsetHeight / 2;
-  const sections = document.querySelectorAll('.current-page > section, .site-footer');
+  const sections = document.querySelectorAll('.current-page > section, .current-page > [data-drift], .site-footer');
   for (const section of sections) {
     const box = section.getBoundingClientRect();
     if (box.top <= y && box.bottom > y) {
@@ -227,6 +263,7 @@ function markRails() {
 export function enhancePage() {
   markRails();
   setupFilms();
+  setupDrift();
   refreshHeader();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
@@ -256,8 +293,8 @@ export function installInteractions() {
 
   if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
-  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateHeader();});}, {signal});
-  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateHeader();});}, {passive:true, signal});
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateHeader();});}, {signal});
+  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateHeader();});}, {passive:true, signal});
   on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
     const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;
@@ -405,5 +442,5 @@ export function installInteractions() {
   on('touchstart', event => {if (event.target.closest('.gallery-stage')) touchX = event.changedTouches[0].clientX;}, {passive:true});
   on('touchend', event => {if (event.target.closest('.gallery-stage')) {const dx = event.changedTouches[0].clientX - touchX;if (Math.abs(dx) > 45) show(active + (dx < 0 ? 1 : -1));}}, {passive:true});
   enhancePage();
-  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);cancelAnimationFrame(arch.frame);filmObserver?.disconnect();lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
+  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);cancelAnimationFrame(arch.frame);filmObserver?.disconnect();driftObserver?.disconnect();lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
 }

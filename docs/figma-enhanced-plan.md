@@ -112,7 +112,7 @@ The owner likes these as techniques, not as the places where they first appeared
 - The opening with a film in the Dome's arch that opens to full screen as you scroll (reference 2): Home, Experiences and The Vessyl Presents.
 - The closing photograph and the footer's colour follow each page's world.
 
-2.4 **The drifting gallery** (reference 3): a sticky title, with photo cards at two depths passing it. It fits wherever a page has a continuous run of pictures (card grids, galleries).
+2.4 **The drifting gallery** (reference 3; built 2026-11-08, waiting for review, see `docs/figma-enhanced-step2.md`): a sticky title, with photo cards at two depths passing it, on every run of card photographs under a heading (six runs on five pages; Horses and the land after its photographs).
 
 2.5 **The arch over a full-screen photo** (reference 5): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique.
 
