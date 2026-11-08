@@ -1,6 +1,7 @@
-/* Figma Enhanced — page system (step 1 of docs/figma-enhanced-plan.md).
-   One grid, one spacing rhythm, one type scale and one set of components under all 28 pages,
-   written by section role rather than per page. Tokens live in tokens.css. */
+/* Figma Enhanced — page system, second pass (2026-11-08).
+   The designer's components, proportions and type, rebuilt on one 12-column grid, one section rhythm and
+   the tokens in tokens.css. At 1440px the sizes equal the frames; H1 stands above H2; text grows on wide
+   screens. Full-width photographs stay full width and square-cornered, as in the frames. */
 
 /* ---- Grid and rhythm ------------------------------------------------------------------------ */
 body[data-edition="figma-enhanced"] .current-page { background: var(--surface); color: var(--ink); }
@@ -9,339 +10,326 @@ body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-new
   padding: calc(var(--section) / 2) var(--edge); background: var(--surface); color: var(--ink);
 }
 body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-newsletter)) > * { grid-column: 1 / -1; min-width: 0; }
+/* Full-width photographs are positioned against the whole section, not its grid area. */
+body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"] > [data-part="hero-image"],
+body[data-edition="figma-enhanced"] .current-page > :is([data-role="overlay"], [data-role="gallery"]) > [data-part="media"] { grid-column: auto; grid-row: auto; }
+/* The designer's beige bands. On every page they sit between two full-width photographs, so the tone
+   changes through a photograph. */
+body[data-edition="figma-enhanced"] .current-page > :where(section)[data-tone="beige"] { background: var(--surface-warm); padding-block: var(--section-band); }
+body[data-edition="figma-enhanced"] .current-page > :where(section)[data-tone="beige"] + :where([data-tone="beige"]) { padding-top: 0; }
+body[data-edition="figma-enhanced"] .current-page > section:first-child + section:not([data-tone="beige"], [data-role="overlay"], [data-role="gallery"], [data-role="map"]) { padding-top: var(--section); }
 
-/* ---- Bands: white by default, beige under card groups, forest under galleries and the quote --------------
-   Set per section in the markup (data-band); tones change at a clean edge, never through a gradient. */
-body[data-edition="figma-enhanced"] .current-page > :where(section)[data-band] { padding-block: var(--section-band); }
-body[data-edition="figma-enhanced"] .current-page > :where(section)[data-band="beige"] { background: var(--surface-warm); }
-body[data-edition="figma-enhanced"] .current-page > :where(section)[data-band="forest"] { background: var(--surface-forest); color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page > :where(section)[data-band="beige"] + :where([data-band="beige"]),
-body[data-edition="figma-enhanced"] .current-page > :where(section)[data-band="forest"] + :where([data-band="forest"]) { padding-top: 0; }
-body[data-edition="figma-enhanced"] .current-page [data-band="forest"] :where(h1, h2, h3) { color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-band="forest"] [data-part="author-role"] { color: color-mix(in srgb, var(--on-dark) 78%, transparent); }
-
-/* ---- Type ----------------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page :where(h1, h2, h3) { margin: 0; font-family: var(--font-display); font-weight: 400; color: var(--heading); text-wrap: balance; }
-body[data-edition="figma-enhanced"] .current-page h1 { font-size: var(--t-display); line-height: var(--lh-display); letter-spacing: -0.012em; }
-body[data-edition="figma-enhanced"] .current-page h2 { font-size: var(--t-h2); line-height: var(--lh-heading); letter-spacing: -0.006em; }
-body[data-edition="figma-enhanced"] .current-page h3 { font-size: var(--t-h3); line-height: var(--lh-title); }
+/* ---- Type: the frames' roles ------------------------------------------------------------------ */
+body[data-edition="figma-enhanced"] .current-page :where(h1, h2, h3) { margin: 0; font-family: var(--font-display); font-weight: 400; color: var(--heading); text-wrap: pretty; }
+body[data-edition="figma-enhanced"] .current-page h1 { font-size: var(--t-h1); line-height: 1.1; }
+body[data-edition="figma-enhanced"] .current-page h2 { font-size: var(--t-h2); line-height: 1.154; }
+body[data-edition="figma-enhanced"] .current-page h3 { font-size: var(--t-h3); line-height: 1.4; }
 body[data-edition="figma-enhanced"] .current-page :where(h1, h2, h3) a { color: inherit; text-decoration: none; }
-body[data-edition="figma-enhanced"] .current-page :where(p, dd, dt, td, th, li) { margin: 0; font: 400 var(--t-body) / var(--lh-body) var(--font-body); color: inherit; text-wrap: pretty; }
-body[data-edition="figma-enhanced"] .current-page p[data-part="paragraph"] { max-width: var(--measure); }
-body[data-edition="figma-enhanced"] .current-page .current-lede { font-size: var(--t-lede); line-height: var(--lh-lede); }
-body[data-edition="figma-enhanced"] .current-page .display-prose { font-family: var(--font-display); font-size: var(--t-statement); line-height: var(--lh-statement); color: var(--heading); max-width: 34em; }
-body[data-edition="figma-enhanced"] .current-page [data-part="eyebrow"] { font: 600 var(--t-label) / 1.4 var(--font-body); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); }
-/* The term of a fact ("Check-in", "Diameter") is plain small text, not a shouted label. */
-body[data-edition="figma-enhanced"] .current-page [data-part="fact"] > [data-part="term"] { font: 500 var(--t-small) / var(--lh-small) var(--font-body); color: var(--ink-soft); }
-/* Inside a paragraph a term is a run-in head. */
-body[data-edition="figma-enhanced"] .current-page p > [data-part="term"] { font-weight: 500; color: var(--heading); }
-body[data-edition="figma-enhanced"] .current-page [data-part="highlight"], body[data-edition="figma-enhanced"] .current-page :where(strong, b) { font-weight: 500; }
-body[data-edition="figma-enhanced"] .current-page [data-part="highlight"] { color: var(--accent); }
-
+body[data-edition="figma-enhanced"] .current-page :where(p, dd, dt, td, th, li) { margin: 0; font: 400 var(--t-body) / 1.667 var(--font-body); color: inherit; }
+body[data-edition="figma-enhanced"] .current-page .current-lede { font-size: var(--t-lede); line-height: 1.4545; }
+body[data-edition="figma-enhanced"] .current-page .display-prose { font: 400 var(--t-h3) / 1.4 var(--font-display); color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page [data-part="eyebrow"] { font: 600 var(--t-label) / 1.4286 var(--font-body); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page [data-part="highlight"] { font: 600 var(--t-highlight) / 1.2 var(--font-body); color: var(--heading); }
+/* A term inside a description ("The half day") is a small serif subheading, as in the frames. */
+body[data-edition="figma-enhanced"] .current-page [data-part="term"] { display: block; color: var(--ink); font: 400 var(--t-h3s) / 1.357 var(--font-display); }
 body[data-edition="figma-enhanced"] .current-page [data-part="copy"] { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s5); }
-body[data-edition="figma-enhanced"] .current-page [data-part="copy"] > :is(h1, h2, h3) + :is(p, div) { margin-top: calc(var(--s2) * -1); }
 
-/* ---- Actions -------------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-part="actions"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s6); margin-top: var(--s2); }
+/* ---- Actions ---------------------------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-part="actions"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s5); }
 body[data-edition="figma-enhanced"] .current-page .current-action {
-  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); min-height: 48px; padding: 0 var(--s5);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; max-width: 100%; min-height: 48px; padding: 14px 24px;
   border: 1px solid transparent; border-radius: var(--r-control); background: var(--heading); color: var(--on-dark);
-  font: 500 var(--t-button) / 1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer;
+  font: 500 var(--t-button) / 1.25 var(--font-body); letter-spacing: 0.02em; text-transform: uppercase; text-align: center; text-decoration: none; cursor: pointer;
   transition: background-color var(--dur-2) var(--ease), color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
 }
-body[data-edition="figma-enhanced"] .current-page .current-action:hover { background: var(--heading-deep); }
+body[data-edition="figma-enhanced"] .current-page .current-action:hover { background: #24351f; }
 body[data-edition="figma-enhanced"] .current-page .current-action:active { transform: translateY(1px); }
 body[data-edition="figma-enhanced"] .current-page .current-action:is(:disabled, [aria-disabled="true"]) { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
-body[data-edition="figma-enhanced"] .current-page :is(a, button, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; box-shadow: none; }
-body[data-edition="figma-enhanced"] .current-page [data-band="forest"] :is(a, button, [tabindex]):focus-visible { outline-color: var(--on-dark); }
-/* The second action, and the frames' "link arrow" buttons, are text links with a chevron. */
-body[data-edition="figma-enhanced"] .current-page :is(.current-action + .current-action, .current-action[data-name^="Link arrow"]) {
-  min-height: 44px; padding: 0; border: 0; border-radius: 0; background: none; color: var(--heading);
+body[data-edition="figma-enhanced"] .current-page :is(a, button, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; box-shadow: none; }
+/* The frames' "Link arrow" buttons: brown text with a diagonal arrow. */
+body[data-edition="figma-enhanced"] .current-page .current-action[data-name^="Link arrow"] { min-height: 36px; padding: 8px 0; border: 0; border-radius: 0; background: transparent; color: var(--link); }
+body[data-edition="figma-enhanced"] .current-page .current-action[data-name^="Link arrow"]::after {
+  content: ""; flex: 0 0 12px; width: 12px; height: 12px; background: currentColor; transition: transform var(--dur-2) var(--ease);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 10 10 2M2 2h8v8' fill='none' stroke='black' stroke-width='1.3'/%3E%3C/svg%3E") center/contain no-repeat;
 }
-body[data-edition="figma-enhanced"] .current-page :is(.current-action + .current-action, .current-action[data-name^="Link arrow"])::after {
-  content: ''; width: 0.55em; height: 0.55em; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
-  transform: rotate(45deg); transition: transform var(--dur-2) var(--ease);
-}
-body[data-edition="figma-enhanced"] .current-page :is(.current-action + .current-action, .current-action[data-name^="Link arrow"]):hover { background: none; color: var(--accent); }
-body[data-edition="figma-enhanced"] .current-page :is(.current-action + .current-action, .current-action[data-name^="Link arrow"]):hover::after { transform: translateX(3px) rotate(45deg); }
-body[data-edition="figma-enhanced"] .current-page :is(.current-action + .current-action, .current-action[data-name^="Link arrow"]):active { transform: none; color: var(--heading-deep); }
-/* On photographs: the Legacy Blueprint's translucent gradient button (owner's reference 9); the closing photograph uses it too. */
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) .current-action:not(.current-action + .current-action) {
+body[data-edition="figma-enhanced"] .current-page .current-action[data-name^="Link arrow"]:hover { background: transparent; color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page .current-action[data-name^="Link arrow"]:hover::after { transform: translate(2px, -2px); }
+/* On photographs: the Legacy Blueprint's translucent gradient button (owner's reference 9). */
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] .current-action:not([data-name^="Link arrow"]) {
   --fill: var(--surface-forest); --top: 35%; --bottom: 60%;
   background: linear-gradient(0deg, color-mix(in srgb, var(--fill) var(--bottom), transparent), color-mix(in srgb, var(--fill) var(--top), transparent));
-  border-color: color-mix(in srgb, var(--on-dark) 32%, transparent); color: var(--on-dark);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-color: color-mix(in srgb, var(--on-dark) 32%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) .current-action:not(.current-action + .current-action):hover { --top: 50%; --bottom: 75%; background: linear-gradient(0deg, color-mix(in srgb, var(--fill) var(--bottom), transparent), color-mix(in srgb, var(--fill) var(--top), transparent)); color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) .current-action:not(.current-action + .current-action)::after { display: none; }
-/* Beside it, the second action stays a text link, in the light ink of the photograph. */
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) .current-action + .current-action { color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) .current-action + .current-action:hover { color: var(--accent-on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]:not([data-hero="split"]) :is(a, button):focus-visible { outline-color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] .current-action:not([data-name^="Link arrow"]):hover { --top: 50%; --bottom: 75%; }
+body[data-edition="figma-enhanced"] .current-page :is([data-role="photo-hero"], [data-role="overlay"]) .current-action[data-name^="Link arrow"] { color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page :is([data-role="photo-hero"], [data-role="overlay"]) .current-action[data-name^="Link arrow"]:hover { color: var(--accent-on-dark); }
+body[data-edition="figma-enhanced"] .current-page :is([data-role="photo-hero"], [data-role="overlay"], [data-role="gallery"]) :is(a, button):focus-visible { outline-color: var(--on-dark); }
 
 /* ---- Photographs ---------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page :is([data-part="media"], [data-part="hero-image"]) { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-photo); background: var(--surface-warm); }
-body[data-edition="figma-enhanced"] .current-page :is([data-part="media"], [data-part="hero-image"]) img { display: block; width: 100%; height: 100%; object-fit: cover; }
-body[data-edition="figma-enhanced"] .current-page [data-part="media"][data-aspect="portrait"] { aspect-ratio: 4 / 5; }
-body[data-edition="figma-enhanced"] .current-page [data-part="media"][data-aspect="landscape"] { aspect-ratio: 3 / 2; }
-body[data-edition="figma-enhanced"] .current-page a [data-part="media"] img, body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(a) [data-part="media"] img { transition: transform var(--dur-3) var(--ease); }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(a:hover) [data-part="media"] img { transform: scale(1.03); }
+body[data-edition="figma-enhanced"] .current-page [data-part="media"] { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-photo); background: var(--surface-warm); }
+body[data-edition="figma-enhanced"] .current-page [data-part="media"] img, body[data-edition="figma-enhanced"] .current-page [data-part="hero-image"] img { display: block; width: 100%; height: 100%; object-fit: cover; }
+body[data-edition="figma-enhanced"] .current-page [data-part="hero-image"] { margin: 0; }
 
-/* ---- Photo hero: an inset rounded panel, copy low on the left ------------------------------------ */
+/* ---- Photo hero: full width, copy low on the left; Home centred (the frames) ------------------- */
 body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] {
-  position: relative; min-height: clamp(560px, 88svh, 980px); padding: var(--inset); align-content: end; background: var(--surface);
+  position: relative; isolation: isolate; align-content: end; min-height: clamp(620px, 48.6vw, 1000px);
+  padding: calc(var(--header) + var(--s8)) var(--edge) clamp(48px, 6.95vw, 140px); background: #262626; color: var(--on-dark);
 }
-/* The photograph spans the grid area, which already sits var(--inset) inside the section. */
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-image"] { position: absolute; inset: 0; border-radius: var(--r-panel); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-image"]::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to top, rgb(18 15 12 / 0.66), rgb(18 15 12 / 0.22) 46%, transparent 72%), linear-gradient(to right, rgb(18 15 12 / 0.34), transparent 62%);
-}
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-copy"] {
-  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: var(--s5);
-  padding: calc(var(--header) + var(--s7)) max(var(--s5), calc(var(--edge) - var(--inset))) clamp(40px, 6vw, 96px); color: var(--on-dark);
-}
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] h1 { max-width: 13.5em; color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] p { max-width: 34em; color: color-mix(in srgb, var(--on-dark) 92%, transparent); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-image"] { position: absolute; inset: 0; z-index: -2; }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(0 0 0 / 0.8), rgb(0 0 0 / 0)); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-copy"] { grid-column: 1 / span 6; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] h1 { max-width: 11em; color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] p:not([data-part="eyebrow"]) { max-width: 26em; color: #fff; font-size: var(--t-lede); line-height: 1.4545; }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] [data-part="eyebrow"] { color: var(--accent-on-dark); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"] { align-content: center; min-height: clamp(700px, 59.7vw, 1200px); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"]::before { background: rgb(0 0 0 / 0.5); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"] > [data-part="hero-copy"] { grid-column: 2 / span 10; align-items: center; text-align: center; gap: 40px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"] h1 { max-width: none; font-size: var(--t-hero); line-height: 1.07; }
 
-/* ---- Split hero: copy beside the photograph on a beige inset panel (experiences and group stays) ------- */
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] {
-  min-height: clamp(560px, 86svh, 940px); align-content: stretch; align-items: center; row-gap: var(--s6);
-  padding: calc(var(--header) + var(--s5)) var(--edge) calc(var(--inset) + var(--s7));
+/* Where the title would sit on a detailed part of the photograph (foliage, people, tables, rocks), the copy
+   sits on frosted glass (owner's prototype reference 16): the photograph under the text is blurred calm. */
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero-text="glass"] > [data-part="hero-copy"] {
+  margin-left: calc(var(--panel-pad) * -1); padding: var(--panel-pad); border-radius: var(--r-panel);
+  background: linear-gradient(135deg, rgb(7 9 8 / 0.62), rgb(7 9 8 / 0.34) 78%); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
 }
-body[data-edition="figma-enhanced"] .current-page [data-hero="split"]::before { content: ''; position: absolute; inset: var(--inset); border-radius: var(--r-panel); background: var(--surface-warm); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-image"] {
-  position: relative; inset: auto; grid-column: 7 / span 6; grid-row: 1; align-self: stretch; min-height: 420px; border-radius: var(--r-photo);
-}
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-image"]::after { display: none; }
-/* The photograph fills whatever height the row gets instead of setting it. */
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-image"] img { position: absolute; inset: 0; }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-copy"] { grid-column: 1 / span 5; grid-row: 1; padding: 0; color: var(--ink); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] h1 { color: var(--heading); }
-body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] p { color: var(--ink); }
 
-/* ---- Text hero: a section opener; as the page opener it is a beige inset panel ------------------- */
+/* ---- Text hero: white and centred, as in the frames ------------------------------------------- */
 body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] { justify-items: center; text-align: center; padding-block: calc(var(--section) * 0.8) calc(var(--section) * 0.45); }
-body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; max-width: 54rem; }
-body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] .current-lede { max-width: 40em; color: var(--ink); }
-body[data-edition="figma-enhanced"] .current-page > [data-role="text-hero"]:first-child { position: relative; padding: var(--inset); background: var(--surface); }
-body[data-edition="figma-enhanced"] .current-page > [data-role="text-hero"]:first-child::before { content: ''; position: absolute; inset: var(--inset); border-radius: var(--r-panel); background: var(--surface-warm); }
-body[data-edition="figma-enhanced"] .current-page > [data-role="text-hero"]:first-child > [data-part="copy"] {
-  position: relative; padding: calc(var(--header) + var(--s8)) max(var(--s5), calc(var(--edge) - var(--inset))) clamp(56px, 7vw, 112px);
-}
-body[data-edition="figma-enhanced"] .current-page > [data-role="text-hero"]:first-child h2 { font-size: var(--t-display); line-height: var(--lh-display); }
-/* After any opener the first section breathes a full step. */
-body[data-edition="figma-enhanced"] .current-page > section:first-child + section:not([data-band]) { padding-top: var(--section); }
+body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; gap: 20px; max-width: 1080px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] h1 { font-size: var(--t-h1); line-height: 1.1; }
+body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] h2 { font-size: var(--t-h2); line-height: 1.154; }
+body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] .current-lede { color: var(--heading-deep); }
+body[data-edition="figma-enhanced"] .current-page > [data-role="text-hero"]:first-child { padding-top: calc(var(--header) + var(--s7)); }
 
-/* ---- Split: description with its rate card ------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] { row-gap: var(--s7); align-items: start; }
+/* ---- Description and rate card ---------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-variant="description"] { align-items: start; row-gap: var(--s7); }
 body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="copy"] { grid-column: 1 / span 7; }
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="copy"] > h2 { font-size: var(--t-h3); line-height: var(--lh-title); }
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] {
-  grid-column: 9 / span 4; display: flex; flex-direction: column; align-items: flex-start; gap: var(--s4);
-  padding: var(--panel-pad); border-radius: var(--r-panel); background: var(--surface-warm);
+body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="copy"] > h2 { font-size: var(--t-h3s); line-height: 1.357; color: var(--ink); }
+body[data-edition="figma-enhanced"] .current-page [data-part="rate"] {
+  grid-column: 9 / span 4; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;
+  padding: clamp(24px, 2.43vw, 44px); border-radius: var(--r-panel); background: var(--surface-warm);
 }
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] h2 { font-size: var(--t-h3); line-height: var(--lh-title); }
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] p:not([data-part="eyebrow"]) { font-size: var(--t-small); line-height: var(--lh-small); color: var(--ink); }
-body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] [data-part="actions"] { margin-top: var(--s3); }
+body[data-edition="figma-enhanced"] .current-page [data-part="rate"] h2 { font-size: var(--t-h3s); line-height: 1.357; }
 
-/* ---- Split: editorial (photo and copy side by side) ---------------------------------------------- */
+/* ---- Editorial splits: photo and copy side by side, the frames' 603:638 photograph ------------- */
 body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] { align-items: center; row-gap: var(--s6); }
+body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="copy"] { gap: 40px; }
+body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="media"] { aspect-ratio: 603 / 638; }
 body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="image-first"] > [data-part="media"] { grid-column: 1 / span 6; grid-row: 1; }
 body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="image-first"] > [data-part="copy"] { grid-column: 8 / span 5; grid-row: 1; }
 body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="copy-first"] > [data-part="copy"] { grid-column: 1 / span 5; grid-row: 1; }
 body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="copy-first"] > [data-part="media"] { grid-column: 7 / span 6; grid-row: 1; }
-body[data-edition="figma-enhanced"] .current-page [data-name="Section - 40/60 text image"] > [data-part="copy"] { grid-column: 1 / span 4; }
 body[data-edition="figma-enhanced"] .current-page [data-name="Section - 40/60 text image"] > [data-part="media"] { grid-column: 6 / span 7; }
 body[data-edition="figma-enhanced"] .current-page [data-name="Section - 60/40 text image"] > [data-part="media"] { grid-column: 1 / span 7; }
 body[data-edition="figma-enhanced"] .current-page [data-name="Section - 60/40 text image"] > [data-part="copy"] { grid-column: 9 / span 4; }
-body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] h2 { font-size: var(--t-h2); }
+body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] h2 { font-size: var(--t-h2m); line-height: 1.095; }
+body[data-edition="figma-enhanced"] .current-page :is([data-name="Section - 40/60 text image"], [data-name="Section - 60/40 text image"]) h2 { font-size: var(--t-h2); line-height: 1.154; }
 
-/* ---- Overlay: a panoramic photograph with a solid panel overlapping its lower edge ------------------ */
-body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] { position: relative; }
-body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="media"] { grid-column: 1 / -1; grid-row: 1; aspect-ratio: 21 / 9; border-radius: var(--r-panel); }
+/* ---- Overlay: a full-width photograph with the frames' translucent brown panel ------------------ */
+body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] {
+  position: relative; isolation: isolate; align-content: stretch; min-height: clamp(560px, 55.5vw, 1100px);
+  padding: clamp(24px, 3.82vw, 76px) var(--edge); background: var(--panel-dark-solid); color: #fff;
+}
+body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="media"] { position: absolute; inset: 0; z-index: -1; height: 100%; border-radius: 0; }
 body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"] {
-  grid-column: 2 / span 5; grid-row: 2; position: relative; z-index: 1; margin-top: calc(clamp(64px, 9vw, 160px) * -1);
-  padding: var(--panel-pad); border-radius: var(--r-panel); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-panel);
+  grid-column: 1 / span 5; grid-row: 1; align-self: stretch; justify-content: center; gap: 40px; padding: var(--panel-pad); background: var(--panel-dark);
 }
-body[data-edition="figma-enhanced"] .current-page [data-name="Overlay panel rigth"] > [data-part="copy"] { grid-column: 7 / span 5; }
-body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] h2 { font-size: var(--t-h2); }
-body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"] :where(h2, h3) { color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Overlay panel rigth"] > [data-part="copy"] { grid-column: 8 / span 5; }
+body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] > [data-part="copy"] { grid-column: 2 / span 5; }
+body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] h2 { font-size: var(--t-h2m); line-height: 1.095; color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] h2 { font-size: var(--t-h2); line-height: 1.154; }
+body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] [data-part="eyebrow"] { color: var(--accent-on-dark); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] [data-part="copy"] > p + p { margin-top: -20px; }
 
-/* ---- Cards ---------------------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-role="cards"] > [data-part="card-grid"] { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: var(--s8) var(--gutter); }
-body[data-edition="figma-enhanced"] .current-page [data-role="cards"][data-columns="2"] { --cols: 2; }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] { display: flex; flex-direction: column; gap: var(--s5); min-width: 0; }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] { gap: var(--s3); }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] > :is(h1, h2, h3) + :is(p, div) { margin-top: 0; }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] h3 { font-size: var(--t-h3); }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] p[data-part="paragraph"] { font-size: var(--t-small); line-height: var(--lh-small); color: var(--ink); }
-/* One shape per group: tall cards in threes, wide ones in pairs and in the offers. */
-body[data-edition="figma-enhanced"] .current-page [data-role="cards"]:not([data-columns="2"]) [data-part="card"] > [data-part="media"] { aspect-ratio: 4 / 5; }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="cards"][data-columns="2"], [data-name="Price and offers"]) [data-part="card"] > [data-part="media"] { aspect-ratio: 3 / 2; }
-body[data-edition="figma-enhanced"] .current-page [data-name="Price and offers"] [data-part="card"] { gap: var(--s4); }
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] [data-part="actions"] { margin-top: var(--s1); }
-/* The offers' "OFFER" mark is a small tag, not a line of text. */
-body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] > p[data-part="paragraph"]:first-child:has(+ h3) {
-  padding: var(--s1) var(--s3); border-radius: 999px; background: var(--surface-warm); color: var(--accent);
-  font: 600 var(--t-label) / 1.4 var(--font-body); letter-spacing: var(--tracking-label); text-transform: uppercase;
+/* ---- Gallery: a full-width photograph with the frames' arrows ----------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="gallery"] { position: relative; isolation: isolate; min-height: clamp(420px, 48.6vw, 1000px); padding: 0; background: var(--panel-dark-solid); }
+body[data-edition="figma-enhanced"] .current-page [data-role="gallery"] > [data-part="media"] { position: absolute; inset: 0; z-index: -1; height: 100%; border-radius: 0; }
+body[data-edition="figma-enhanced"] .current-page :is([data-part="gallery-prev"], [data-part="gallery-next"]) {
+  position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 58px; height: 58px; padding: 0; border: 0;
+  background: none; color: #fff; translate: 0 -50%; cursor: pointer; transition: opacity var(--dur-2) var(--ease);
 }
-body[data-edition="figma-enhanced"] .current-page [data-band="beige"] [data-part="card"] > [data-part="copy"] > p[data-part="paragraph"]:first-child:has(+ h3) { background: var(--surface); }
+body[data-edition="figma-enhanced"] .current-page :is([data-part="gallery-prev"], [data-part="gallery-next"])::before {
+  content: ""; width: 41px; height: 41px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; rotate: 45deg; translate: 8px 0;
+}
+body[data-edition="figma-enhanced"] .current-page [data-part="gallery-next"]::before { rotate: -135deg; translate: -8px 0; }
+body[data-edition="figma-enhanced"] .current-page :is([data-part="gallery-prev"], [data-part="gallery-next"]):hover { opacity: 0.75; }
+body[data-edition="figma-enhanced"] .current-page [data-part="gallery-prev"] { left: clamp(8px, 1.74vw, 40px); }
+body[data-edition="figma-enhanced"] .current-page [data-part="gallery-next"] { right: clamp(8px, 1.74vw, 40px); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] :is([data-part="gallery-prev"], [data-part="gallery-next"]) { color: var(--surface-copper); }
 
-/* ---- Copy sections: headings over a card group, and short centred statements ----------------------- */
+/* ---- Cards: the frames' white cards, room cards with a shadow, offers with their ribbon ---------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="cards"] > [data-part="card-grid"] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: clamp(24px, 3.13vw, 56px); }
+body[data-edition="figma-enhanced"] .current-page [data-role="cards"][data-columns="2"] > [data-part="card-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] { position: relative; display: flex; flex-direction: column; min-width: 0; border-radius: var(--r-panel); background: var(--surface); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="media"] { aspect-ratio: 400 / 251; border-radius: var(--r-panel) var(--r-panel) 0 0; }
+body[data-edition="figma-enhanced"] .current-page [data-columns="2"] [data-part="card"] > [data-part="media"] { aspect-ratio: 622 / 251; }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] { flex: 1; padding: 20px 30px 24px; gap: 10px; }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] h3 { color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] h3 a:hover { text-decoration: underline; text-underline-offset: 0.15em; text-decoration-thickness: 1px; }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] [data-part="actions"] { margin-top: auto; padding-top: var(--s2); }
+body[data-edition="figma-enhanced"] .current-page :is([data-name="Room Card"], [data-name="50 card"]) { box-shadow: var(--shadow-card); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] { background: transparent; }
+body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] > [data-part="media"] { aspect-ratio: 1; border-radius: var(--r-photo); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] > [data-part="copy"] { padding: 15px 0 0; gap: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] h3 { font-size: var(--t-h4); line-height: 1.46; color: var(--heading-deep); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] p { line-height: 1.333; }
+body[data-edition="figma-enhanced"] .current-page a [data-part="media"] img, body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(a) [data-part="media"] img { transition: transform var(--dur-3) var(--ease); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(a:hover) [data-part="media"] img { transform: scale(1.03); }
+/* Offers: the frames' copper ribbon across the corner, a shadow and brown titles. */
+body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(> [data-part="copy"] > p:first-child + h3) { overflow: hidden; box-shadow: var(--shadow-card); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"]:has(> [data-part="copy"] > p:first-child + h3) :is(h3, [data-part="highlight"]) { color: var(--link); }
+body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] > p:first-child:has(+ h3) {
+  position: absolute; top: 14px; left: -17px; z-index: 1; width: 162px; margin: 0; background: #d57e3d; color: #fff;
+  font: 700 18.7px / 28.5px var(--font-body); text-align: center; transform: rotate(-30deg); pointer-events: none;
+}
+
+/* ---- Copy sections: centred headings, eyebrows and short statements ---------------------------- */
 body[data-edition="figma-enhanced"] .current-page [data-role="copy"] { justify-items: center; text-align: center; }
-body[data-edition="figma-enhanced"] .current-page [data-role="copy"] > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; max-width: 56rem; }
-body[data-edition="figma-enhanced"] .current-page [data-role="copy"] h2 { font-size: var(--t-statement); line-height: var(--lh-statement); }
-body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"] { padding-bottom: var(--s6); }
-body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"][data-band] { padding-bottom: var(--s6); }
-body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"][data-band] + [data-band] { padding-top: var(--s5); }
-body[data-edition="figma-enhanced"] .current-page [data-name="copy block"] p { font-size: var(--t-lede); line-height: var(--lh-lede); max-width: 42em; }
+body[data-edition="figma-enhanced"] .current-page [data-role="copy"] > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; gap: 30px; max-width: 1080px; }
+body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"] h2 { font-size: var(--t-h2s); line-height: 1.278; }
+body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"]:has(+ [data-role="cards"]) { padding-bottom: var(--s6); }
+body[data-edition="figma-enhanced"] .current-page [data-name="Heading title"][data-tone="beige"] + [data-tone="beige"] { padding-top: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-name="copy block"] p { color: var(--heading-deep); }
 
-/* ---- Callout: a beige panel with a small portrait ---------------------------------------------------- */
+/* ---- Introduction: the fan artwork beside the opening statement -------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] { align-items: center; padding-block: calc(var(--section) * 0.7); }
+body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > [data-part="artwork"] { grid-column: 1 / span 2; }
+body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > [data-part="artwork"] img { width: 100%; max-height: 440px; object-fit: contain; }
+body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > [data-part="copy"] { grid-column: 4 / span 8; }
+
+/* ---- Quote: centred, with the fan artwork running off the right edge --------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] { position: relative; isolation: isolate; overflow: clip; justify-items: center; text-align: center; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; gap: 20px; max-width: 1080px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] > [data-part="artwork"] { position: absolute; right: -140px; top: 85px; z-index: -1; width: 470px; height: 500px; pointer-events: none; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] > [data-part="artwork"] img { width: 100%; height: 100%; object-fit: contain; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] [data-part="attribution"] { margin-top: 40px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] [data-part="attribution"] p { font-size: var(--t-lede); line-height: 1.4545; }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] [data-part="author-name"] { margin-bottom: 10px; color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page [data-role="quote"] [data-part="author-role"] { color: var(--heading); }
+
+/* ---- Callout: the frames' beige panel with a portrait ------------------------------------------ */
 body[data-edition="figma-enhanced"] .current-page [data-role="callout"] > [data-part="callout-panel"] {
-  grid-column: 2 / span 10; display: grid; grid-template-columns: minmax(140px, 220px) minmax(0, 1fr); align-items: center; gap: var(--panel-pad);
-  padding: var(--panel-pad); border-radius: var(--r-panel); background: var(--surface-warm);
+  grid-column: 2 / span 10; display: flex; align-items: center; gap: 40px; padding: clamp(24px, 3.82vw, 64px); border-radius: var(--r-panel); background: var(--surface-warm);
 }
-body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="media"] { aspect-ratio: 4 / 5; }
-body[data-edition="figma-enhanced"] .current-page [data-role="callout"] h2 { font-size: var(--t-statement); line-height: var(--lh-statement); max-width: 26em; }
-body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="artwork"] { width: clamp(80px, 9vw, 130px); }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="copy"] { flex: 1 1 auto; max-width: 1000px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] h2 { font-size: var(--t-h2s); line-height: 1.278; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="media"] { flex: 0 0 clamp(140px, 12.5vw, 220px); aspect-ratio: 180 / 216; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="artwork"] { flex: 0 0 clamp(96px, 9vw, 150px); }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="artwork"] img { width: 100%; }
 
-/* ---- Facts and amenities: terms and values on the 12 columns ------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page :is([data-role="facts"], [data-role="amenities"]) > [data-part="facts"] {
-  display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; row-gap: var(--s6); margin: 0;
-}
-/* Each fact spans --span columns: four to a row, three when the count divides by three, two for a pair. */
-body[data-edition="figma-enhanced"] .current-page [data-part="facts"] > [data-part="fact"] { grid-column: span var(--span, 3); }
-@media (min-width: 1024px) {
-  body[data-edition="figma-enhanced"] .current-page [data-part="facts"]:is(:has(> :nth-child(3):last-child), :has(> :nth-child(5):last-child), :has(> :nth-child(6):last-child), :has(> :nth-child(9):last-child)) { --span: 4; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="facts"]:has(> :nth-child(2):last-child) { --span: 6; }
-}
-body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="facts"] { --span: 4; }
-body[data-edition="figma-enhanced"] .current-page [data-role="facts"] { padding-block: calc(var(--section) * 0.35); }
-body[data-edition="figma-enhanced"] .current-page [data-part="fact"] { display: flex; flex-direction: column; gap: var(--s2); padding-top: var(--s4); border-top: 1px solid var(--rule-strong); }
-body[data-edition="figma-enhanced"] .current-page [data-role="facts"] [data-part="fact"] > p[data-part="paragraph"] { font-size: var(--t-lede); line-height: var(--lh-lede); color: var(--heading); }
-body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="fact"] { gap: var(--s3); border-top-color: var(--accent); }
-body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="fact"] > p[data-part="paragraph"] { color: var(--ink); }
+/* ---- Facts: the frames' copper-ruled columns; amenities without rules -------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="facts"] > [data-part="facts"] { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; gap: 40px; }
+body[data-edition="figma-enhanced"] .current-page [data-name="included"] > [data-part="facts"]:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] > [data-part="facts"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body[data-edition="figma-enhanced"] .current-page [data-role="facts"] [data-part="fact"] { padding-top: 14px; border-top: 4px solid var(--accent); }
+body[data-edition="figma-enhanced"] .current-page [data-role="facts"] [data-part="fact"] > :first-child { margin-bottom: 10px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="facts"] [data-part="fact"] > p:not(:first-child) { font: 300 var(--t-highlight) / 1.2 var(--font-body); color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page [data-role="facts"] h3 { color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="fact"] > p:not(:first-child) { font: 400 var(--t-lede) / 1.4545 var(--font-body); color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page [data-role="amenities"] > [data-part="facts"] { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 35px; margin: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-role="amenities"] dt { margin-bottom: 10px; }
 body[data-edition="figma-enhanced"] .current-page [data-role="amenities"] dd { margin: 0; color: var(--ink); }
-
-/* ---- Gallery: one panoramic inset photograph that opens the viewer -------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-role="gallery"] { padding-inline: var(--inset); }
-body[data-edition="figma-enhanced"] .current-page [data-role="gallery"] > [data-part="media"] { aspect-ratio: 21 / 9; border-radius: var(--r-panel); }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="gallery"], [data-role="overlay"]) [data-part="gallery-next"] { display: none; }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="gallery"], [data-role="overlay"]) [data-part="gallery-prev"] {
-  position: absolute; z-index: 2; right: var(--s5); bottom: var(--s5); width: 56px; height: 56px; padding: 0; border: 1px solid color-mix(in srgb, var(--on-dark) 45%, transparent);
-  border-radius: 50%; background: color-mix(in srgb, var(--surface-forest) 55%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--on-dark); cursor: zoom-in;
-  transition: background-color var(--dur-2) var(--ease);
+@media (min-width: 1366px) {
+  body[data-edition="figma-enhanced"] .current-page [data-role="facts"] [data-part="fact"] > p:first-child { white-space: nowrap; }
 }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="gallery"], [data-role="overlay"]) [data-part="gallery-prev"]::before {
-  content: ''; position: absolute; inset: 0; margin: auto; width: 18px; height: 18px;
-  background: linear-gradient(currentColor, currentColor) 0 0 / 7px 1.5px, linear-gradient(currentColor, currentColor) 0 0 / 1.5px 7px,
-    linear-gradient(currentColor, currentColor) 100% 100% / 7px 1.5px, linear-gradient(currentColor, currentColor) 100% 100% / 1.5px 7px;
-  background-repeat: no-repeat;
-}
-body[data-edition="figma-enhanced"] .current-page :is([data-role="gallery"], [data-role="overlay"]) [data-part="gallery-prev"]:hover { background: color-mix(in srgb, var(--surface-forest) 80%, transparent); }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="gallery"], [data-role="overlay"]) [data-part="gallery-prev"]:active { transform: scale(0.96); }
-body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] [data-part="gallery-prev"] { top: var(--s5); bottom: auto; }
 
-/* ---- Comparison table ----------------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-part="table-scroll"] { overflow-x: auto; border-radius: var(--r-panel); }
-body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] table { width: 100%; border-collapse: collapse; }
-body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] th { padding: var(--s4) var(--s5); text-align: left; border-bottom: 1px solid var(--rule-strong); font: 500 var(--t-small) / var(--lh-small) var(--font-body); color: var(--ink-soft); }
-body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td { padding: var(--s5); border-bottom: 1px solid var(--rule); vertical-align: top; }
-body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td:first-child { font-family: var(--font-display); font-size: var(--t-h3); line-height: var(--lh-title); color: var(--heading); }
+/* ---- Comparison table --------------------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-part="table-scroll"] { overflow-x: auto; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] th { padding: 15px 25px; border-bottom: 2px solid var(--rule-strong); color: var(--accent); font: 600 var(--t-label) / 1.4286 var(--font-body); letter-spacing: 0.214em; text-transform: uppercase; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td { padding: 15px 25px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td:first-child { font: 400 var(--t-highlight) / 1.9 var(--font-display); }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] th:nth-child(1) { width: 20%; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] th:nth-child(2) { width: 14%; }
+body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] th:nth-child(3) { width: 23%; }
 
-/* ---- Events: rows of a programme on the 12 columns -------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-role="events"] > h2 { margin-bottom: var(--s6); }
+/* ---- Events: the frames' programme rows --------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="events"] > h2 { margin-bottom: 40px; font-size: var(--t-h3); line-height: 1.4; text-align: center; color: var(--accent); }
 body[data-edition="figma-enhanced"] .current-page [data-part="event"] {
-  display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; row-gap: var(--s2);
-  padding-block: var(--s5); border-top: 1px solid var(--rule-strong);
+  display: grid; grid-template-columns: minmax(0, 123fr) minmax(0, 319fr) minmax(0, 491fr) minmax(0, 230fr) max-content; align-items: center; gap: 24px;
+  padding: 24px; border-top: 1px solid var(--accent-on-dark);
 }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"]:last-child { border-bottom: 1px solid var(--rule-strong); }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(1) { grid-column: 1 / span 2; font-weight: 500; }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(2) { grid-column: 3 / span 3; }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(3) { grid-column: 6 / span 4; }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(4) { grid-column: 10 / span 2; }
-body[data-edition="figma-enhanced"] .current-page [data-part="event"] > [data-part="actions"] { grid-column: 12; justify-self: end; margin: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(1) { font-weight: 700; }
+body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(2) { font-weight: 600; }
 
-/* ---- Topics ------------------------------------------------------------------------------------------------ */
-body[data-edition="figma-enhanced"] .current-page [data-role="topics"] > [data-part="topics"] { grid-column: 2 / span 10; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule-strong); }
-body[data-edition="figma-enhanced"] .current-page [data-role="topics"] li { padding: var(--s5) 0; border-bottom: 1px solid var(--rule); }
-body[data-edition="figma-enhanced"] .current-page [data-role="topics"] h3 { font-size: var(--t-h3); }
+/* ---- Topics (Weddings) ---------------------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="topics"] > [data-part="topics"] { margin: 0; padding: 0; list-style: none; }
+body[data-edition="figma-enhanced"] .current-page [data-role="topics"] > [data-part="topics"]::before { content: ""; display: block; height: 42px; border-bottom: 2px solid var(--rule-strong); }
+body[data-edition="figma-enhanced"] .current-page [data-role="topics"] li { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 15px 50px; border-bottom: 1px solid var(--rule); color: var(--ink); }
+body[data-edition="figma-enhanced"] .current-page [data-role="topics"] li:last-child { border-bottom: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-role="topics"] h3 { font-size: var(--t-highlight); line-height: 1.9; color: var(--ink); }
 
-/* ---- Map, press logos, quote, introduction -------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page [data-role="map"] > [data-part="media"] { aspect-ratio: 3 / 2; border-radius: var(--r-panel); }
-body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s3); margin: var(--s6) 0 0; padding: 0; list-style: none; }
-body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li { padding: var(--s2) var(--s4); border-radius: 999px; background: var(--surface-warm); color: var(--heading); font-size: var(--t-small); line-height: var(--lh-small); }
-body[data-edition="figma-enhanced"] .current-page [data-role="logos"] { padding-block: calc(var(--section) * 0.4); }
-body[data-edition="figma-enhanced"] .current-page [data-role="logos"] > [data-part="artwork"] { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s6) var(--s7); }
-body[data-edition="figma-enhanced"] .current-page [data-role="logos"] img { height: clamp(18px, 1.9vw, 30px); width: auto; max-width: 140px; object-fit: contain; opacity: 0.8; }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="quote"], [data-role="introduction"]) { justify-items: center; text-align: center; }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="quote"], [data-role="introduction"]) > [data-part="copy"] { grid-column: 2 / span 10; align-items: center; gap: var(--s5); }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="quote"], [data-role="introduction"]) > [data-part="artwork"] { width: clamp(48px, 4.5vw, 72px); margin-bottom: var(--s6); opacity: 0.55; }
-body[data-edition="figma-enhanced"] .current-page :is([data-role="quote"], [data-role="introduction"]) > [data-part="artwork"] img { width: 100%; height: auto; }
-body[data-edition="figma-enhanced"] .current-page [data-role="quote"][data-band="forest"] .display-prose { color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-part="attribution"] { display: flex; flex-direction: column; gap: var(--s1); margin-top: var(--s3); }
-body[data-edition="figma-enhanced"] .current-page [data-part="author-name"] { font-weight: 500; color: var(--heading); }
-body[data-edition="figma-enhanced"] .current-page [data-band="forest"] [data-part="author-name"] { color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page [data-part="author-role"] { font-size: var(--t-small); line-height: var(--lh-small); color: var(--ink-soft); }
-
-/* ---- Closing: a night photograph that melts into the newsletter and the footer (Legacy reference 13) ---------
-   The footer takes the darkest tone of the photograph, and the photograph fades into it over two header heights.
-   The newsletter sits below the photograph on that colour: no paragraph is set over a photograph. */
-body[data-edition="figma-enhanced"] .current-page .site-newsletter {
-  position: relative; isolation: isolate; display: grid; align-items: end; min-height: 0; margin: 0;
-  padding: var(--section-band) var(--edge); border-radius: 0; background: var(--surface-forest); color: var(--on-dark);
+/* ---- Map: full width, the frame's crop of the aerial photograph, labels on their buildings -------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="map"] { position: relative; padding: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-role="map"] > [data-part="media"] { aspect-ratio: 1440 / 870; border-radius: 0; }
+body[data-edition="figma-enhanced"] .current-page [data-role="map"] > [data-part="media"] img { position: absolute; inset: auto; width: 129.64%; height: 147.24%; max-width: none; left: -3.87%; top: -19.01%; object-fit: fill; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li {
+  position: absolute; display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 104px; background: #fff; box-shadow: 0 4px 2px rgb(26 48 19 / 0.5);
+  color: var(--heading); font: 600 var(--t-label) / 1.4286 var(--font-body); white-space: nowrap;
 }
-body[data-edition="figma-enhanced"] .current-page .site-newsletter.newsletter-closing { padding: 0 0 calc(var(--section) * 0.6); background: var(--surface-night); }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(1) { left: 68%; top: 17%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(2) { left: 72.4%; top: 60.9%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(3) { left: 62.5%; top: 47%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(4) { left: 43.2%; top: 44.3%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(5) { left: 56.3%; top: 80.2%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(6) { left: 39.2%; top: 17.7%; }
+body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li:nth-child(7) { left: 19.9%; top: 54.7%; }
+
+/* ---- Press logos ---------------------------------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page [data-role="logos"] { padding-block: 35px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="logos"] > [data-part="artwork"] { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 36px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="logos"] img { width: 100px; max-width: 13%; max-height: 38px; object-fit: contain; }
+
+/* ---- Closing: a night photograph that melts into the newsletter and the footer (Legacy reference 13) --
+   The footer takes the darkest tone of the photograph, which fades into it over two header heights. */
+body[data-edition="figma-enhanced"] .current-page .site-newsletter { position: relative; isolation: isolate; color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page .site-newsletter.newsletter-closing { display: grid; padding: 0 0 calc(var(--section) * 0.6); background: var(--surface-night); }
 body[data-edition="figma-enhanced"] .current-page .newsletter-photo { position: relative; height: clamp(320px, 62svh, 680px); margin: 0; overflow: hidden; }
 body[data-edition="figma-enhanced"] .current-page .newsletter-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
-body[data-edition="figma-enhanced"] .current-page .newsletter-photo::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to top, var(--surface-night), rgb(22 26 17 / 0.62) var(--header), transparent calc(var(--header) * 2));
-}
-body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-inner { padding: var(--s5) var(--edge) 0; }
-body[data-edition="figma-enhanced"] .current-page .newsletter-inner { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s6); align-items: end; width: 100%; max-width: none; margin: 0; }
-body[data-edition="figma-enhanced"] .current-page .newsletter-inner > div { grid-column: 1 / span 6; }
-body[data-edition="figma-enhanced"] .current-page .newsletter-form { position: relative; grid-column: 8 / span 5; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s3); align-items: start; }
-body[data-edition="figma-enhanced"] .current-page .site-newsletter .newsletter-eyebrow { margin: 0 0 var(--s4); font: 600 var(--t-label) / 1.4 var(--font-body); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent-on-dark); }
-body[data-edition="figma-enhanced"] .current-page .site-newsletter h2 { margin: 0 0 var(--s4); font: 400 var(--t-h2) / var(--lh-heading) var(--font-display); color: var(--on-dark); }
-body[data-edition="figma-enhanced"] .current-page .site-newsletter p:not(.newsletter-eyebrow, .newsletter-status) { max-width: 34em; color: color-mix(in srgb, var(--on-dark) 90%, transparent); }
-body[data-edition="figma-enhanced"] .current-page .newsletter-form input {
-  width: 100%; height: 48px; min-width: 0; padding: 0 var(--s5); border: 1px solid color-mix(in srgb, var(--on-dark) 40%, transparent); border-radius: var(--r-control);
-  background: var(--surface); color: var(--ink); font: 400 var(--t-body) / 1 var(--font-body);
-}
+body[data-edition="figma-enhanced"] .current-page .newsletter-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--surface-night), rgb(22 26 17 / 0.62) var(--header), transparent calc(var(--header) * 2)); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-inner { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s6); align-items: end; max-width: none; margin: 0; padding: var(--s5) var(--edge) 0; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-inner > div { grid-column: 1 / span 6; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-form { grid-column: 8 / span 5; }
+body[data-edition="figma-enhanced"] .current-page .site-newsletter .newsletter-eyebrow { margin: 0 0 20px; color: var(--label-on-dark); font: 600 var(--t-label) / 1.4286 var(--font-body); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+body[data-edition="figma-enhanced"] .current-page .site-newsletter h2 { margin: 0 0 12px; color: #fff; font: 400 var(--t-h2s) / 1.278 var(--font-display); }
+body[data-edition="figma-enhanced"] .current-page .site-newsletter p:not(.newsletter-eyebrow, .newsletter-status) { color: #fff; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-form { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-form input { width: 100%; height: 48px; min-width: 0; padding: 0 24px; border: 1px solid transparent; border-radius: var(--r-control); background: #fff; color: var(--ink); font: 400 var(--t-button) / 1.25 var(--font-body); }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form input::placeholder { color: #8a8580; opacity: 1; }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form input:focus-visible { outline: 2px solid var(--on-dark); outline-offset: 2px; }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form input[aria-invalid="true"] { border-color: #f2b48c; box-shadow: 0 0 0 2px #f2b48c; }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form button {
-  --fill: var(--surface-forest); --top: 35%; --bottom: 60%;
-  min-height: 48px; padding: 0 var(--s5); border: 1px solid color-mix(in srgb, var(--on-dark) 32%, transparent); border-radius: var(--r-control);
-  background: linear-gradient(0deg, color-mix(in srgb, var(--fill) var(--bottom), transparent), color-mix(in srgb, var(--fill) var(--top), transparent));
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--on-dark);
-  font: 500 var(--t-button) / 1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background-color var(--dur-2) var(--ease);
+  min-height: 48px; padding: 0 24px; border: 1px solid transparent; border-radius: var(--r-control); background: var(--surface-forest); color: var(--on-dark);
+  font: 500 var(--t-button) / 1.25 var(--font-body); letter-spacing: 0.02em; text-transform: uppercase; cursor: pointer; transition: background-color var(--dur-2) var(--ease);
 }
-body[data-edition="figma-enhanced"] .current-page .newsletter-form button:hover { --top: 50%; --bottom: 75%; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-form button:hover { background: #24351f; }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form button:active { transform: translateY(1px); }
-body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form button { background: var(--on-dark); border-color: transparent; color: var(--heading); -webkit-backdrop-filter: none; backdrop-filter: none; }
-body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form button:hover { background: var(--surface); }
-body[data-edition="figma-enhanced"] .current-page .newsletter-status { position: static; grid-column: 1 / -1; min-height: 1.6em; margin: 0; font: 400 var(--t-small) / var(--lh-small) var(--font-body); color: color-mix(in srgb, var(--on-dark) 86%, transparent); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-status { position: static; grid-column: 1 / -1; min-height: 1.6em; margin: 0; font: 400 var(--t-button) / 1.5 var(--font-body); color: color-mix(in srgb, var(--on-dark) 86%, transparent); }
 body[data-edition="figma-enhanced"] .current-page .newsletter-form[data-state="error"] .newsletter-status { color: #f6c4a2; }
+/* The Vessyl Presents keeps the frames' events newsletter: a forest pattern panel inside the page. */
+body[data-edition="figma-enhanced"] .current-page .site-newsletter.newsletter-events { margin: calc(var(--section) / 2) var(--edge); padding: clamp(40px, 5.5vw, 96px) clamp(24px, 6.9vw, 120px); border-radius: var(--r-panel); overflow: hidden; background-color: var(--surface-forest); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-inner { display: flex; justify-content: space-between; align-items: center; gap: 40px; max-width: none; margin: 0; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-inner > div { flex: 0 1 544px; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form { flex: 0 0 auto; }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form input { width: clamp(220px, 25vw, 400px); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form button { background: var(--on-dark); color: var(--heading); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form button:hover { background: #fff; }
 /* Header and footer content sit on the page's outer margin at every width. */
 body[data-edition="figma-enhanced"] .site-header .header-inner { max-width: none; padding-inline: var(--edge); }
 body[data-edition="figma-enhanced"] .site-footer { padding-inline: 0; background: var(--surface-night); }
 body[data-edition="figma-enhanced"] .footer-inner { max-width: none; padding-inline: var(--edge); }
 body[data-edition="figma-enhanced"] :is(.footer-top, .footer-columns, .footer-bottom) { padding-inline: 0; }
-/* Between the phone and tablet layouts, five link groups do not fit the narrower grid: three to a row. */
 @media (min-width: 681px) and (max-width: 760px) {
   body[data-edition="figma-enhanced"] .footer-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px var(--gutter); }
 }
 
-/* ---- Tablet ---------------------------------------------------------------------------------------------- */
+/* ---- Tablet ---------------------------------------------------------------------------------------- */
 @media (max-width: 1023px) {
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-copy"] { grid-column: 1 / span 6; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-image"] { grid-column: 7 / span 6; min-height: 360px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-copy"] { grid-column: 1 / span 9; }
   body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="copy"] { grid-column: 1 / span 7; }
-  body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] { grid-column: 8 / span 5; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="rate"] { grid-column: 8 / span 5; }
   body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="image-first"] > [data-part="media"],
   body[data-edition="figma-enhanced"] .current-page [data-name="Section - 60/40 text image"] > [data-part="media"] { grid-column: 1 / span 6; }
   body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="image-first"] > [data-part="copy"],
@@ -350,63 +338,77 @@ body[data-edition="figma-enhanced"] :is(.footer-top, .footer-columns, .footer-bo
   body[data-edition="figma-enhanced"] .current-page [data-name="Section - 40/60 text image"] > [data-part="copy"] { grid-column: 1 / span 6; }
   body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"][data-layout="copy-first"] > [data-part="media"],
   body[data-edition="figma-enhanced"] .current-page [data-name="Section - 40/60 text image"] > [data-part="media"] { grid-column: 7 / span 6; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="media"] { aspect-ratio: 3 / 2; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"], body[data-edition="figma-enhanced"] .current-page [data-name="Overlay panel rigth"] > [data-part="copy"] { grid-column: 2 / span 10; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"], body[data-edition="figma-enhanced"] .current-page [data-name="Overlay panel rigth"] > [data-part="copy"], body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] > [data-part="copy"] { grid-column: 2 / span 8; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="cards"] > [data-part="card-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   body[data-edition="figma-enhanced"] .current-page [data-role="callout"] > [data-part="callout-panel"] { grid-column: 1 / -1; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="facts"] { --span: 6; }
-  body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="facts"] { --span: 4; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(1) { grid-column: 1 / span 3; grid-row: 1; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(2) { grid-column: 4 / span 6; grid-row: 1; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(3) { grid-column: 4 / -1; grid-row: 2; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(4) { grid-column: 4 / -1; grid-row: 3; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > [data-part="actions"] { grid-column: 10 / -1; grid-row: 1; }
-  body[data-edition="figma-enhanced"] .current-page .newsletter-inner > div { grid-column: 1 / span 9; }
-  body[data-edition="figma-enhanced"] .current-page .newsletter-form { grid-column: 1 / span 9; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="facts"] > [data-part="facts"], body[data-edition="figma-enhanced"] .current-page [data-name="included"] > [data-part="facts"]:has(> :nth-child(4):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body[data-edition="figma-enhanced"] .current-page [data-role="amenities"] > [data-part="facts"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; padding-inline: 0; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(3) { grid-column: 2 / -1; grid-row: 2; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p:nth-child(4) { grid-column: 2 / -1; grid-row: 3; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > [data-part="actions"] { grid-column: 3; grid-row: 1; justify-self: end; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="topics"] li { padding-inline: 16px; }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-inner > div, body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-form { grid-column: 1 / span 10; }
 }
 
-/* ---- Phone ------------------------------------------------------------------------------------------------ */
+/* ---- Phone: the frames' mobile adaptation ------------------------------------------------------------ */
 @media (max-width: 767px) {
-  body[data-edition="figma-enhanced"] .current-page > section:not(.site-newsletter) > *,
+  body[data-edition="figma-enhanced"] .current-page > section:not(.site-newsletter) > :not([data-part="hero-image"]),
   body[data-edition="figma-enhanced"] .current-page [data-variant] > *,
-  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"],
+  body[data-edition="figma-enhanced"] .current-page :is([data-role="overlay"], [data-name="Overlay panel rigth"], [data-name="Slider with overlay"]) > [data-part="copy"],
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-copy"],
   body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] > [data-part="copy"],
   body[data-edition="figma-enhanced"] .current-page [data-role="copy"] > [data-part="copy"],
-  body[data-edition="figma-enhanced"] .current-page :is([data-role="quote"], [data-role="introduction"]) > [data-part="copy"],
-  body[data-edition="figma-enhanced"] .current-page [data-role="topics"] > [data-part="topics"] { grid-column: 1 / -1 !important; }
-  body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="media"] { grid-row: 1 !important; }
-  body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="copy"] { grid-row: 2 !important; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="quote"] > [data-part="copy"],
+  body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > *,
+  body[data-edition="figma-enhanced"] .current-page [data-role="callout"] > [data-part="callout-panel"] { grid-column: 1 / -1 !important; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] { min-height: max(640px, 85svh); padding-bottom: 60px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"]::before { background: linear-gradient(90deg, rgb(0 0 0 / 0.65), rgb(0 0 0 / 0.1)), linear-gradient(0deg, rgb(0 0 0 / 0.38), transparent 80%); }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"] { min-height: max(720px, 94svh); }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero-text="glass"] > [data-part="hero-copy"] { margin-left: 0; padding: 24px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-name="Hero"] > [data-part="hero-copy"] { gap: 28px; }
+  body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="media"] { grid-row: 1 !important; aspect-ratio: 4 / 3; }
+  body[data-edition="figma-enhanced"] .current-page [data-variant="editorial"] > [data-part="copy"] { grid-row: 2 !important; gap: 24px; }
   body[data-edition="figma-enhanced"] .current-page [data-variant="description"] { row-gap: var(--s6); }
-  body[data-edition="figma-enhanced"] .current-page [data-variant="description"] > [data-part="rate"] { grid-row: 2; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] { min-height: clamp(520px, 84svh, 760px); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] { min-height: 0; align-content: start; padding: calc(var(--header) + var(--s3)) calc(var(--inset) + var(--s5)) calc(var(--inset) + var(--s5)); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-copy"] { grid-row: 1; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-hero="split"] > [data-part="hero-image"] { grid-row: 2; min-height: 0; aspect-ratio: 4 / 5; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] { text-align: left; justify-items: start; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="text-hero"] > [data-part="copy"] { align-items: flex-start; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="media"] { aspect-ratio: 4 / 5; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"] { margin: calc(var(--s8) * -1) var(--s3) 0 !important; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="cards"]:not([data-columns="2"]) > [data-part="card-grid"] {
-    display: flex; gap: var(--s4); margin-inline: calc(var(--edge) * -1); padding: 0 var(--edge) var(--s2);
-    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge); scrollbar-width: none; overscroll-behavior-x: contain;
-  }
-  body[data-edition="figma-enhanced"] .current-page [data-role="cards"]:not([data-columns="2"]) > [data-part="card-grid"]::-webkit-scrollbar { display: none; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="cards"]:not([data-columns="2"]) [data-part="card"] { flex: 0 0 min(78vw, 340px); scroll-snap-align: start; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="cards"][data-columns="2"] > [data-part="card-grid"] { grid-template-columns: minmax(0, 1fr); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="callout"] > [data-part="callout-panel"] { grid-template-columns: minmax(0, 1fr); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="media"] { width: min(46vw, 180px); }
-  body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] [data-part="facts"] { --span: 12; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="gallery"] > [data-part="media"] { aspect-ratio: 3 / 2; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="rate"] { grid-row: 2; padding: 28px 24px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="cards"] > [data-part="card-grid"], body[data-edition="figma-enhanced"] .current-page [data-role="cards"][data-columns="2"] > [data-part="card-grid"] { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="media"], body[data-edition="figma-enhanced"] .current-page [data-columns="2"] [data-part="card"] > [data-part="media"] { aspect-ratio: 16 / 10; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="card"] > [data-part="copy"] { padding: 22px 24px 24px; }
+  body[data-edition="figma-enhanced"] .current-page [data-name="Cards"] > [data-part="copy"] { padding-inline: 0; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > [data-part="artwork"] { display: flex; justify-content: center; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="introduction"] > [data-part="artwork"] img { width: 110px; max-height: 180px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="quote"] > [data-part="artwork"] { right: -120px; width: 300px; height: 320px; opacity: 0.6; }
+  body[data-edition="figma-enhanced"] .current-page :is([data-role="overlay"], [data-role="gallery"]) { display: flex; flex-direction: column; align-items: stretch; min-height: 0; padding: 0; }
+  body[data-edition="figma-enhanced"] .current-page :is([data-role="overlay"], [data-role="gallery"]) > [data-part="media"] { position: relative; inset: auto; z-index: 0; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > [data-part="copy"] { width: 100%; padding: 36px var(--edge) 48px; gap: 24px; background: var(--panel-dark-solid); }
+  body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] [data-part="copy"] > p + p { margin-top: 0; }
+  /* In overlays the arrows are the section's own, so they sit at the middle of the 4:3 photograph. */
+  body[data-edition="figma-enhanced"] .current-page [data-role="overlay"] > :is([data-part="gallery-prev"], [data-part="gallery-next"]) { top: calc(100vw * 0.375); }
+  body[data-edition="figma-enhanced"] .current-page [data-name="Slider with overlay"] :is([data-part="gallery-prev"], [data-part="gallery-next"]) { color: #fff; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="facts"] > [data-part="facts"], body[data-edition="figma-enhanced"] .current-page [data-name="3 col info"] > [data-part="facts"], body[data-edition="figma-enhanced"] .current-page [data-name="included"] > [data-part="facts"]:has(> :nth-child(4):last-child),
+  body[data-edition="figma-enhanced"] .current-page [data-role="amenities"] > [data-part="facts"] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] table { display: block; table-layout: auto; }
   body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] :is(table, tbody, tr, td) { display: block; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] tr { padding: var(--s4) 0; border-bottom: 1px solid var(--rule-strong); }
-  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td { padding: var(--s1) 0; border: 0; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td:not(:first-child)::before { content: attr(data-label); display: block; font: 500 var(--t-small) / var(--lh-small) var(--font-body); color: var(--ink-soft); }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--s4); }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > p { grid-column: 1 !important; grid-row: auto !important; }
-  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > [data-part="actions"] { grid-column: 2 !important; grid-row: 1 / span 2 !important; }
-  body[data-edition="figma-enhanced"] .current-page [data-role="logos"] > [data-part="artwork"] { justify-content: center; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] :where(tbody, tr) { display: block; width: 100%; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] tr { padding: 20px 0; border-top: 1px solid var(--rule-strong); }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 16px; width: 100%; padding: 8px 0; border: 0; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td::before { content: attr(data-label); color: var(--accent); font: 600 11px / 20px var(--font-body); letter-spacing: 1px; text-transform: uppercase; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="comparison"] td:first-child { font-size: 26px; line-height: 34px; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 20px var(--edge); pointer-events: auto; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="map-key"] li { position: static; border-radius: 4px; background: var(--surface-warm); box-shadow: none; padding: 8px 10px; font-size: 12px; white-space: normal; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="callout"] > [data-part="callout-panel"] { flex-direction: column; align-items: flex-start; gap: 28px; padding: 28px 24px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-part="media"] { flex: none; width: min(100%, 180px); }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 24px 0; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] > * { grid-column: 1 !important; grid-row: auto !important; justify-self: start !important; }
+  body[data-edition="figma-enhanced"] .current-page [data-part="event"] .current-action { margin-top: 8px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="logos"] > [data-part="artwork"] { justify-content: center; gap: 30px 32px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="logos"] img { max-width: 25%; max-height: 34px; }
   body[data-edition="figma-enhanced"] .current-page .newsletter-photo { height: clamp(260px, 52svh, 440px); }
-  body[data-edition="figma-enhanced"] .current-page .newsletter-inner > div, body[data-edition="figma-enhanced"] .current-page .newsletter-form { grid-column: 1 / -1; }
-  body[data-edition="figma-enhanced"] .current-page .newsletter-form { grid-template-columns: minmax(0, 1fr); }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-inner > div, body[data-edition="figma-enhanced"] .current-page .newsletter-closing .newsletter-form { grid-column: 1 / -1; }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-form { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   body[data-edition="figma-enhanced"] .current-page .newsletter-form button { width: 100%; }
+  body[data-edition="figma-enhanced"] .current-page .site-newsletter.newsletter-events { margin-inline: 0; border-radius: 0; padding: 48px var(--edge); }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-inner { flex-direction: column; align-items: stretch; gap: 28px; }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-inner > div { flex: none; }
+  body[data-edition="figma-enhanced"] .current-page .newsletter-events .newsletter-form input { width: 100%; }
 }

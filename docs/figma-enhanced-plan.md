@@ -17,9 +17,10 @@ Every step below is reviewed by the owner before the next one starts. Every step
 - **Designer updates** land in `/figma/` first, exactly as before. Then they are ported to the enhanced edition, adapted to its system.
 - **Content stays the designer's:** the same 28 pages, texts, facts, placeholders and corrected typos. Headings use EB Garamond and text uses Roboto, with all text properties from the frames, as in `/figma/` today. Text selection and copying stay blocked.
 - **The owner's rejections apply** (memory `site-design-rejections`):
-  - no number labels, eyebrow clutter or technical hairlines;
-  - no text over detailed photographs;
-  - no gradient stripes between flat colour blocks (a photo melting into a matching footer is fine);
+  - no page or section counters ("01 / 18"); the designer's eyebrows and capitals stay (owner, 2026-11-08);
+  - no text on a highly detailed part of a photograph; on a calm part text is fine, checked by eye for each photograph (owner, 2026-11-08);
+  - a tone changes through a photograph or through a tinted pattern, as on the Legacy Blueprint, not at a flat edge and not through a gradient stripe (a photo melting into a matching footer is fine);
+  - hero photographs and films are full-width cards without rounding (owner, 2026-11-08);
   - one photo shape per group;
   - no generated fake versions of real places;
   - every change must be seen while its picture fills the screen.
@@ -51,19 +52,13 @@ Every step below is reviewed by the owner before the next one starts. Every step
 
 Goal: one system under all 28 pages, so that pages stop looking assembled from hand-sized templates. The audit's numbers are the before state.
 
-**Done 2026-11-08, waiting for the owner's review (Checkpoint 1).** The system is described in `docs/figma-enhanced-system.md`, with the before and after numbers. In short:
-- tokens in `tokens.css`; one page stylesheet, `system.css`, written by section role;
-- three hero types: photograph, split and text;
-- white, beige, forest and night bands;
-- the closing night photograph melts into the footer, and the newsletter sits under it;
-- 11 text styles, text on column lines, 24 labels instead of 250, three photo proportions;
-- states for buttons and the newsletter;
-- `alt` texts that describe the photographs.
+**First pass 2026-11-08 (229dc26, ce2439b), published; the same day the owner found it worse than the frames in places and corrected the rules.** It removed the designer's eyebrows and capitals, inset and rounded the heroes, changed tones at flat edges, replaced the designer's panels and cards and moved the map labels off the map. The owner's corrections are in `docs/figma-enhanced-system.md` (Principle) and in the rules below.
 
-Decisions taken during the step, for the owner to review:
-- Every opener with a paragraph became a split hero (pages 03–05, 08–12, 23–25), because no paragraph may sit over a photograph.
-- Fact terms are sentence-case Roboto 500 instead of tracked capitals.
-- The newsletter sits under the closing photograph rather than over it, for the same reason.
+**Second pass 2026-11-08, waiting for the owner's review (Checkpoint 1).**
+- It starts again from the designer's markup and keeps the frames' components, eyebrows, capitals, proportions and full-width photographs.
+- It adds the grid, the rhythm, a type scale with H1 above H2, fluid sizes, descriptive `alt` texts, control states and the closing photograph.
+- Text on photographs was checked by eye. Twelve heroes put their text on frosted glass.
+- The system is described in `docs/figma-enhanced-system.md`.
 
 1.1 **Tokens**, written in `src/lib/enhanced/styles/tokens.css` and described in `docs/figma-enhanced-system.md`:
 - **Grid:** 12 columns at 1440 with fixed outer margins; the same grid at 1024, 768 and 375.

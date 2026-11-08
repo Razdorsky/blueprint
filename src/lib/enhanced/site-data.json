@@ -18,21 +18,21 @@
     "id": "814:7245",
     "name": "The Villas",
     "slug": "villas",
-    "photo": false
+    "photo": true
   },
   {
     "index": 4,
     "id": "814:7255",
     "name": "The Treehouse",
     "slug": "treehouse",
-    "photo": false
+    "photo": true
   },
   {
     "index": 5,
     "id": "814:7265",
     "name": "Glamping Tents",
     "slug": "glamping-tents",
-    "photo": false
+    "photo": true
   },
   {
     "index": 6,
@@ -53,35 +53,35 @@
     "id": "814:7286",
     "name": "The Day and the Half Day",
     "slug": "day-and-half-day",
-    "photo": false
+    "photo": true
   },
   {
     "index": 9,
     "id": "814:7296",
     "name": "The Frequency Experience",
     "slug": "frequency-experience",
-    "photo": false
+    "photo": true
   },
   {
     "index": 10,
     "id": "814:7315",
     "name": "Arenal After Dark",
     "slug": "arenal-after-dark",
-    "photo": false
+    "photo": true
   },
   {
     "index": 11,
     "id": "814:7324",
     "name": "For Two",
     "slug": "for-two",
-    "photo": false
+    "photo": true
   },
   {
     "index": 12,
     "id": "814:7305",
     "name": "Horses and the River",
     "slug": "horses-and-the-river",
-    "photo": false
+    "photo": true
   },
   {
     "index": 13,
@@ -158,21 +158,21 @@
     "id": "884:8986",
     "name": "Retreats",
     "slug": "retreats",
-    "photo": false
+    "photo": true
   },
   {
     "index": 24,
     "id": "884:9222",
     "name": "Groups and offsites",
     "slug": "groups-and-offsites",
-    "photo": false
+    "photo": true
   },
   {
     "index": 25,
     "id": "944:7523",
     "name": "Weddings",
     "slug": "weddings",
-    "photo": false
+    "photo": true
   },
   {
     "index": 26,

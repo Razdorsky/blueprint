@@ -1,53 +1,53 @@
-/* Figma Enhanced — design tokens (step 1.1 of docs/figma-enhanced-plan.md).
-   Every page style in system.css is written in these terms. Values are fluid between 375 and
-   about 2000 CSS px, the width the owner reviews at. */
+/* Figma Enhanced — design tokens (step 1 of docs/figma-enhanced-plan.md, second pass 2026-11-08).
+   The values are the designer's: at 1440px every size below equals the frames, except that H1 now
+   stands above H2. Sizes are fluid, about 15% larger on a 2000px screen and floored on phones. */
 body[data-edition="figma-enhanced"] {
-  /* Colour roles. Contrast on white: ink 15.1, ink-soft 7.9, heading 9.9, accent 5.5. On beige: 12.9, 6.8, 8.4, 4.7.
-     On-dark: 8.4 on forest, 15.1 on night; accent-on-dark: 5.4 on forest, 9.6 on night (all :1). */
+  /* Colour roles, all from the frames. */
   --ink: #262626;
   --ink-soft: #57504a;
   --heading: #364830;
   --heading-deep: #1a3013;
-  --accent: #a2551b;
-  --accent-on-dark: #e3b791;
+  --accent: #a2551b;            /* copper: eyebrows, fact rules, author names */
+  --link: #733a11;              /* the frames' link arrows */
+  --accent-on-dark: #d3a079;    /* sand: eyebrows on photographs and dark panels */
+  --label-on-dark: #dabfb6;     /* the newsletter label */
   --surface: #ffffff;
   --surface-warm: #f5ebe7;
   --surface-forest: #364830;
-  --surface-night: #161a11;  /* footer and the foot of the closing photograph: the darkest tone of the night photos */
+  --surface-copper: #311500;    /* the frames' copper pattern surface */
+  --surface-night: #161a11;     /* footer, and the foot of the closing photograph */
+  --panel-dark: rgb(38 17 1 / 0.8);  /* the frames' translucent panel over photographs */
+  --panel-dark-solid: #261101;
   --on-dark: #f5ebe7;
-  --rule: #ecdfd8;
+  --rule: #f5ebe7;
   --rule-strong: #dabfb6;
 
-  /* Type: EB Garamond for headings and statements, Roboto for text, as decided by the owner. */
+  /* Type: EB Garamond for headings and display prose, Roboto for text, as decided by the owner. */
   --font-display: 'EB Garamond', Georgia, 'Times New Roman', serif;
   --font-body: Roboto, Arial, sans-serif;
-  --t-display: clamp(42px, 26px + 2.9vw, 80px);    /* H1: 68px at 1440 */
-  --t-h2: clamp(32px, 22px + 1.75vw, 56px);        /* 47px at 1440 */
-  --t-h3: clamp(24px, 18px + 0.75vw, 32px);        /* 29px at 1440 */
-  --t-statement: clamp(24px, 18px + 1.2vw, 40px);  /* display prose and statement headings: 35px at 1440 */
-  --t-lede: clamp(18px, 14.8px + 0.5vw, 24px);     /* 22/32 at 1440 */
-  --t-body: clamp(16px, 13.68px + 0.3vw, 20px);    /* 18/30 at 1440, 19.7 at 2000 */
-  --t-small: clamp(14px, 12.84px + 0.15vw, 16px);  /* 15/24 at 1440 */
-  --t-label: clamp(12px, 11px + 0.12vw, 14px);
-  --t-button: clamp(13px, 12px + 0.1vw, 15px);
-  --lh-display: 1.04;
-  --lh-heading: 1.1;
-  --lh-title: 1.2;
-  --lh-statement: 1.25;
-  --lh-lede: 1.455;
-  --lh-body: 1.667;
-  --lh-small: 1.6;
-  --tracking-label: 0.14em;
-  --measure: 62ch;
+  --t-hero: clamp(40px, 41.77px + 1.822vw, 82px);      /* 68 at 1440: Home H1 (frames 60) */
+  --t-h1: clamp(38px, 36.86px + 1.607vw, 72px);        /* 60: page H1 (frames 52, so H1 now stands above H2) */
+  --t-h2: clamp(34px, 31.94px + 1.393vw, 62px);        /* 52/60: 40/60 and 60/40 splits, the gallery panel, text heroes */
+  --t-h2m: clamp(30px, 25.8px + 1.125vw, 50px);        /* 42/46: 50/50 splits and overlay panels */
+  --t-h2s: clamp(28px, 22.11px + 0.964vw, 43px);       /* 36/46: callout, heading titles, newsletter */
+  --t-h3: clamp(26px, 19.66px + 0.857vw, 38px);        /* 32/44.8: card titles, intro and quote prose, events, 3-col info */
+  --t-h3s: clamp(24px, 17.2px + 0.75vw, 34px);         /* 28/38: description and rate card headings */
+  --t-h4: clamp(22px, 15.97px + 0.697vw, 31px);        /* 26/38: titles in the 3- and 4-card grids */
+  --t-lede: clamp(18px, 13.51px + 0.589vw, 26px);      /* 22/32: hero and opening paragraphs, quote attribution */
+  --t-highlight: clamp(18px, 12.29px + 0.536vw, 24px); /* 20/24: price lines and fact values */
+  --t-body: clamp(16px, 11.06px + 0.482vw, 22px);      /* 18/30: text */
+  --t-button: clamp(14px, 9.83px + 0.429vw, 19px);     /* 16/20: buttons and link arrows */
+  --t-label: clamp(12px, 8.6px + 0.375vw, 17px);       /* 14/20: eyebrows and map labels */
+  --tracking-label: 0.32em;     /* the frames' 4.48px at 14px */
 
   /* Grid: 12 columns inside fluid outer margins, content at most 1680px wide. */
   --margin: clamp(20px, 5.55vw, 104px);
   --gutter: clamp(16px, 1.67vw, 32px);
   --max: 1680px;
-  --header: 96px;
   --edge: max(var(--margin), calc((100% - var(--max)) / 2)); /* outer margin of full-width sections */
+  --header: 96px;
 
-  /* Spacing scale (8px base) and the section rhythm built from it. */
+  /* Spacing scale (8px base) and the one section rhythm built from it. */
   --s1: 4px;
   --s2: 8px;
   --s3: 12px;
@@ -59,14 +59,14 @@ body[data-edition="figma-enhanced"] {
   --s9: 96px;
   --section: clamp(64px, 48px + 4vw, 128px);       /* between two sections' content: 106px at 1440 */
   --section-band: clamp(56px, 40px + 3.2vw, 112px); /* inside a coloured band */
-  --inset: clamp(8px, 0.85vw, 16px);               /* edge of inset panels (heroes, galleries) */
-  --panel-pad: clamp(24px, 3.3vw, 48px);           /* inside every panel: rate card, callout, overlay panel */
+  --panel-pad: clamp(24px, 3.4vw, 56px);           /* inside panels: 49px at 1440, the frames' 50 */
 
-  /* Shape: the owner's liked radii from the Legacy Blueprint. */
+  /* Shape: photographs and panels 10px as in the frames, controls 12px (owner's Legacy reference 8).
+     Full-width photographs (heroes, galleries, overlays, the map, the closing photograph) have no radius. */
   --r-photo: 10px;
+  --r-panel: 10px;
   --r-control: 12px;
-  --r-panel: 18px;
-  --shadow-panel: 0 1px 2px rgb(38 38 38 / 0.05), 0 22px 48px -28px rgb(38 38 38 / 0.32);
+  --shadow-card: 0 4px 10px rgb(49 21 0 / 0.2);    /* the frames' room cards */
 
   /* Motion. Only user-triggered changes animate in step 1; reduced motion removes them. */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
