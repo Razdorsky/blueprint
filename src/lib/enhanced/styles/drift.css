@@ -4,35 +4,35 @@
    card's photograph opens from a slightly smaller rounded mask as it arrives. The cards stay the designer's: photo,
    title, text. Behaviour: interactions.js (setupDrift, updateDrift). Below 900px the run keeps the designer's grid. */
 @media (min-width: 900px) {
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] {
+  body[data-edition="figma-enhanced"] .current-page [data-drift] {
     --card: min(24vw, 44svh);
     position: relative; display: grid; min-height: calc(var(--run) + var(--section)); padding-block: calc(var(--section) / 2);
     background: var(--surface);
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] > section { grid-area: 1 / 1; display: block; padding: 0; background: none; }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] > [data-role="text-hero"] { position: relative; z-index: 2; pointer-events: none; }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] > [data-role="text-hero"] > [data-part="copy"] {
+  body[data-edition="figma-enhanced"] .current-page [data-drift] > section { grid-area: 1 / 1; display: block; padding: 0; background: none; }
+  body[data-edition="figma-enhanced"] .current-page [data-drift] > [data-role="text-hero"] { position: relative; z-index: 2; pointer-events: none; }
+  body[data-edition="figma-enhanced"] .current-page [data-drift] > [data-role="text-hero"] > [data-part="copy"] {
     position: sticky; top: 0; display: grid; align-content: center; justify-items: center; height: 100svh;
     width: min(32vw, 30em); max-width: none; margin-inline: auto; padding: 0; text-align: center;
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] > [data-role="cards"],
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] [data-part="card-grid"] { display: contents; }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] [data-part="card"] {
+  body[data-edition="figma-enhanced"] .current-page [data-drift] > [data-role="cards"],
+  body[data-edition="figma-enhanced"] .current-page [data-drift] [data-part="card-grid"] { display: contents; }
+  body[data-edition="figma-enhanced"] .current-page [data-drift] [data-part="card"] {
     position: absolute; z-index: 1; top: calc(var(--section) / 2 + var(--y)); width: var(--card);
     transform: translate3d(0, var(--drift, 0px), 0); will-change: transform;
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] [data-part="card"][data-side="left"] { left: var(--edge); }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift] [data-part="card"][data-side="right"] { right: var(--edge); }
+  body[data-edition="figma-enhanced"] .current-page [data-drift] [data-part="card"][data-side="left"] { left: var(--edge); }
+  body[data-edition="figma-enhanced"] .current-page [data-drift] [data-part="card"][data-side="right"] { right: var(--edge); }
 }
 /* The arrival (452c7d0's [data-reveal]): armed by the script, so without it the photographs simply show. */
 @media (prefers-reduced-motion: no-preference) {
-  body[data-edition="figma-enhanced"] .current-page > [data-drift][data-armed] [data-part="card"] > [data-part="media"] {
+  body[data-edition="figma-enhanced"] .current-page [data-drift][data-armed] [data-part="card"] > [data-part="media"] {
     clip-path: inset(7% round var(--r-photo)); transition: clip-path 1.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift][data-armed] [data-part="card"] > [data-part="media"] img {
+  body[data-edition="figma-enhanced"] .current-page [data-drift][data-armed] [data-part="card"] > [data-part="media"] img {
     transform: scale(1.14); transition: transform 1.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift][data-armed] [data-part="card"][data-revealed] > [data-part="media"] { clip-path: inset(0 round var(--r-photo)); }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift][data-armed] [data-part="card"][data-revealed] > [data-part="media"] img { transform: none; }
-  body[data-edition="figma-enhanced"] .current-page > [data-drift][data-armed] [data-part="card"][data-revealed]:has(a:hover) > [data-part="media"] img { transform: scale(1.045); }
+  body[data-edition="figma-enhanced"] .current-page [data-drift][data-armed] [data-part="card"][data-revealed] > [data-part="media"] { clip-path: inset(0 round var(--r-photo)); }
+  body[data-edition="figma-enhanced"] .current-page [data-drift][data-armed] [data-part="card"][data-revealed] > [data-part="media"] img { transform: none; }
+  body[data-edition="figma-enhanced"] .current-page [data-drift][data-armed] [data-part="card"][data-revealed]:has(a:hover) > [data-part="media"] img { transform: scale(1.045); }
 }

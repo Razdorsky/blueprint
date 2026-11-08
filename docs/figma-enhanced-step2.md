@@ -259,3 +259,27 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
 - Styles: `styles/drift.css`. The arrival is armed by the script, so without it the photographs show plainly; reduced motion keeps cards still and unmasked.
 - Behaviour: `setupDrift` and `updateDrift` in `interactions.js`, on the same scroll frame as the arch and the header.
 - Checked: layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the shell items); axe 0; drift, held title, arrival and header tone identical in the three engines; phones, 899px and reduced motion.
+
+## 2.5 The arch over a full-screen photograph (2026-11-08)
+
+### What the reference does
+
+`/blueprint/` 452c7d0, the `nightfall` block on Home (owner's reference 5): `blocks/Nightfall.svelte`, `styles/blocks.css` 315–328, `motion.ts` 220–223.
+- A dusk photograph sticks to the screen (100svh) inside the block, and the next panel, 30svh over its lower edge, rises over it.
+- The panel is clipped to the Dome's shape: `clip-path: inset(0 (1−g)·19vw 0 (1−g)·19vw round (1−g)·31vw (1−g)·31vw 0 0)`, with `--g` going from 0 to 1 as its top climbs from the bottom of the screen to 10% (GSAP ScrollTrigger, scrub 0.6). The ground changes at the arch's edge, never in a gradient. The owner: "the big photo starts to be covered by the next block, which floats up from below with a soft motion".
+- The arch was dark there; the owner set no colour (2026-11-08): the technique is the panel rising in the Dome's shape.
+
+### Decisions
+
+- **Where** (placement map): every opening with a photograph, where the description rises over it (21 pages: 03–05, 08–12, 14, 15, 17–26, 28), and Home, where the drifting gallery rises over the photograph of the Dome ("The Dome is the reason this place exists"). The openings that took the Home arch keep it.
+- **Colour**: the rising block's own surface (white for the descriptions and the gallery).
+- **The designer's openings start whole.** The reference panel overlaps its photograph from the start; here that would cover the page's title on load. So `--g` follows how far the block covers the photograph: 0 while it only meets it, 1 once it covers 60%.
+- **No line is ever cut.** The description's copy spans the page, so a narrow arch would clip it. The photograph's text dissolves under the rising arch (as on the Home opening), and the block's text appears only as the arch reaches the edges.
+- **Phones** run the same arch; reduced motion keeps the blocks still and square.
+
+### Built (2026-11-08)
+
+- Markup: each photograph and its rising block are wrapped in `<div class="rise" data-rise>`; the block carries `data-rise-panel`. The photograph sticks inside the pair, so it lets go once the block has passed.
+- Styles: `styles/rise.css`. The section rules, the header's tone, the page transition and the opening's film button also reach sections inside a pair.
+- Behaviour: `setupRise` and `updateRise` in `interactions.js`, on the scroll frame, with the Home arch's lag.
+- Checked: layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the shell items); axe 0 on all pages; the arch, the hold and the header identical in the three engines; page transitions, Back and Forward; galleries, menu and newsletter.

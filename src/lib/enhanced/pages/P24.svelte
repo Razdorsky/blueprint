@@ -4,14 +4,14 @@
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
 
-<section data-name="Hero Section" data-node-id="884:9224" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/698de65973782acf1018.webp" alt="A large group at a long dinner table under palms" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1800"></figure><div data-part="hero-copy"><p data-node-id="I884:9224;756:1065" data-part="eyebrow">Groups and offsites</p>
+<div class="rise" data-rise><section data-name="Hero Section" data-node-id="884:9224" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/698de65973782acf1018.webp" alt="A large group at a long dinner table under palms" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1800"></figure><div data-part="hero-copy"><p data-node-id="I884:9224;756:1065" data-part="eyebrow">Groups and offsites</p>
 <h1 data-node-id="I884:9224;756:1066" class="c-heading" data-part="heading">For companies that have had enough of hotel ballrooms</h1></div></section>
-<section data-name="Description and info 60/40" data-node-id="884:9225" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I884:9225;756:1501" data-part="eyebrow">Groups</p>
+<section data-name="Description and info 60/40" data-rise-panel data-node-id="884:9225" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I884:9225;756:1501" data-part="eyebrow">Groups</p>
 <p data-node-id="I884:9225;756:1467" data-part="paragraph" class="current-lede">The Hearth seats [x]. The Dome holds [x] sitting on the floor. There is wifi that works, [x] Mbps, and a studio you can record in. There is also no road noise, no lobby, and nowhere for anyone to slip off to, which is either the point or the problem depending on your team.</p></div>
 <div data-part="rate"><p data-node-id="I884:9225;756:1469" data-part="eyebrow">What it costs</p>
 <h2 data-node-id="I884:9225;756:1470" class="c-heading" data-part="heading">[x] per person per night</h2>
 <p data-node-id="I884:9225;756:1493" data-part="paragraph">Full property, meals included. Minimums as for buyouts.</p>
-<div data-part="actions"><button data-name="CTA" data-node-id="I884:9225;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Enquire about a group booking — destination not supplied">Enquire about a group booking</button></div></div></section>
+<div data-part="actions"><button data-name="CTA" data-node-id="I884:9225;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Enquire about a group booking — destination not supplied">Enquire about a group booking</button></div></div></section></div>
 <section data-name="included" data-node-id="884:9226" data-role="facts"><div data-part="facts"><div data-part="fact"><p data-part="eyebrow">the hearth seats</p>
 <p data-part="paragraph">[x]</p></div><div data-part="fact"><p data-part="eyebrow">wifi</p>
 <p data-part="paragraph">[x]</p></div><div data-part="fact"><p data-part="eyebrow">the dome holds</p>

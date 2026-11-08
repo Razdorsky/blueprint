@@ -1,0 +1,27 @@
+/* Figma Enhanced — step 2.5 (docs/figma-enhanced-step2.md): the arch over a full-screen photograph, the owner's
+   reference 5 (/blueprint/ 452c7d0, "nightfall"), placed by the map of 2026-11-08. The photograph holds the screen
+   while the next block rises over it in the shape of the Dome and widens to the edges; the ground changes at the
+   arch's edge. The arch has no colour of its own: it is the rising block's own surface. On every opening with a
+   photograph the description rises over it; on Home the drifting gallery rises over the photograph of the Dome.
+   interactions.js (setupRise, updateRise) sets --g on the pair: 0 while the block only meets the photograph, 1 once it
+   covers 60% of it. The designer's text on the photograph dissolves under the arch, as on the Home opening, and the
+   block's own text appears as the arch reaches the edges, so the narrow arch never cuts a line. Without the script,
+   and with reduced motion, nothing moves: --g stays 1. */
+body[data-edition="figma-enhanced"] .current-page > [data-rise] { --g: 1; position: relative; }
+body[data-edition="figma-enhanced"] .current-page > [data-rise] > :first-child { position: sticky; top: 0; z-index: 0; }
+body[data-edition="figma-enhanced"] .current-page > [data-rise] > [data-rise-panel] {
+  position: relative; z-index: 1; background: var(--surface);
+  clip-path: inset(0 calc((1 - var(--g)) * 19vw) 0 calc((1 - var(--g)) * 19vw)
+    round calc((1 - var(--g)) * 31vw) calc((1 - var(--g)) * 31vw) 0 0);
+}
+/* The photograph's own text leaves first. */
+body[data-edition="figma-enhanced"] .current-page > [data-rise][data-rising] > :first-child > :is([data-part="hero-copy"], [data-part="copy"]) {
+  opacity: calc(1 - var(--g) * 2.2); transform: translateY(calc(var(--g) * -4svh)); filter: blur(calc(var(--g) * 8px));
+  will-change: opacity, transform, filter;
+}
+/* The block's text comes in as the arch widens to the edges. */
+body[data-edition="figma-enhanced"] .current-page > [data-rise][data-rising] > section[data-rise-panel] > *,
+body[data-edition="figma-enhanced"] .current-page > [data-rise][data-rising] > [data-drift][data-rise-panel] :is([data-part="card"], [data-role="text-hero"] > [data-part="copy"]) {
+  opacity: clamp(0, (var(--g) - 0.6) * 2.5, 1);
+}
+body[data-edition="figma-enhanced"] .current-page > [data-rise][data-rising] > section[data-rise-panel] > * { transform: translateY(calc((1 - var(--g)) * 32px)); }

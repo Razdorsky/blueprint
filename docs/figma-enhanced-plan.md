@@ -9,7 +9,7 @@ Inputs:
 - `docs/figma-design-audit.md`: the audit numbers, the "what to change / what to add" lists, the owner's 20 liked references and the rejections.
 - Owner memory: liked elements and rejections.
 
-Every step below is reviewed by the owner before the next one starts. Every step is committed on its own. Nothing is published without the owner's request.
+Every step below is reviewed by the owner before the next one starts. Every step is committed on its own and published as soon as it is done, without asking; the owner is told which step can be seen on the live site (owner, 2026-11-08).
 
 ## Rules for every step
 
@@ -112,9 +112,9 @@ The owner likes these as techniques, not as the places where they first appeared
 - The opening with a film in the Dome's arch that opens to full screen as you scroll (reference 2): Home, Experiences and The Vessyl Presents.
 - The closing photograph and the footer's colour follow each page's world.
 
-2.4 **The drifting gallery** (reference 3; built 2026-11-08, waiting for review, see `docs/figma-enhanced-step2.md`): a sticky title, with photo cards at two depths passing it, on every run of card photographs under a heading (six runs on five pages; Horses and the land after its photographs).
+2.4 **The drifting gallery** (reference 3; published 2026-11-08, see `docs/figma-enhanced-step2.md`): a sticky title, with photo cards at two depths passing it, on every run of card photographs under a heading (six runs on five pages; Horses and the land after its photographs).
 
-2.5 **The arch over a full-screen photo** (reference 5): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique.
+2.5 **The arch over a full-screen photo** (reference 5; built 2026-11-08, see `docs/figma-enhanced-step2.md`): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique. Placed on all 21 openings with a photograph (the description rises) and on Home (the drifting gallery rises over the Dome).
 
 2.6 **The next-page block** (reference 7), improved: the button to the next page is designed inside the opening media.
 

@@ -184,6 +184,42 @@ function updateDrift() {
   });
 }
 
+// Step 2.5 (docs/figma-enhanced-step2.md): the arch over a full-screen photograph, as on /blueprint/ 452c7d0. --g on
+// each pair follows how far the rising block covers the photograph it rises over: 0 while it only meets it, 1 once
+// it covers 60%. It follows with the same short lag as the Home arch (the reference's scrub 0.6). Reduced motion
+// leaves the pairs still and square.
+const rise = {pairs: [], frame: 0};
+function setupRise() {
+  cancelAnimationFrame(rise.frame);
+  rise.frame = 0;
+  const pairs = [...document.querySelectorAll('.current-page > [data-rise]')];
+  pairs.forEach(el => {el.style.removeProperty('--g');el.removeAttribute('data-rising');});
+  rise.pairs = matchMedia('(prefers-reduced-motion: reduce)').matches ? [] : pairs.map(el => {
+    el.setAttribute('data-rising', '');
+    return {el, photo: el.firstElementChild, panel: el.querySelector(':scope > [data-rise-panel]'), g: 0, target: 0};
+  });
+  updateRise(true);
+}
+function updateRise(jump = false) {
+  if (!rise.pairs.length) return;
+  for (const pair of rise.pairs) {
+    const photo = pair.photo.getBoundingClientRect();
+    const covered = photo.bottom - pair.panel.getBoundingClientRect().top;
+    pair.target = Math.min(1, Math.max(0, covered / (photo.height * 0.6)));
+    if (jump) pair.g = pair.target;
+  }
+  const step = () => {
+    let moving = false;
+    for (const pair of rise.pairs) {
+      pair.g += (pair.target - pair.g) * 0.16;
+      if (Math.abs(pair.target - pair.g) < 0.001) pair.g = pair.target; else moving = true;
+      pair.el.style.setProperty('--g', pair.g.toFixed(4));
+    }
+    rise.frame = moving ? requestAnimationFrame(step) : 0;
+  };
+  if (jump) step(); else if (!rise.frame) rise.frame = requestAnimationFrame(step);
+}
+
 // The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
 // with a short lag (scrub), on screens from 900px and without reduced motion.
 const arch = {el: null, target: 0, current: 0, frame: 0};
@@ -222,15 +258,16 @@ let refreshHeader = () => {};
 function toneUnder(header) {
   if (header.querySelector('[data-mega][data-open="true"]')) return 'dark';
   const y = header.offsetHeight / 2;
-  const sections = document.querySelectorAll('.current-page > section, .current-page > [data-drift], .site-footer');
+  // The last match is the one on top: a rising block covers the photograph it rises over (step 2.5).
+  const sections = document.querySelectorAll('.current-page > section, .current-page > [data-drift], .current-page > [data-rise] > :is(section, [data-drift]), .site-footer');
+  let under = null;
   for (const section of sections) {
     const box = section.getBoundingClientRect();
-    if (box.top <= y && box.bottom > y) {
-      if (section.matches('[data-hero="arch"]')) return section.dataset.open === 'true' ? 'dark' : 'light';
-      return section.matches(DARK) ? 'dark' : 'light';
-    }
+    if (box.top <= y && box.bottom > y) under = section;
   }
-  return header.dataset.theme || 'light';
+  if (!under) return header.dataset.theme || 'light';
+  if (under.matches('[data-hero="arch"]')) return under.dataset.open === 'true' ? 'dark' : 'light';
+  return under.matches(DARK) ? 'dark' : 'light';
 }
 function updateHeader() {
   const header = document.querySelector('[data-header]');
@@ -264,6 +301,7 @@ export function enhancePage() {
   markRails();
   setupFilms();
   setupDrift();
+  setupRise();
   refreshHeader();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
@@ -293,8 +331,8 @@ export function installInteractions() {
 
   if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
-  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateHeader();});}, {signal});
-  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateHeader();});}, {passive:true, signal});
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateRise();updateHeader();});}, {signal});
+  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateRise();updateHeader();});}, {passive:true, signal});
   on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
     const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;
@@ -442,5 +480,5 @@ export function installInteractions() {
   on('touchstart', event => {if (event.target.closest('.gallery-stage')) touchX = event.changedTouches[0].clientX;}, {passive:true});
   on('touchend', event => {if (event.target.closest('.gallery-stage')) {const dx = event.changedTouches[0].clientX - touchX;if (Math.abs(dx) > 45) show(active + (dx < 0 ? 1 : -1));}}, {passive:true});
   enhancePage();
-  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);cancelAnimationFrame(arch.frame);filmObserver?.disconnect();driftObserver?.disconnect();lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
+  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);cancelAnimationFrame(arch.frame);cancelAnimationFrame(rise.frame);filmObserver?.disconnect();driftObserver?.disconnect();lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
 }

@@ -4,14 +4,14 @@
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
 
-<section data-name="Hero Section" data-node-id="965:7713" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/c497476865b545968151.webp" alt="Guests sitting on boulders in a rocky river" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1350"></figure><div data-part="hero-copy"><p data-node-id="I965:7713;756:1065" data-part="eyebrow">Plan your visit</p>
+<div class="rise" data-rise><section data-name="Hero Section" data-node-id="965:7713" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/c497476865b545968151.webp" alt="Guests sitting on boulders in a rocky river" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1350"></figure><div data-part="hero-copy"><p data-node-id="I965:7713;756:1065" data-part="eyebrow">Plan your visit</p>
 <h1 data-node-id="I965:7713;756:1066" class="c-heading" data-part="heading">What is worth leaving the property for</h1></div></section>
-<section data-name="Description and info 60/40" data-node-id="965:7714" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I965:7714;756:1501" data-part="eyebrow">Around here</p>
+<section data-name="Description and info 60/40" data-rise-panel data-node-id="965:7714" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I965:7714;756:1501" data-part="eyebrow">Around here</p>
 <p data-node-id="I965:7714;756:1467" data-part="paragraph" class="current-lede">Most of what people come to Arenal for is within an hour of us. We will book any of it for you at the Hearth, usually with a day of notice, and we are not taking a cut that changes what we recommend.</p></div>
 <div data-part="rate"><p data-node-id="I965:7714;756:1469" data-part="eyebrow">Ask us</p>
 <h2 data-node-id="I965:7714;756:1470" class="c-heading" data-part="heading">We book it for you</h2>
 <p data-node-id="I965:7714;756:1493" data-part="paragraph">At the Hearth, usually with a day of notice.</p>
-<div data-part="actions"><button data-name="CTA" data-node-id="I965:7714;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Ask us to book any of this — destination not supplied">Ask us to book any of this</button></div></div></section>
+<div data-part="actions"><button data-name="CTA" data-node-id="I965:7714;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Ask us to book any of this — destination not supplied">Ask us to book any of this</button></div></div></section></div>
 <section data-name="Section - 50/50 image text" data-node-id="965:7715" data-role="split" data-layout="image-first" data-variant="editorial"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/9772fed083830cf825f9.webp" alt="Arenal Volcano above the rainforest and the infinity pool" loading="lazy" decoding="async" width="1024" height="1536"></figure>
 <div data-part="copy"><p data-node-id="" data-part="eyebrow">The volcano</p>
 <h2 data-node-id="" class="c-heading" data-part="heading">A very large, very symmetrical mountain</h2>

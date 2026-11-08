@@ -48,9 +48,9 @@ body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-fi
 body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-controls button { width: 36px; height: 36px; }
 /* In an opening the button sits on the section, above the photograph's shade, at its lower right and clear of the
    designer's copy; on phones, where the copy spans the width, it moves to the top right under the header. */
-body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { grid-column: auto !important; right: var(--edge); bottom: clamp(24px, 4svh, 48px); }
+body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { grid-column: auto !important; right: var(--edge); bottom: clamp(24px, 4svh, 48px); }
 @media (max-width: 760px) {
-  body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { top: calc(var(--header) + 12px); bottom: auto; right: 16px; }
+  body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { top: calc(var(--header) + 12px); bottom: auto; right: 16px; }
 }
 
 /* ---- Home: the arch ----------------------------------------------------------------------------------- */

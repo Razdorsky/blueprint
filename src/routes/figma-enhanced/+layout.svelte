@@ -16,6 +16,7 @@
   import '#lib/enhanced/styles/motion.css';
   import '#lib/enhanced/styles/films.css';
   import '#lib/enhanced/styles/drift.css';
+  import '#lib/enhanced/styles/rise.css';
 
   let {children}: {children:Snippet} = $props();
   onMount(installInteractions);
@@ -38,13 +39,13 @@
 
   // Step 2.2 (docs/figma-enhanced-step2.md): the Legacy Blueprint page transition. The page dissolves; when the
   // departing opening is on screen, the openings travel together and the new photograph settles from 110%.
-  const opening = () => document.querySelector<HTMLElement>('.current-page > section:first-child');
+  const opening = () => document.querySelector<HTMLElement>('.current-page > section:first-child, .current-page > [data-rise]:first-child > section:first-child');
   const onScreen = (element: Element | null, share: number) => {
     const box = element?.getBoundingClientRect();
     return !!box && box.top > -innerHeight * 0.25 && box.bottom > innerHeight * share;
   };
   async function photoReady() {
-    const image = document.querySelector<HTMLImageElement>('.current-page > [data-role="photo-hero"]:first-child [data-part="hero-image"] img');
+    const image = document.querySelector<HTMLImageElement>('.current-page > [data-role="photo-hero"]:first-child [data-part="hero-image"] img, .current-page > [data-rise]:first-child > [data-role="photo-hero"]:first-child [data-part="hero-image"] img');
     if (!image) return null;
     await Promise.race([image.decode().catch(() => {}), new Promise(resolve => setTimeout(resolve, 400))]);
     return image.complete && image.naturalWidth ? image : null;

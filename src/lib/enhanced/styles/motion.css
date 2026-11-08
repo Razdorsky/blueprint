@@ -9,8 +9,8 @@
   --vt-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --vt-arrive: cubic-bezier(0.16, 1, 0.3, 1);
 }
-html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child { view-transition-name: vt-opening; }
-html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child > :is([data-part="hero-copy"], [data-part="copy"]) { view-transition-name: vt-opening-copy; }
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > :is(section:first-child, [data-rise]:first-child > section:first-child) { view-transition-name: vt-opening; }
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > :is(section:first-child, [data-rise]:first-child > section:first-child) > :is([data-part="hero-copy"], [data-part="copy"]) { view-transition-name: vt-opening-copy; }
 html[data-vt-header="shared"] body[data-edition="figma-enhanced"] .site-header { view-transition-name: vt-header; }
 /* Never capture a mega panel over the departing page. */
 html[data-vt] body[data-edition="figma-enhanced"] .site-header .mega { visibility: hidden !important; transition: none !important; }

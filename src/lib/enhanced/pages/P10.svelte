@@ -4,14 +4,14 @@
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
 
-<section data-name="Hero Section" data-node-id="814:7317" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/217d8eafeb5342a6cc73.webp" alt="A long candlelit table under hanging lanterns" loading="eager" decoding="async" fetchpriority="high" width="1800" height="2400"></figure><div data-part="hero-copy"><p data-node-id="I814:7317;756:1065" data-part="eyebrow">Arenal After Dark</p>
+<div class="rise" data-rise><section data-name="Hero Section" data-node-id="814:7317" data-role="photo-hero" data-hero-text="glass"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/217d8eafeb5342a6cc73.webp" alt="A long candlelit table under hanging lanterns" loading="eager" decoding="async" fetchpriority="high" width="1800" height="2400"></figure><div data-part="hero-copy"><p data-node-id="I814:7317;756:1065" data-part="eyebrow">Arenal After Dark</p>
 <h1 data-node-id="I814:7317;756:1066" class="c-heading" data-part="heading">The valley is better at night, and almost nobody sees it</h1></div></section>
-<section data-name="Description and info 60/40" data-node-id="814:7318" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I814:7318;756:1501" data-part="eyebrow">enjoy the evening</p>
+<section data-name="Description and info 60/40" data-rise-panel data-node-id="814:7318" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I814:7318;756:1501" data-part="eyebrow">enjoy the evening</p>
 <p data-node-id="I814:7318;756:1467" data-part="paragraph" class="current-lede">You arrive as the light goes. [Inclusion: a walk, a drink, the land at dusk.] You eat what the kitchen cooked that day, at the long table. Then the Dome, lit from inside, and [what happens there that evening].</p></div>
 <div data-part="rate"><p data-node-id="I814:7318;756:1469" data-part="eyebrow">price</p>
 <h2 data-node-id="I814:7318;756:1470" class="c-heading" data-part="heading">[Price] a person</h2>
 <p data-node-id="I814:7318;756:1493" data-part="paragraph">Transport from La Fortuna, [price] return, if you would rather not drive the road back down in the dark. We recommend this.</p>
-<div data-part="actions"><button data-name="CTA" data-node-id="I814:7318;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book an evening — destination not supplied">book an evening</button></div></div></section>
+<div data-part="actions"><button data-name="CTA" data-node-id="I814:7318;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book an evening — destination not supplied">book an evening</button></div></div></section></div>
 <section data-name="included" data-node-id="804:3169" data-role="facts"><div data-part="facts"><div data-part="fact"><p data-node-id="804:3094" data-part="eyebrow">when</p>
 <p data-node-id="804:3095" data-part="paragraph">[Start] to [end], [days]</p></div><div data-part="fact"><p data-node-id="804:3155" data-part="eyebrow">people</p>
 <p data-node-id="804:3156" data-part="paragraph">[X]</p></div><div data-part="fact"><p data-node-id="804:3161" data-part="eyebrow">included</p>

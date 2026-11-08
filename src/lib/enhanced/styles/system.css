@@ -5,19 +5,19 @@
 
 /* ---- Grid and rhythm ------------------------------------------------------------------------ */
 body[data-edition="figma-enhanced"] .current-page { background: var(--surface); color: var(--ink); }
-body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-newsletter)), body[data-edition="figma-enhanced"] .current-page > :where([data-drift]) > :where(section) {
+body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-newsletter)), body[data-edition="figma-enhanced"] .current-page :where([data-drift], [data-rise]) > :where(section) {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-content: start;
   padding: calc(var(--section) / 2) var(--edge); background: var(--surface); color: var(--ink);
 }
-body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-newsletter)) > *, body[data-edition="figma-enhanced"] .current-page > :where([data-drift]) > :where(section) > * { grid-column: 1 / -1; min-width: 0; }
+body[data-edition="figma-enhanced"] .current-page > :where(section:not(.site-newsletter)) > *, body[data-edition="figma-enhanced"] .current-page :where([data-drift], [data-rise]) > :where(section) > * { grid-column: 1 / -1; min-width: 0; }
 /* Full-width photographs are positioned against the whole section, not its grid area. */
-body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"] > [data-part="hero-image"],
-body[data-edition="figma-enhanced"] .current-page > :is([data-role="overlay"], [data-role="gallery"]) > [data-part="media"] { grid-column: auto; grid-row: auto; }
+body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"] > [data-part="hero-image"], body[data-edition="figma-enhanced"] .current-page > :where([data-rise]) > [data-role="photo-hero"] > [data-part="hero-image"],
+body[data-edition="figma-enhanced"] .current-page > :is([data-role="overlay"], [data-role="gallery"]) > [data-part="media"], body[data-edition="figma-enhanced"] .current-page > :where([data-rise]) > :is([data-role="overlay"], [data-role="gallery"]) > [data-part="media"] { grid-column: auto; grid-row: auto; }
 /* The designer's beige bands. On every page they sit between two full-width photographs, so the tone
    changes through a photograph. */
 body[data-edition="figma-enhanced"] .current-page > :where(section)[data-tone="beige"] { background: var(--surface-warm); padding-block: var(--section-band); }
 body[data-edition="figma-enhanced"] .current-page > :where(section)[data-tone="beige"] + :where([data-tone="beige"]) { padding-top: 0; }
-body[data-edition="figma-enhanced"] .current-page > section:first-child + section:not([data-tone="beige"], [data-role="overlay"], [data-role="gallery"], [data-role="map"]) { padding-top: var(--section); }
+body[data-edition="figma-enhanced"] .current-page > section:first-child + section:not([data-tone="beige"], [data-role="overlay"], [data-role="gallery"], [data-role="map"]), body[data-edition="figma-enhanced"] .current-page > :where([data-rise]:first-child) > section:first-child + section { padding-top: var(--section); }
 
 /* ---- Type: the frames' roles ------------------------------------------------------------------ */
 body[data-edition="figma-enhanced"] .current-page :where(h1, h2, h3) { margin: 0; font-family: var(--font-display); font-weight: 400; color: var(--heading); text-wrap: pretty; }
@@ -353,7 +353,7 @@ body[data-edition="figma-enhanced"] :is(.footer-top, .footer-columns, .footer-bo
 
 /* ---- Phone: the frames' mobile adaptation ------------------------------------------------------------ */
 @media (max-width: 767px) {
-  body[data-edition="figma-enhanced"] .current-page > section:not(.site-newsletter) > :not([data-part="hero-image"]), body[data-edition="figma-enhanced"] .current-page > :where([data-drift]) > section > :not([data-part="hero-image"]),
+  body[data-edition="figma-enhanced"] .current-page > section:not(.site-newsletter) > :not([data-part="hero-image"]), body[data-edition="figma-enhanced"] .current-page :where([data-drift], [data-rise]) > section > :not([data-part="hero-image"]),
   body[data-edition="figma-enhanced"] .current-page [data-variant] > *,
   body[data-edition="figma-enhanced"] .current-page :is([data-role="overlay"], [data-name="Overlay panel rigth"], [data-name="Slider with overlay"]) > [data-part="copy"],
   body[data-edition="figma-enhanced"] .current-page [data-role="photo-hero"] > [data-part="hero-copy"],

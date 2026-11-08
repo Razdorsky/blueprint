@@ -4,15 +4,15 @@
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
 
-<section data-name="Hero Section" data-node-id="944:7525" data-role="photo-hero"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/c52099090a2b2ca82d49.webp" alt="A long table set for a wedding dinner" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1601"></figure><div data-part="hero-copy"><p data-node-id="I944:7525;756:1065" data-part="eyebrow">Weddings</p>
+<div class="rise" data-rise><section data-name="Hero Section" data-node-id="944:7525" data-role="photo-hero"><figure data-part="hero-image" data-aspect="landscape"><img src="{base}/media/c52099090a2b2ca82d49.webp" alt="A long table set for a wedding dinner" loading="eager" decoding="async" fetchpriority="high" width="2400" height="1601"></figure><div data-part="hero-copy"><p data-node-id="I944:7525;756:1065" data-part="eyebrow">Weddings</p>
 <h1 data-node-id="I944:7525;756:1066" class="c-heading" data-part="heading">Small, private,{' '}and outdoors</h1></div></section>
-<section data-name="Description and info 60/40" data-node-id="944:7526" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I944:7526;756:1501" data-part="eyebrow">Weddings</p>
+<section data-name="Description and info 60/40" data-rise-panel data-node-id="944:7526" data-role="split" data-layout="copy-first" data-variant="description"><div data-part="copy"><p data-node-id="I944:7526;756:1501" data-part="eyebrow">Weddings</p>
 <p data-node-id="I944:7526;756:1467" data-part="paragraph" class="current-lede">We host weddings of up to [x] people. The ceremony happens [x]. Dinner is at the long table in El Rancho or set up under the open roof at the Hearth. Everybody who is at the wedding sleeps on the property, which means the party does not end with people getting into cars.</p>
 <p data-part="paragraph" class="current-lede">There is one wedding at a time. The property is yours for the dates you book it.</p></div>
 <div data-part="rate"><p data-node-id="I944:7526;756:1469" data-part="eyebrow">What it costs</p>
 <h2 data-node-id="I944:7526;756:1470" class="c-heading" data-part="heading">From [x]</h2>
 <p data-node-id="I944:7526;756:1493" data-part="paragraph">[x] nights and [x] guests, all in on the property side. Over [x] guests we quote it.</p>
-<div data-part="actions"><button data-name="CTA" data-node-id="I944:7526;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Enquire about a wedding — destination not supplied">Enquire about a wedding</button></div></div></section>
+<div data-part="actions"><button data-name="CTA" data-node-id="I944:7526;756:1490" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Enquire about a wedding — destination not supplied">Enquire about a wedding</button></div></div></section></div>
 <section data-name="Hero text only" data-node-id="944:7527" data-role="text-hero"><div data-part="copy"><p data-node-id="I944:7527;764:945" data-part="eyebrow">What is included</p>
 <h2 data-node-id="I944:7527;764:946" class="c-heading" data-part="heading">The property, the ceremony site, dinner, and a coordinator</h2></div></section>
 <section data-name="3 col info" data-node-id="944:7528" data-role="facts"><div data-part="facts"><div data-part="fact"><h3 data-node-id="I944:7528;0" class="c-heading" data-part="heading">All fourteen units</h3>
