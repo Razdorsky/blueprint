@@ -120,17 +120,16 @@ function playFilm(button) {
   video.dataset.loopSrc = video.currentSrc || video.querySelector('source:not([media])')?.src || '';
   video.dataset.activated = 'true';
   video.querySelectorAll('source').forEach(source => source.remove());
+  // play() runs inside the tap itself, which iOS Safari requires for sound; the scene's start travels in the
+  // address as a media fragment (#t=), with a seek as the fallback once the film's length is known.
   video.preload = 'auto';
-  video.src = video.dataset.full;
+  video.src = video.dataset.full + (start ? `#t=${start}` : '');
   video.loop = false;
   video.muted = false;
   video.volume = scene ? 0 : 1;
   video.removeAttribute('aria-hidden');
-  const go = () => {
-    video.currentTime = start;
-    video.play().then(() => {if (scene) fadeVolume(video, 1, 700);}).catch(() => {});
-  };
-  if (video.readyState >= 1) go(); else video.addEventListener('loadedmetadata', go, {once: true});
+  video.addEventListener('loadedmetadata', () => {if (start && Math.abs(video.currentTime - start) > 1) video.currentTime = start;}, {once: true});
+  video.play().then(() => {if (scene) fadeVolume(video, 1, 700);}).catch(() => {});
   button.hidden = true;
   const controls = box.querySelector('[data-film-controls]');
   if (controls) controls.hidden = false;
