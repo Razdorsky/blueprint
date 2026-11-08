@@ -81,3 +81,64 @@ Each feature is studied before it is built, then reviewed by the owner before th
   - layout at 69 widths in three engines;
   - axe on 28 pages at three widths;
   - gallery, menu and newsletter tests.
+
+## 2.2 Smooth scrolling and page transitions (2026-11-08)
+
+### What the references do
+
+**Lenis on `/blueprint/`, commit 452c7d0.** Code: `src/lib/blueprint/motion.ts` 25–33, `src/routes/blueprint/+layout.svelte` 49–58.
+- Wheel scrolling is smoothed with `lerp: 0.09` and `wheelMultiplier: 0.9`. Touch stays native. The page keeps its inertia: text and photographs glide to a stop instead of stepping.
+- It is not started when the visitor prefers reduced motion.
+- Scrolling stops while the menu or the photo viewer is open, and starts again when they close.
+- After every page change Lenis is resized and moved to the browser's position at once, so it never scrolls the new page back to where the old one was.
+
+**Legacy Blueprint page transitions** (owner's reference 11, commit 437572a). Code in `vessyl-website-blueprint`: `app/page-transitions.css`, `public/page-transitions.js`, `app/motion.css` 1–40.
+- The whole page dissolves: the old one fades out in 450ms, the new one fades in over 600ms (`cubic-bezier(0.4, 0, 0.2, 1)`).
+- When the departing page's opening photograph is still on screen, the photographs travel together:
+  - The old one stays fully visible while the new one dissolves over it in 800ms.
+  - Inside the new frame the photograph settles from 110% to 100% scale over the same 800ms. This is "the hero arriving smoothly".
+- The hero text leaves in 120ms. The new text arrives 240ms later, rising 7px and fading in over 400ms.
+- The header, when visible, cross-fades in 750ms instead of blinking.
+- Menus and dropdowns are hidden before the old page is captured.
+- With reduced motion there is no transition.
+
+### Decisions
+
+- Lenis with the `/blueprint/` settings, wheel only:
+  - It is skipped with reduced motion.
+  - It stops while the menu dialog or the photo viewer is open.
+  - It is synced after every navigation.
+  - The mega panels and dialogs scroll on their own (`data-lenis-prevent`).
+- The edition's existing View Transition gets the Legacy choreography:
+  - The opening sections share a transition name when the departing one is visible.
+  - The new photograph settles from 110% once its image is decoded. The wait is capped at 400ms, so a slow image never holds the page.
+  - The header cross-fades when it is on screen.
+  - Hero text arrives after the photograph.
+- Text-hero pages take part too: their opening panel dissolves the same way, without the zoom.
+
+### Built (2026-11-08), waiting for the owner's review
+
+- **Lenis** (`interactions.js`):
+  - Settings: `lerp 0.09`, `wheelMultiplier 0.9`, wheel only. Not started with reduced motion.
+  - It stops while the menu or the photo viewer is open.
+  - The menu, the viewer and the mega panels scroll on their own (`data-lenis-prevent`).
+  - `lenis/dist/lenis.css` is imported by the layout.
+- **Navigation** (`src/routes/figma-enhanced/+layout.svelte`):
+  - A glide still running stops when any navigation starts, so Back right after a wheel does not carry the old page's glide over.
+  - After the page changes, Lenis is resized and moved to the position SvelteKit chose. Back and Forward restore positions exactly.
+- **Transition** (`+layout.svelte`, `styles/motion.css`):
+  - The page dissolves (450 / 600ms).
+  - When the departing opening is on screen, the openings share a name: the old one stays while the new one dissolves over 800ms.
+  - The new photograph settles from 110% to 100% in 800ms. The new page waits for it to decode, at most 400ms.
+  - The hero text leaves in 120ms, and the new text rises 7px and fades in over 400ms after 240ms.
+  - The visible header cross-fades in 750ms.
+  - Mega panels are never captured.
+- **Checked:**
+  - In Chrome, WebKit and Firefox:
+    - one wheel step glides about 330px over half a second;
+    - scrolling stops while the menu is open;
+    - the transition timings above, measured from the running animations;
+    - the new page opens at the top;
+    - Back and Forward restore 0 and 809px.
+  - With reduced motion there is no Lenis and no transition.
+  - Layout at 69 widths in three engines, axe, and the gallery, menu and newsletter tests.

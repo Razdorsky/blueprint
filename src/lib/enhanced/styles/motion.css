@@ -1,0 +1,49 @@
+/* Figma Enhanced — step 2.2 (docs/figma-enhanced-step2.md): the Legacy Blueprint page transition (reference 11).
+   The page dissolves. When the departing opening is on screen, the two openings travel together: the old one
+   stays while the new one dissolves over it, its photograph settling from 110% (+layout.svelte), and the new
+   hero text arrives after the photograph. The header cross-fades when it is on screen. */
+:root {
+  --vt-scene: 800ms;
+  --vt-copy: 400ms;
+  --vt-header: 750ms;
+  --vt-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --vt-arrive: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child { view-transition-name: vt-opening; }
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child > :is([data-part="hero-copy"], [data-part="copy"]) { view-transition-name: vt-opening-copy; }
+html[data-vt-header="shared"] body[data-edition="figma-enhanced"] .site-header { view-transition-name: vt-header; }
+/* Never capture a mega panel over the departing page. */
+html[data-vt] body[data-edition="figma-enhanced"] .site-header .mega { visibility: hidden !important; transition: none !important; }
+
+::view-transition-group(root) { animation: none; }
+::view-transition-old(root) { animation: vt-out 450ms var(--vt-ease) both; }
+::view-transition-new(root) { animation: vt-in 600ms var(--vt-ease) both; }
+
+::view-transition-group(vt-opening) { z-index: 1; animation: none; }
+::view-transition-image-pair(vt-opening) { overflow: clip; }
+::view-transition-old(vt-opening),
+::view-transition-new(vt-opening) { width: 100%; height: auto; object-fit: fill; object-position: center top; }
+::view-transition-old(vt-opening) { animation: none; opacity: 1; }
+::view-transition-old(vt-opening):only-child { animation: vt-out 450ms var(--vt-ease) both; }
+::view-transition-new(vt-opening) { animation: vt-in var(--vt-scene) var(--vt-ease) both; }
+
+::view-transition-group(vt-opening-copy) { z-index: 2; animation: none; }
+::view-transition-old(vt-opening-copy) { animation: vt-out 120ms ease-out both; }
+::view-transition-new(vt-opening-copy) { animation: vt-copy var(--vt-copy) 240ms var(--vt-arrive) both; }
+
+::view-transition-group(vt-header) { z-index: 3; animation: none; }
+::view-transition-old(vt-header) { animation: vt-out var(--vt-header) var(--vt-ease) both; }
+::view-transition-new(vt-header) { animation: vt-in var(--vt-header) var(--vt-ease) both; }
+
+::view-transition-old(*),
+::view-transition-new(*) { mix-blend-mode: normal; }
+
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+@keyframes vt-copy { from { opacity: 0; transform: translateY(7px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}

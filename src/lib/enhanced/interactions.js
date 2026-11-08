@@ -1,4 +1,10 @@
 // One delegated controller survives SvelteKit page changes. Abort on unmount.
+import Lenis from 'lenis';
+
+// Step 2.2: wheel scrolling glides as on /blueprint/ 452c7d0 (docs/figma-enhanced-step2.md). Touch stays native,
+// and there is no Lenis for visitors who prefer reduced motion.
+let lenis;
+export const smooth = () => lenis;
 let resetPendingMenu = () => {};
 export function closeOverlays() {
   resetPendingMenu();
@@ -103,6 +109,7 @@ export function installInteractions() {
   const menu = () => document.querySelector('#site-menu');
   const gallery = () => document.querySelector('.gallery-dialog');
 
+  if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
   addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();updateHeader();});}, {signal});
   addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateHeader();});}, {passive:true, signal});
@@ -159,6 +166,7 @@ export function installInteractions() {
     }));
     show(Math.max(0, images.findIndex(image => image.src === selected)));
     dialog.showModal();
+    lenis?.stop();
   }
   on('click', event => {
     const target = event.target instanceof Element ? event.target : null;
@@ -167,7 +175,7 @@ export function installInteractions() {
     if (megaTrigger) {if (megaTrigger.getAttribute('aria-expanded') === 'true') closeMegas(); else openMega(megaTrigger, false);return;}
     if (!target.closest('[data-mega]')) closeMegas();
     const open = target.closest('[data-menu-open]');
-    if (open) {resetPendingMenu();opener=open;const dialog=menu();if(dialog&&!dialog.open){dialog.showModal();dialog.scrollTop=0;open.setAttribute('aria-expanded','true');dialog.querySelector('[data-menu-close]')?.focus();}return;}
+    if (open) {resetPendingMenu();opener=open;const dialog=menu();if(dialog&&!dialog.open){dialog.showModal();lenis?.stop();dialog.scrollTop=0;open.setAttribute('aria-expanded','true');dialog.querySelector('[data-menu-close]')?.focus();}return;}
     if(target===menu()){const box=target.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom){closeMenu();return;}}
     if (target.closest('[data-menu-close]')) {closeMenu();return;}
     if (target.closest('[data-language-trigger]')) {notify('This preview is in English. Localized page copy has not been supplied yet.');return;}
@@ -181,7 +189,10 @@ export function installInteractions() {
     if (galleryTrigger) {openGallery(galleryTrigger.closest('[data-gallery]'), galleryTrigger.currentSrc || galleryTrigger.src, galleryTrigger);return;}
   });
   on('cancel', event => {if (event.target === menu()) {event.preventDefault();closeMenu();}}, {capture:true});
-  on('close', event => {if (event.target === gallery()) galleryOpener?.focus();}, {capture:true});
+  on('close', event => {
+    if (event.target === gallery()) galleryOpener?.focus();
+    if (!document.querySelector('dialog[open]')) lenis?.start();
+  }, {capture:true});
   on('keydown', event => {
     const target = event.target instanceof Element ? event.target : null;
     if (gallery()?.open && ['ArrowLeft','ArrowRight'].includes(event.key)) {event.preventDefault();show(active + (event.key === 'ArrowLeft' ? -1 : 1));return;}
@@ -207,5 +218,5 @@ export function installInteractions() {
   on('touchstart', event => {if (event.target.closest('.gallery-stage')) touchX = event.changedTouches[0].clientX;}, {passive:true});
   on('touchend', event => {if (event.target.closest('.gallery-stage')) {const dx = event.changedTouches[0].clientX - touchX;if (Math.abs(dx) > 45) show(active + (dx < 0 ? 1 : -1));}}, {passive:true});
   enhancePage();
-  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);resetPendingMenu=()=>{};refreshHeader=()=>{};};
+  return () => {controller.abort();timeouts.forEach(clearTimeout);cancelAnimationFrame(headerFrame);lenis?.destroy();lenis=undefined;resetPendingMenu=()=>{};refreshHeader=()=>{};};
 }

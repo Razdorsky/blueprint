@@ -1,4 +1,4 @@
-<dialog id="photo-gallery" class="gallery-dialog" aria-label="Photo gallery">
+<dialog id="photo-gallery" class="gallery-dialog" aria-label="Photo gallery" data-lenis-prevent>
   <span class="gallery-count" aria-live="polite"></span>
   <button type="button" class="icon-button gallery-close" aria-label="Close gallery">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">

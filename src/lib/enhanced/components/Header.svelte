@@ -60,7 +60,7 @@
     </div>
   </div>
   {#each groups as group (group.id)}
-    <nav id={`mega-${group.id}`} class="mega" data-mega data-open="false" aria-label={group.title} inert>
+    <nav id={`mega-${group.id}`} class="mega" data-mega data-open="false" aria-label={group.title} data-lenis-prevent inert>
       <div class="mega-cards" style={`--count: ${group.items.length}`}>
         {#each group.items as item (item.index)}
           <a class="mega-card" href={route(edition, item.slug, base)}>

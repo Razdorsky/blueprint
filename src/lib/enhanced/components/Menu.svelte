@@ -10,7 +10,7 @@
   let { edition, base = '' }: Props = $props();
 </script>
 
-<dialog class="site-menu" id="site-menu" aria-label="Explore The Vessyl">
+<dialog class="site-menu" id="site-menu" aria-label="Explore The Vessyl" data-lenis-prevent>
   <div class="menu-top">
     <a href={route(edition, '', base)}>
       <img src={`${base.replace(/\/$/, '')}/brand/logo-dark.svg`} alt="VESSYL" width="220" height="41" />
