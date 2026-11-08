@@ -54,4 +54,5 @@ part "$EVT"  10.05 4.8  loop-handpan     0.8       # P18: a musician at the hand
 # Films with sound: their scenes play when a loop is clicked (film time = source time - start).
 film "$PROG" 7.1 79.4 film-programming          # Amenities and Experiences, without the opening and closing logo
 film "$OVER" 0 140.1 film-overview              # Property & Program Overview Reel, whole
-for f in "$OUT"/loop-{rancho-pool,rancho,retreat,arenal,estate,experiences,presents,poolview,saddle,plunge,yoga,tuning,halter,swim,handpan}*.mp4 "$OUT"/film-{programming,overview}.mp4; do print "$(basename $f) $(du -h $f | cut -f1)"; done
+film "$EVT" 5.6 53.8 film-events                # Events reel to its end: Josh speaks until 57.8, over the closing logo (it used to stop at 55.8, mid-sentence)
+for f in "$OUT"/loop-{rancho-pool,rancho,retreat,arenal,estate,experiences,presents,poolview,saddle,plunge,yoga,tuning,halter,swim,handpan}*.mp4 "$OUT"/film-{programming,overview,events}.mp4; do print "$(basename $f) $(du -h $f | cut -f1)"; done

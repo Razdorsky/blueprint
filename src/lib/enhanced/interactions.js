@@ -46,7 +46,7 @@ let filmObserver;
 function syncVideo(video) {
   const visible = video.dataset.visible === 'true' && !document.hidden;
   if (!visible) {video.pause();return;}
-  if (video.dataset.activated === 'true') return;
+  if (video.dataset.activated === 'true' || 'still' in video.dataset) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) video.pause();
   else video.play().catch(() => {});
 }
@@ -58,7 +58,7 @@ function setupFilms() {
       syncVideo(entry.target);
     }
   }, {threshold: [0, 0.15]});
-  document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(video => {video.muted = true;filmObserver.observe(video);});
+  document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(video => {video.muted = true;filmObserver.observe(video);});
   setupArch();
 }
 // Placement map, 2026-11-08: every loop cut from footage with sound sits in a [data-film-box] with a button. A box
@@ -93,11 +93,12 @@ function endScene(box, focus = false) {
   cancelAnimationFrame(video._fade || 0);
   video.pause();
   video.dataset.activated = 'false';
+  video.removeAttribute('data-photo');
   video.muted = true;
   video.volume = 1;
   video.loop = true;
   video.setAttribute('aria-hidden', 'true');
-  video.src = video.dataset.loopSrc || '';
+  if (video.dataset.loopSrc) video.src = video.dataset.loopSrc; else video.removeAttribute('src');
   video.load();
   syncVideo(video);
   const button = box.querySelector('[data-film-play]');
@@ -119,6 +120,7 @@ function playFilm(button) {
   video.dataset.loopSrc = video.currentSrc || video.querySelector('source:not([media])')?.src || '';
   video.dataset.activated = 'true';
   video.querySelectorAll('source').forEach(source => source.remove());
+  video.preload = 'auto';
   video.src = video.dataset.full;
   video.loop = false;
   video.muted = false;
@@ -136,9 +138,12 @@ function playFilm(button) {
   controls?.querySelector('[data-film-toggle]')?.focus();
 }
 // A scene ends at data-end: the sound fades over its last 0.9s, then the silent loop comes back.
+// data-photo-after: from that moment the photograph shows again while the sound plays on (the founder's last words
+// run over the reel's closing logo, which his portrait frame would crop).
 function sceneTime(video) {
   const end = Number(video.dataset.end);
   if (!end || video.dataset.activated !== 'true') return;
+  if (video.dataset.photoAfter) video.toggleAttribute('data-photo', video.currentTime >= Number(video.dataset.photoAfter));
   if (video.currentTime >= end) {endScene(video.closest('[data-film-box]'), video.closest('[data-film-box]')?.contains(document.activeElement));return;}
   if (video.currentTime >= end - 0.9 && !video._fading) {video._fading = true;fadeVolume(video, 0, Math.max(0, (end - video.currentTime) * 1000));}
   if (video.currentTime < end - 0.9) video._fading = false;
@@ -254,7 +259,7 @@ export function installInteractions() {
   let railFrame = 0, headerFrame = 0;
   addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateHeader();});}, {signal});
   addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateHeader();});}, {passive:true, signal});
-  on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(syncVideo));
+  on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
     const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;
     if (box) filmControls(box);

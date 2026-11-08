@@ -9,7 +9,12 @@ body[data-edition="figma-enhanced"] .current-page [data-part="hero-image"] video
 body[data-edition="figma-enhanced"] .current-page [data-part="media"] > video[data-loop] {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
 }
-body[data-edition="figma-enhanced"] .current-page [data-part="media"]:has(> video[data-loop]) { position: relative; overflow: hidden; isolation: isolate; }
+body[data-edition="figma-enhanced"] .current-page [data-part="media"]:has(> video) { position: relative; overflow: hidden; isolation: isolate; }
+/* A photograph with a film behind it (the founder on Home): the film shows only while it plays. */
+body[data-edition="figma-enhanced"] .current-page [data-part="media"] > video[data-still] {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; transition: opacity 300ms var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page [data-part="media"] > video[data-still][data-activated="true"]:not([data-photo]) { opacity: 1; }
 
 /* ---- The film button and controls on frosted glass (Legacy reference 12), shared by every film box ------------ */
 body[data-edition="figma-enhanced"] .current-page [data-film-box] :is(.film-play, .film-controls button) {
@@ -34,9 +39,11 @@ body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-tog
 body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-mute][data-muted="true"] .icon-sound,
 body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-mute]:not([data-muted="true"]) .icon-muted { display: none; }
 body[data-edition="figma-enhanced"] .current-page [data-film-box] :is(.film-play, .film-controls button):focus-visible { outline: 2px solid var(--on-dark); outline-offset: 4px; box-shadow: none; }
-/* The callouts' photographs are small: the button is a round icon there (its aria-label names it). */
+/* The callouts' photographs are small: over a loop the button is a round icon (its aria-label names it). */
 body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-play { right: 8px; bottom: 8px; width: 36px; height: 36px; min-height: 36px; padding: 0; justify-content: center; }
-body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-play span { display: none; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box]:has(> video[data-loop]) .film-play span { display: none; }
+/* The founder's photograph names its film: Hear Josh. */
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box]:has(> video[data-still]) .film-play { width: auto; padding: 0 14px 0 12px; gap: 8px; font-size: 12px; }
 body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-controls { right: 8px; bottom: 8px; gap: 6px; }
 body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-controls button { width: 36px; height: 36px; }
 /* In an opening the button sits on the section, above the photograph's shade, at its lower right and clear of the
