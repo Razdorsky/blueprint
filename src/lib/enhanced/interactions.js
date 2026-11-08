@@ -61,33 +61,87 @@ function setupFilms() {
   document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(video => {video.muted = true;filmObserver.observe(video);});
   setupArch();
 }
-function filmControls(arch) {
-  const video = arch.querySelector('video[data-film]');
-  const toggle = arch.querySelector('[data-film-toggle]');
-  const mute = arch.querySelector('[data-film-mute]');
+// Placement map, 2026-11-08: every loop cut from footage with sound sits in a [data-film-box] with a button. A box
+// with data-start and data-end plays that scene of the source film with sound, the sound fading in and out, then
+// returns to the silent loop; a box without them plays the whole film (the arches, Take the whole property). One
+// film sounds at a time.
+const filmVideo = box => box?.querySelector('video[data-full]');
+function filmControls(box) {
+  const video = filmVideo(box);
+  const toggle = box.querySelector('[data-film-toggle]');
+  const mute = box.querySelector('[data-film-mute]');
   if (!video || !toggle || !mute) return;
   toggle.dataset.paused = String(video.paused);
   toggle.setAttribute('aria-label', video.paused ? 'Play the film' : 'Pause the film');
   mute.dataset.muted = String(video.muted);
   mute.setAttribute('aria-label', video.muted ? 'Turn the sound on' : 'Mute the film');
 }
+function fadeVolume(video, to, ms) {
+  cancelAnimationFrame(video._fade || 0);
+  const from = video.volume, start = performance.now();
+  const step = now => {
+    // A frame's timestamp can precede `start`, and a fade may have no time left: keep both inside 0..1.
+    const t = ms > 0 ? Math.min(1, Math.max(0, (now - start) / ms)) : 1;
+    video.volume = Math.min(1, Math.max(0, from + (to - from) * t));
+    video._fade = t < 1 ? requestAnimationFrame(step) : 0;
+  };
+  video._fade = requestAnimationFrame(step);
+}
+function endScene(box, focus = false) {
+  const video = filmVideo(box);
+  if (!video || video.dataset.activated !== 'true') return;
+  cancelAnimationFrame(video._fade || 0);
+  video.pause();
+  video.dataset.activated = 'false';
+  video.muted = true;
+  video.volume = 1;
+  video.loop = true;
+  video.setAttribute('aria-hidden', 'true');
+  video.src = video.dataset.loopSrc || '';
+  video.load();
+  syncVideo(video);
+  const button = box.querySelector('[data-film-play]');
+  if (button) button.hidden = false;
+  const controls = box.querySelector('[data-film-controls]');
+  if (controls) controls.hidden = true;
+  if (focus) button?.focus();
+}
 function playFilm(button) {
-  const arch = button.closest('[data-part="arch"]');
-  const video = arch?.querySelector('video[data-film]');
-  if (!arch || !video?.dataset.full) return;
+  const box = button.closest('[data-film-box]');
+  const video = filmVideo(box);
+  if (!box || !video?.dataset.full) return;
+  document.querySelectorAll('.current-page [data-film-box]').forEach(other => {
+    const playing = filmVideo(other);
+    if (other === box || playing?.dataset.activated !== 'true') return;
+    if (playing.dataset.end) endScene(other); else playing.pause();
+  });
+  const start = Number(video.dataset.start || 0), scene = Boolean(video.dataset.end);
+  video.dataset.loopSrc = video.currentSrc || video.querySelector('source:not([media])')?.src || '';
   video.dataset.activated = 'true';
   video.querySelectorAll('source').forEach(source => source.remove());
   video.src = video.dataset.full;
   video.loop = false;
   video.muted = false;
+  video.volume = scene ? 0 : 1;
   video.removeAttribute('aria-hidden');
-  video.currentTime = 0;
-  video.play().catch(() => {});
+  const go = () => {
+    video.currentTime = start;
+    video.play().then(() => {if (scene) fadeVolume(video, 1, 700);}).catch(() => {});
+  };
+  if (video.readyState >= 1) go(); else video.addEventListener('loadedmetadata', go, {once: true});
   button.hidden = true;
-  const controls = arch.querySelector('[data-film-controls]');
+  const controls = box.querySelector('[data-film-controls]');
   if (controls) controls.hidden = false;
-  filmControls(arch);
+  filmControls(box);
   controls?.querySelector('[data-film-toggle]')?.focus();
+}
+// A scene ends at data-end: the sound fades over its last 0.9s, then the silent loop comes back.
+function sceneTime(video) {
+  const end = Number(video.dataset.end);
+  if (!end || video.dataset.activated !== 'true') return;
+  if (video.currentTime >= end) {endScene(video.closest('[data-film-box]'), video.closest('[data-film-box]')?.contains(document.activeElement));return;}
+  if (video.currentTime >= end - 0.9 && !video._fading) {video._fading = true;fadeVolume(video, 0, Math.max(0, (end - video.currentTime) * 1000));}
+  if (video.currentTime < end - 0.9) video._fading = false;
 }
 
 // The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
@@ -202,9 +256,11 @@ export function installInteractions() {
   addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateHeader();});}, {passive:true, signal});
   on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
-    const arch = event.target instanceof HTMLVideoElement ? event.target.closest('[data-part="arch"]') : null;
-    if (arch) filmControls(arch);
+    const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;
+    if (box) filmControls(box);
   }, {capture:true});
+  on('timeupdate', event => {if (event.target instanceof HTMLVideoElement && event.target.dataset.end) sceneTime(event.target);}, {capture:true});
+  on('ended', event => {if (event.target instanceof HTMLVideoElement && event.target.dataset.end) endScene(event.target.closest('[data-film-box]'));}, {capture:true});
   refreshHeader = () => {lastY = scrollY;document.querySelector('[data-header]')?.classList.remove('is-away');updateHeader();};
   on('focusin', event => {
     const target = event.target instanceof Element ? event.target : null;
@@ -212,6 +268,31 @@ export function installInteractions() {
     if (target && !target.closest('[data-mega], [data-mega-trigger]')) closeMegas();
   });
   resetPendingMenu=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=undefined;menu()?.classList.remove('closing');};
+  // Placement map, 2026-11-08: on wide screens the menu shows the photograph of the page under the pointer or focus
+  // (Menu.svelte). The new photograph is decoded first, then crossfades in; a later hover wins.
+  let previewWanted = '';
+  function previewMenu(src, name) {
+    const figure = menu()?.querySelector('.menu-preview');
+    const frame = figure?.querySelector('.menu-preview-image');
+    if (!frame || !src || !figure.offsetParent || previewWanted === src) return;
+    previewWanted = src;
+    const current = frame.querySelector('img:not(.is-leaving)');
+    if (current?.getAttribute('src') === src) {figure.querySelector('figcaption').textContent = name;return;}
+    const next = new Image();
+    next.alt = '';next.className = 'is-coming';next.src = src;
+    next.decode().catch(() => {}).then(() => {
+      if (previewWanted !== src || !frame.isConnected) return;
+      frame.append(next);
+      void next.offsetWidth;
+      next.classList.remove('is-coming');
+      frame.querySelectorAll('img').forEach(img => {if (img !== next) img.classList.add('is-leaving');});
+      later(() => frame.querySelectorAll('img.is-leaving').forEach(img => img.remove()), 480);
+      figure.querySelector('figcaption').textContent = name;
+    });
+  }
+  const previewFrom = event => {const link = event.target instanceof Element ? event.target.closest('.site-menu .menu-column a[data-cover]') : null;if (link) previewMenu(link.dataset.cover, link.textContent.trim());};
+  on('pointerover', previewFrom);
+  on('focusin', previewFrom);
   // Owner's request, 2026-11-07: page text cannot be selected or copied (see also styles/shell-edition.css).
   // Form fields stay editable: their text can be selected, copied, cut and pasted.
   const editable = target => target instanceof Element && !!target.closest('input, textarea, [contenteditable=""], [contenteditable="true"]');
@@ -267,17 +348,17 @@ export function installInteractions() {
     if (filmPlay) {playFilm(filmPlay);return;}
     const filmToggle = target.closest('[data-film-toggle]');
     if (filmToggle) {
-      const video = filmToggle.closest('[data-part="arch"]')?.querySelector('video[data-film]');
+      const video = filmVideo(filmToggle.closest('[data-film-box]'));
       if (video?.paused) {if (video.ended) video.currentTime = 0;video.play().catch(() => {});} else video?.pause();
       return;
     }
     const filmMute = target.closest('[data-film-mute]');
-    if (filmMute) {const video = filmMute.closest('[data-part="arch"]')?.querySelector('video[data-film]');if (video) video.muted = !video.muted;return;}
+    if (filmMute) {const video = filmVideo(filmMute.closest('[data-film-box]'));if (video) {cancelAnimationFrame(video._fade || 0);if (video.volume === 0) video.volume = 1;video.muted = !video.muted;}return;}
     const megaTrigger = target.closest('[data-mega-trigger]');
     if (megaTrigger) {if (megaTrigger.getAttribute('aria-expanded') === 'true') closeMegas(); else openMega(megaTrigger, false);return;}
     if (!target.closest('[data-mega]')) closeMegas();
     const open = target.closest('[data-menu-open]');
-    if (open) {resetPendingMenu();opener=open;const dialog=menu();if(dialog&&!dialog.open){dialog.showModal();lenis?.stop();dialog.scrollTop=0;open.setAttribute('aria-expanded','true');dialog.querySelector('[data-menu-close]')?.focus();}return;}
+    if (open) {resetPendingMenu();opener=open;const dialog=menu();if(dialog&&!dialog.open){dialog.showModal();lenis?.stop();dialog.scrollTop=0;open.setAttribute('aria-expanded','true');dialog.querySelector('[data-menu-close]')?.focus();const figure=dialog.querySelector('.menu-preview');if(figure){previewWanted='';previewMenu(figure.dataset.cover,figure.dataset.name);}}return;}
     if(target===menu()){const box=target.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom){closeMenu();return;}}
     if (target.closest('[data-menu-close]')) {closeMenu();return;}
     if (target.closest('[data-language-trigger]')) {notify('This preview is in English. Localized page copy has not been supplied yet.');return;}
@@ -310,7 +391,7 @@ export function installInteractions() {
       if (event.shiftKey && target === links[0]) {event.preventDefault();trigger?.focus();return;}
       if (!event.shiftKey && target === links.at(-1)) {
         event.preventDefault();
-        const triggers = [...document.querySelectorAll('[data-mega-trigger]')];
+        const triggers = [...document.querySelectorAll('[data-mega-trigger]')].filter(button => button.offsetParent);
         const next = triggers[triggers.indexOf(trigger) + 1] || document.querySelector('[data-header] .brand');
         closeMegas();next?.focus();return;
       }

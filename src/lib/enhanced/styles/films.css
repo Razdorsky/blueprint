@@ -1,93 +1,117 @@
-/* Figma Enhanced — step 2.3 (docs/figma-enhanced-step2.md): films. Silent loops in the openings, and the Home
-   opening from /blueprint/ 452c7d0: a film in an arch the shape of the Dome that opens to the full screen as you
-   scroll. Behaviour: interactions.js (loops, arch, film). */
+/* Figma Enhanced — step 2.3 (docs/figma-enhanced-step2.md), corrected to the placement map (2026-11-08): silent loops
+   in openings and sections where the footage shows the designer's subject; the opening from /blueprint/ 452c7d0 (a
+   film in an arch the shape of the Dome that opens to the full screen as you scroll) on Home, Experiences and The
+   Vessyl Presents; and the Legacy film button (reference 12) on every loop cut from footage with sound.
+   Behaviour: interactions.js (loops, arch, playFilm, endScene). */
 
-/* ---- Silent loops in the openings: the loop covers the designer's photograph, which stays as the fallback. */
-body[data-edition="figma-enhanced"] .current-page [data-part="hero-image"] video[data-loop] {
+/* ---- Silent loops: the loop covers the designer's photograph, which stays as the fallback. */
+body[data-edition="figma-enhanced"] .current-page [data-part="hero-image"] video[data-loop],
+body[data-edition="figma-enhanced"] .current-page [data-part="media"] > video[data-loop] {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;
+}
+body[data-edition="figma-enhanced"] .current-page [data-part="media"]:has(> video[data-loop]) { position: relative; overflow: hidden; isolation: isolate; }
+
+/* ---- The film button and controls on frosted glass (Legacy reference 12), shared by every film box ------------ */
+body[data-edition="figma-enhanced"] .current-page [data-film-box] :is(.film-play, .film-controls button) {
+  border: 1px solid rgb(245 235 231 / 0.32); background: linear-gradient(135deg, rgb(7 9 8 / 0.58), rgb(7 9 8 / 0.3) 78%);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); color: var(--on-dark); cursor: pointer;
+  transition: background-color var(--dur-2) var(--ease), opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-play {
+  position: absolute; z-index: 3; right: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 0 18px 0 15px; border-radius: 999px;
+  font: 500 13px / 1.25 var(--font-body); letter-spacing: 0.02em; text-transform: uppercase;
+}
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-play svg { width: 14px; height: 14px; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-play[hidden],
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-controls[hidden] { display: none; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-play:hover { transform: scale(1.04); }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-controls { position: absolute; z-index: 3; right: 20px; bottom: 20px; display: flex; gap: 10px; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-controls button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] .film-controls svg { width: 17px; height: 17px; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-toggle][data-paused="true"] .icon-pause,
+body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-toggle]:not([data-paused="true"]) .icon-play,
+body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-mute][data-muted="true"] .icon-sound,
+body[data-edition="figma-enhanced"] .current-page [data-film-box] [data-film-mute]:not([data-muted="true"]) .icon-muted { display: none; }
+body[data-edition="figma-enhanced"] .current-page [data-film-box] :is(.film-play, .film-controls button):focus-visible { outline: 2px solid var(--on-dark); outline-offset: 4px; box-shadow: none; }
+/* The callouts' photographs are small: the button is a round icon there (its aria-label names it). */
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-play { right: 8px; bottom: 8px; width: 36px; height: 36px; min-height: 36px; padding: 0; justify-content: center; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-play span { display: none; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-controls { right: 8px; bottom: 8px; gap: 6px; }
+body[data-edition="figma-enhanced"] .current-page [data-role="callout"] [data-film-box] .film-controls button { width: 36px; height: 36px; }
+/* In an opening the button sits on the section, above the photograph's shade, at its lower right and clear of the
+   designer's copy; on phones, where the copy spans the width, it moves to the top right under the header. */
+body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { grid-column: auto !important; right: var(--edge); bottom: clamp(24px, 4svh, 48px); }
+@media (max-width: 760px) {
+  body[data-edition="figma-enhanced"] .current-page > [data-role="photo-hero"][data-film-box] > :is(.film-play, .film-controls) { top: calc(var(--header) + 12px); bottom: auto; right: 16px; }
 }
 
 /* ---- Home: the arch ----------------------------------------------------------------------------------- */
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] {
   display: block; align-content: start; min-height: 0; padding: 0; background: var(--surface); color: var(--ink);
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"]::before { content: none; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"].is-opening { height: 185svh; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch-stage"] {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role]::before { content: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role].is-opening { height: 185svh; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch-stage"] {
   position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter);
   min-height: 100svh; padding-inline: var(--edge); overflow: hidden;
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"].is-opening [data-part="arch-stage"] { position: sticky; top: 0; height: 100svh; min-height: 0; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role].is-opening [data-part="arch-stage"] { position: sticky; top: 0; height: 100svh; min-height: 0; }
 /* The designer's title and actions, left of the arch. They fade, rise and blur away as it opens, so nothing is
    written over the open film. */
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="hero-copy"] {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] {
   position: relative; z-index: 2; grid-column: 1 / span 6; align-self: end; display: flex; flex-direction: column; align-items: flex-start; gap: 32px;
   padding: calc(var(--header) + 48px) 0 clamp(40px, 9svh, 96px); text-align: left; color: var(--ink);
   opacity: calc(1 - var(--open, 0) * 2.4); transform: translateY(calc(var(--open, 0) * -7svh)); filter: blur(calc(var(--open, 0) * 10px));
   will-change: opacity, transform, filter;
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] h1 { max-width: 11em; font-size: var(--t-hero); line-height: 1.04; color: var(--heading); }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="hero-copy"] .current-action:not([data-name^="Link arrow"]) {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] h1 { max-width: 11em; font-size: var(--t-hero); line-height: 1.04; color: var(--heading); }
+/* The designer's eyebrow and lede on the text openings that took the arch (Experiences, The Vessyl Presents) keep
+   their light-page colours: the photo-hero rules would paint them for a photograph. */
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] [data-part="eyebrow"] { color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] :is([data-part="paragraph"], .current-lede) { max-width: 34em; color: var(--ink); text-shadow: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] .current-action:not([data-name^="Link arrow"]) {
   background: var(--heading); border-color: transparent; color: var(--on-dark); -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="hero-copy"] .current-action:not([data-name^="Link arrow"]):hover { background: #24351f; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="hero-copy"] :is(a, button):focus-visible { outline-color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] .current-action:not([data-name^="Link arrow"]):hover { background: #24351f; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] :is(a, button):focus-visible { outline-color: var(--accent); }
 /* The arch: its top is a half circle; every inset and the radius go to zero as --open goes from 0 to 1. The film
    slides so that its subject (--fx, a percentage of its width) sits in the arch's middle while closed. */
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch"] {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch"] {
   --al: 53vw; --ar: var(--edge); --at: calc(var(--header) + 40px); --ab: 5svh; --rad: calc((47vw - var(--edge)) / 2);
   --shift: calc((53vw + 100vw - var(--edge)) / 2 - var(--fx, 50) * 1vw);
   position: absolute; inset: 0; z-index: 1;
   clip-path: inset(calc(var(--at) * (1 - var(--open, 0))) calc(var(--ar) * (1 - var(--open, 0))) calc(var(--ab) * (1 - var(--open, 0))) calc(var(--al) * (1 - var(--open, 0)))
     round calc(var(--rad) * (1 - var(--open, 0))) calc(var(--rad) * (1 - var(--open, 0))) 0 0);
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch-media"] {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch-media"] {
   position: absolute; inset: 0; background: #1d1a14; transform: translateX(calc((1 - var(--open, 0)) * var(--shift))); will-change: transform;
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch-media"] video {
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch-media"] video {
   display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.12 - var(--open, 0) * 0.12));
 }
 
-/* ---- The film: Watch the film, then pause and sound (Legacy reference 12), on frosted glass ------------------- */
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] :is(.film-play, .film-controls button) {
-  border: 1px solid rgb(245 235 231 / 0.32); background: linear-gradient(135deg, rgb(7 9 8 / 0.58), rgb(7 9 8 / 0.3) 78%);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); color: var(--on-dark); cursor: pointer;
-  transition: background-color var(--dur-2) var(--ease), opacity var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+/* ---- The arch's film button follows the arch's corner as it opens ---------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] :is(.film-play, .film-controls) {
+  right: calc(var(--ar) * (1 - var(--open, 0)) + 24px); bottom: calc(var(--ab) * (1 - var(--open, 0)) + 24px);
 }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-play {
-  position: absolute; z-index: 3; right: calc(var(--ar) * (1 - var(--open, 0)) + 24px); bottom: calc(var(--ab) * (1 - var(--open, 0)) + 24px);
-  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px 0 18px; border-radius: 999px;
-  font: 500 var(--t-button) / 1.25 var(--font-body); letter-spacing: 0.02em; text-transform: uppercase;
-}
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-play svg { width: 16px; height: 16px; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-play[hidden] { display: none; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-play:hover { transform: scale(1.04); }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-controls {
-  position: absolute; z-index: 3; right: calc(var(--ar) * (1 - var(--open, 0)) + 24px); bottom: calc(var(--ab) * (1 - var(--open, 0)) + 24px);
-  display: flex; gap: 10px;
-}
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-controls[hidden] { display: none; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-controls button { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] .film-controls svg { width: 18px; height: 18px; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-film-toggle][data-paused="true"] .icon-pause,
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-film-toggle]:not([data-paused="true"]) .icon-play,
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-film-mute][data-muted="true"] .icon-sound,
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-film-mute]:not([data-muted="true"]) .icon-muted { display: none; }
-body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] :is(.film-play, .film-controls button):focus-visible { outline: 2px solid var(--on-dark); outline-offset: 4px; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] .film-play { min-height: 48px; padding: 0 22px 0 18px; font-size: var(--t-button); }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] .film-play svg { width: 16px; height: 16px; }
+body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] .film-controls button { width: 48px; height: 48px; }
 
 /* ---- Phones and narrow screens: the copy stands above an arch that does not open (as on /blueprint/) ---------- */
 @media (max-width: 899px) {
-  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch-stage"] { display: flex; flex-direction: column; min-height: 0; padding-inline: 0; }
-  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="hero-copy"] {
+  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch-stage"] { display: flex; flex-direction: column; min-height: 0; padding-inline: 0; }
+  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="hero-copy"] {
     padding: calc(var(--header) + 28px) var(--edge) 28px; gap: 24px; opacity: 1; transform: none; filter: none;
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch"] {
+  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch"] {
     --al: var(--edge); --ar: var(--edge); --at: 0px; --ab: 0px; --rad: calc(50vw - var(--edge)); --shift: 0px;
     position: relative; inset: auto; height: 76svh; min-height: 420px;
   }
-  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] [data-part="arch-media"] video { object-position: calc(var(--fx, 50) * 1%) 50%; }
+  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-role] [data-part="arch-media"] video { object-position: calc(var(--fx, 50) * 1%) 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"][data-name="Hero"] :is(.film-play, .film-controls button) { transition: none; }
+  body[data-edition="figma-enhanced"] .current-page [data-film-box] :is(.film-play, .film-controls button) { transition: none; }
 }

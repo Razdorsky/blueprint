@@ -10,6 +10,7 @@
   import '#lib/enhanced/styles/shell-edition.css';
   import '#lib/enhanced/styles/tokens.css';
   import '#lib/enhanced/styles/system.css';
+  import '#lib/enhanced/styles/closing.css';
   import '#lib/enhanced/styles/focus.css';
   import '#lib/enhanced/styles/header.css';
   import '#lib/enhanced/styles/motion.css';

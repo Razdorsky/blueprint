@@ -160,7 +160,7 @@ Notes from the owner, collected from 2026-11-07. The list will grow. Reuse these
    - On phones it is a swipeable row with scroll snapping.
    - **Owner's caveat:** an interesting idea, but it lacks a treatment of its own and looks like every other block (same paper ground, same cards). Keep it as an idea to rethink and improve, not to copy as it is. Possible directions, to discuss: its own band (dark or forest tone), a progress or count indicator, larger or varied cards.
    - Code: `blocks/Doors.svelte` (still in the current tree), `styles/blocks.css` (`.doors.rail*`), `motion.ts` at 452c7d0 (around 268–275). Check how the current tree drives the rail before reusing it.
-5. **The dark arch over a full-screen photograph (`nightfall` block; on Home, "You find out what is for dinner when you sit down").**
+5. **The arch over a full-screen photograph (`nightfall` block; dark on `/blueprint/`, but the owner likes the technique, not the colour (2026-11-08); on Home, "You find out what is for dinner when you sit down").**
    - A dusk photograph holds the screen (sticky). Scrolling on, a dark panel in the Dome's arch shape rises softly from below and widens to the screen's edges, covering the photograph. Light meets dark at the arch's edge, never in a gradient.
    - The owner: "the big photo starts to be covered by the next block, which floats up from below with soft motion — really good".
    - Inside the panel: a large centred heading, then a 4:5 photo and text on the 12-column grid. The header turns dark.

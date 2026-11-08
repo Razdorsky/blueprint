@@ -3,11 +3,20 @@
   type Props = { pageIndex: number };
   let { pageIndex }: Props = $props();
   let events = $derived(pageIndex === 13);
-  // The closing photograph the footer melts into (docs/figma-enhanced-plan.md, step 1.5). The Frequency Dome page
-  // opens on the same night photograph, so it closes on another one.
-  let closing = $derived(pageIndex === 14
-    ? {src: '46c02cfc7ce0c5cd9c65.webp', width: 2400, height: 1502}
-    : {src: 'fe78e39c5c2e5fd2d9bc.webp', width: 2048, height: 1281});
+  // The closing photograph the footer melts into (docs/figma-enhanced-plan.md, step 1.5; Legacy reference 13). Placement
+  // map, 2026-11-08: it belongs to the page's world and never repeats a photograph already on the page; each has a
+  // dark lower edge, and the footer takes that edge's colour (closing.css, data-closing).
+  const night = {src: 'fe78e39c5c2e5fd2d9bc.webp', width: 2048, height: 1281, tone: 'night', position: '50% 45%'};
+  const moloka = {src: '9203238de1f599aa3053.webp', width: 2400, height: 1603, tone: 'candle', position: '50% 55%'};
+  const closings: Record<number, typeof night> = {
+    10: moloka, 19: moloka, 20: moloka,
+    14: {src: 'df44479df6d2cfd7b1f9.webp', width: 2400, height: 1600, tone: 'amber', position: '50% 40%'},
+    21: {src: '217d8eafeb5342a6cc73.webp', width: 1800, height: 2400, tone: 'candle', position: '50% 62%'},
+    25: {src: '09cc93d75115d2f71e88.webp', width: 1603, height: 2400, tone: 'candle', position: '50% 58%'},
+    27: {src: '21ac2d49d2ab56699e04.webp', width: 2400, height: 1668, tone: 'night', position: '50% 38%'},
+    28: {src: '21ac2d49d2ab56699e04.webp', width: 2400, height: 1668, tone: 'night', position: '50% 38%'}
+  };
+  let closing = $derived(closings[pageIndex] || night);
   let status = $state('');
   let formState = $state<'' | 'error' | 'notice'>('');
   function submit(event:SubmitEvent){
@@ -30,11 +39,12 @@
   class:newsletter-events={events}
   class:newsletter-closing={!events}
   class="site-newsletter newsletter"
+  data-closing={events ? undefined : closing.tone}
   aria-labelledby="newsletter-title"
 >
   {#if !events}
     <figure class="newsletter-photo" aria-hidden="true">
-      <img src={`${base}/media/${closing.src}`} alt="" loading="lazy" decoding="async" width={closing.width} height={closing.height} />
+      <img src={`${base}/media/${closing.src}`} alt="" loading="lazy" decoding="async" width={closing.width} height={closing.height} style={`object-position: ${closing.position}`} />
     </figure>
   {/if}
   <div class="newsletter-inner">

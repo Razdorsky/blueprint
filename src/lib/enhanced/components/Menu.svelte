@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { booking, pages, route } from '#lib/enhanced/site.ts';
+  // The designer's menu. Placement map, 2026-11-08: the mega menu's photographs reach every group here, since only
+  // four groups fit in the header. On wide screens the photograph of the page under the pointer or focus shows beside
+  // the lists (interactions.js, previewMenu); it starts on the page you are on.
+  import { booking, route } from '#lib/enhanced/site.ts';
+  import { cover, groups } from '#lib/enhanced/navigation.ts';
 
   type Props = {
     edition: 'figma-enhanced';
@@ -7,7 +11,9 @@
     base?: string;
   };
 
-  let { edition, base = '' }: Props = $props();
+  let { edition, page, base = '' }: Props = $props();
+
+  const asset = (path: string) => `${base.replace(/\/$/, '')}${path}`;
 </script>
 
 <dialog class="site-menu" id="site-menu" aria-label="Explore The Vessyl" data-lenis-prevent>
@@ -21,43 +27,21 @@
       </svg>
     </button>
   </div>
-  <div class="menu-columns">
-    <section class="menu-column">
-      <h2>Where you sleep</h2>
-      {#each pages.slice(1, 6) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
+  <div class="menu-body">
+    <div class="menu-columns">
+      {#each groups as group (group.id)}
+        <section class="menu-column">
+          <h2>{group.title}</h2>
+          {#each group.overview ? [group.overview, ...group.items] : group.items as item (item.index)}
+            <a href={route(edition, item.slug, base)} data-cover={asset(cover(item.index))}>{item.name}</a>
+          {/each}
+        </section>
       {/each}
-    </section>
-    <section class="menu-column">
-      <h2>Experiences</h2>
-      {#each pages.slice(6, 13) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
-      {/each}
-    </section>
-    <section class="menu-column">
-      <h2>The Property</h2>
-      {#each pages.slice(13, 18) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
-      {/each}
-    </section>
-    <section class="menu-column">
-      <h2>Eating here</h2>
-      {#each pages.slice(18, 21) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
-      {/each}
-    </section>
-    <section class="menu-column">
-      <h2>Take the whole property</h2>
-      {#each pages.slice(21, 25) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
-      {/each}
-    </section>
-    <section class="menu-column">
-      <h2>Plan your visit</h2>
-      {#each pages.slice(25, 28) as item (item.index)}
-        <a href={route(edition, item.slug, base)}>{item.name}</a>
-      {/each}
-    </section>
+    </div>
+    <figure class="menu-preview" aria-hidden="true" data-cover={asset(cover(page.index))} data-name={page.name}>
+      <span class="menu-preview-image"><img src={asset(cover(page.index))} alt="" loading="lazy" decoding="async" /></span>
+      <figcaption>{page.name}</figcaption>
+    </figure>
   </div>
   <div class="menu-footer">
     <a class="nav-book" href={booking} target="_blank" rel="noopener noreferrer">CHECK AVAILABILITY ↗</a>

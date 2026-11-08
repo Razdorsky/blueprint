@@ -1,0 +1,11 @@
+/* Figma Enhanced — the closing photograph and the footer (Legacy reference 13), placement map 2026-11-08. The footer
+   melts into the photograph above it and takes the colour of the photograph's lower edge (Newsletter.svelte,
+   data-closing). Night: the Dome at night; candle: tables by candlelight; amber: a musician by lamplight. */
+body[data-edition="figma-enhanced"] { --surface-closing: var(--surface-night); }
+body[data-edition="figma-enhanced"]:has(.site-newsletter[data-closing="candle"]) { --surface-closing: #150d07; }
+body[data-edition="figma-enhanced"]:has(.site-newsletter[data-closing="amber"]) { --surface-closing: #1d1107; }
+body[data-edition="figma-enhanced"] .current-page .site-newsletter.newsletter-closing,
+body[data-edition="figma-enhanced"] .site-footer { background: var(--surface-closing); }
+body[data-edition="figma-enhanced"] .current-page .newsletter-photo::after {
+  background: linear-gradient(to top, var(--surface-closing), color-mix(in srgb, var(--surface-closing) 62%, transparent) var(--header), transparent calc(var(--header) * 2));
+}

@@ -97,19 +97,24 @@ Goal: one system under all 28 pages, so that pages stop looking assembled from h
 
 One at a time, each reviewed before the next. References are numbered as in `docs/figma-design-audit.md`.
 
-2.1 **Header** (built 2026-11-08, waiting for review; study and decisions in `docs/figma-enhanced-step2.md`) from `/blueprint/` 452c7d0 (reference 1): floating, takes the light of the section beneath, steps away while you scroll down, with a reading-progress line. Add the Legacy mega menu (reference 10) for Where you sleep and Experiences, with an Overview link to pages 02 and 07.
+The owner likes these as techniques, not as the places where they first appeared (owner, 2026-11-08: the arch is not only for dinners and has no set colour; the drifting gallery fits any continuous run of pictures). Where each one is used is decided page by page, by what the composition needs, and shown to the owner. The only limits are the ones the owner set: the 3D Dome is a small scene, not a page; no captions inside the portals; the rail gets a look of its own; the photo change gets decisive transitions; the next-page button sits inside the media; no generated night versions of real places.
+
+**Placement map, 2026-11-08** (shown to the owner as a private page: https://claude.ai/artifact/1F5BVydf8DdNniiQ5XF7nG). For every technique it lists the pages and sections it goes to, why, and which photograph or footage it uses. Footage replaces a photograph only where it shows the same subject. The owner's answers, 2026-11-08: yes to the arch film on the text openings of P07 and P13. A place with one photo and arrows is not a gallery, even where the designer's layer is called a gallery slider, so those places are out of the drifting-gallery map. Portals are still open: the photos in the two-card pairs are wide, so an arch comes out low and crops them; the proposal is the tall 50/50 photos that look into the Dome (P09, P10, P11), with the door pairs (P03–P05, P19) as the alternative. Steps 2.1–2.3 are corrected to the map first; 2.4–2.10 follow it.
+
+2.1 **Header** (published 2026-11-08; study and decisions in `docs/figma-enhanced-step2.md`) from `/blueprint/` 452c7d0 (reference 1): floating, takes the light of the section beneath, steps away while you scroll down, with a reading-progress line. The Legacy mega menu (reference 10), corrected to the placement map: every menu group that fits beside MENU (four at most), and the page photographs in the menu for all six.
 
 2.2 **Smooth scrolling and page transitions** (built 2026-11-08, waiting for review; see `docs/figma-enhanced-step2.md`).
 - Lenis inertia (452c7d0).
 - View Transitions between pages, with the hero arriving smoothly (Legacy reference 11).
 
-2.3 **Films** (built 2026-11-08, waiting for review; see `docs/figma-enhanced-step2.md`).
-- Silent loops that restart with sound on click (Legacy reference 12).
-- The Home opening: a film in the Dome's arch that opens to full screen as you scroll (reference 2).
+2.3 **Films** (published 2026-11-08, corrected to the placement map the same day; see `docs/figma-enhanced-step2.md`).
+- Silent loops wherever footage shows the designer's subject, openings and sections; each loop from footage with sound plays its scene with sound on click (Legacy reference 12).
+- The opening with a film in the Dome's arch that opens to full screen as you scroll (reference 2): Home, Experiences and The Vessyl Presents.
+- The closing photograph and the footer's colour follow each page's world.
 
-2.4 **The drifting gallery** (reference 3): a sticky title, with photo cards at two depths passing it. Used once, where a page introduces the land.
+2.4 **The drifting gallery** (reference 3): a sticky title, with photo cards at two depths passing it. It fits wherever a page has a continuous run of pictures (card grids, galleries).
 
-2.5 **The dark arch over a full-screen photo** (reference 5): for the evening and dining moments.
+2.5 **The arch over a full-screen photo** (reference 5): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique.
 
 2.6 **The next-page block** (reference 7), improved: the button to the next page is designed inside the opening media.
 
@@ -120,7 +125,7 @@ One at a time, each reviewed before the next. References are numbered as in `doc
 2.8 **Photo portals and frosted glass** from the early prototype (references 15–16): arched or rounded-bottom frames with an inner border and a slow zoom-in on arrival, and frosted panels over film or 3D. No captions inside the photos.
 
 2.9 **The artistic layer** from the "atlas" prototype (references 17–20):
-- the engraving that develops into the film as you scroll, for one opening;
+- the engraving that develops into the film as you scroll;
 - margin drawings of animals and plants that draw themselves;
 - engraved plates that develop into photos, with a mobile mechanic (develop at screen centre or on tap);
 - fireflies over real night footage.

@@ -54,6 +54,27 @@ body[data-edition="figma-enhanced"][data-hero-theme="paper"] .site-header .nav-b
   body[data-edition="figma-enhanced"] .footer-bottom { padding-inline: 40px; }
 }
 body[data-edition="figma-enhanced"] .menu-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Placement map, 2026-11-08: the photograph of the page under the pointer or focus, beside the lists on wide screens
+   (interactions.js, previewMenu). Below 1180px the lists stand alone, as the designer made them. */
+body[data-edition="figma-enhanced"] .menu-preview { display: none; }
+@media (min-width: 1180px) {
+  body[data-edition="figma-enhanced"] .menu-body {
+    display: grid; grid-template-columns: minmax(0, 1fr) clamp(220px, 19vw, 380px); align-items: start; gap: 4vw; max-width: 1560px; margin: auto;
+  }
+  body[data-edition="figma-enhanced"] .menu-body .menu-columns { max-width: none; margin: 0; gap: 3.4vw 3vw; }
+  body[data-edition="figma-enhanced"] .menu-body .menu-column h2 { font-size: clamp(30px, 2.6vw, 50px); }
+  body[data-edition="figma-enhanced"] .menu-body .menu-column a { font-size: clamp(18px, 1.5vw, 24px); }
+  body[data-edition="figma-enhanced"] .site-menu .menu-footer { max-width: 1560px; }
+  body[data-edition="figma-enhanced"] .menu-preview { display: block; position: sticky; top: 132px; margin: 0; }
+  body[data-edition="figma-enhanced"] .menu-preview-image { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; border-radius: var(--r-photo); background: #e9ddd6; }
+  body[data-edition="figma-enhanced"] .menu-preview-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 420ms var(--ease), transform 900ms var(--ease); }
+  body[data-edition="figma-enhanced"] .menu-preview-image img.is-leaving { opacity: 0; transform: scale(1.03); }
+  body[data-edition="figma-enhanced"] .menu-preview-image img.is-coming { opacity: 0; transform: scale(1.06); }
+  body[data-edition="figma-enhanced"] .menu-preview figcaption { margin-top: 14px; font: 400 14px / 20px var(--font-body); letter-spacing: 0.28px; text-transform: uppercase; color: var(--heading); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-edition="figma-enhanced"] .menu-preview-image img { transition: none; }
+}
 @media (max-width: 680px) {
   body[data-edition="figma-enhanced"] .menu-columns { grid-template-columns: minmax(0, 1fr); }
 }

@@ -175,16 +175,17 @@ The scripts state that nothing about a place is invented.
   - It is a fragment of the brand film, so the "Watch the film" control plays that film, `film-vessyl.mp4` (61s, with sound), from the start. Legacy behaviour.
   - The designer's title and actions stay as they are and move to the left of the arch.
   - The night photograph of the Dome remains the page's closing photograph.
-- **Silent loops in the openings**, where the brand footage shows the same subject as the designer's photograph:
+- **Silent loops in the openings.** Six are cut from the approved footage and show the same subject as the designer's photograph. Three are not footage: they are the designer's own photograph with a slow camera move ("animated photos"), because no footage shows that subject:
   - The Treehouse: `loop-treehouse`, the treehouse from the air.
   - Glamping Tents: `loop-tents`. The tents from the air, which also ends the reuse of the Villas photograph.
-  - For Two: `loop-evening`, the same table for two at sunset.
+  - For Two: `loop-evening`, an animated photo of the same table for two at sunset.
   - Horses and the River: `loop-river`.
   - The Harmonic Hearth: `loop-hearth`, the same room.
-  - Horses and the Land: `loop-pasture`, horses on the same track.
+  - Horses and the Land: `loop-pasture`, an animated photo of the horses on the track.
   - The Recording Studio: `loop-studio`, the console.
-  - Take the Whole Property: `loop-house`, the property from the air.
+  - Take the Whole Property: `loop-house`, an animated photo of the property from the air, made from the drone still.
 - **Openings that keep their photograph:** the footage shows a different subject or time of day (the Villas interior, the Dome by day, the day pool).
+- **Placement map (2026-11-08):** the owner found these placements too narrow. `docs/figma-enhanced-plan.md` points to the map of where every liked technique goes on all 28 pages; the loops above are revised there (more openings and sections from real footage, sound on click, `loop-house` replaced with footage).
 - **Loop behaviour:**
   - Loops have no sound, so they stay silent.
   - They play only while on screen and visible, and not with reduced motion; the poster stands in.
@@ -215,3 +216,21 @@ The scripts state that nothing about a place is invented.
   - In Chrome, WebKit and Firefox: the arch opens and the header turns; the film plays with sound from the start; the loops play.
   - With reduced motion the arch stays closed and the loops show their posters.
   - Layout at 69 widths in three engines, axe, and the gallery, menu and newsletter tests.
+
+## 2.1–2.3 corrected to the placement map (2026-11-08)
+
+The owner found the techniques of 2.1–2.3 placed in single spots. The placement map (`docs/figma-enhanced-plan.md`) decides where each one goes; these are the corrections. Footage replaces a photograph only where it shows the same subject, checked frame by frame against the photograph.
+
+- **Mega menu, all six groups of the designer's menu** (`navigation.ts`, `components/Header.svelte`, `components/Menu.svelte`):
+  - The groups and the photograph for each page (its opening photograph, or the first one on a text page) live in `navigation.ts`.
+  - Measured: beside MENU there is room for four groups at most, because that space stops growing at the header's edge. Where you sleep and Experiences show from 1180px, The Property from 1500px and Eating here from 1940px (`header.css`, `data-rank`). The Property has no overview page, so its panel has no Overview link. Cards are at most 260px wide.
+  - The menu lists every group. From 1180px the photograph of the page under the pointer or focus shows beside the lists, crossfading once decoded (`previewMenu`); it starts on the current page.
+- **The arch opening on Experiences and The Vessyl Presents** (owner, 2026-11-08: yes). The designer's eyebrow, heading and lede stay on the left. Experiences: the Dome with a forest on its ceiling, and "Watch the film" plays Amenities and Experiences (`film-programming.mp4`, 79 s). The Vessyl Presents: a violinist under blue light, and the film is the Events reel (`film-events.mp4`).
+- **Loops** (`scripts/blueprint-media/loops-map.sh`; every range sits inside one shot, short shots slowed with motion interpolation):
+  - New openings: The Day and the Half Day (El Rancho and the pool), The Frequency Experience (the Dome against the sky), The Frequency Dome (the Dome at night under the Milky Way), El Rancho (the table under its roof), Retreats (a group facing two teachers in the Dome), Arenal (the volcano above the rainforest).
+  - Take the whole property: footage of the main house and pool from the drone replaces the animated photograph.
+  - Sections: "Where you actually are" on Home, "Into the Dome", "A bond.", the cold plunge on the Hearth page, the yoga callout and the tuning fork on Sound and movement, the stable callout and the swim on Horses and the land, the handpan on the studio page.
+  - Kept as photographs, because no footage shows their subject: the Villas, Arenal After Dark, Eating here, Moloka, Groups and offsites, Weddings, Things to do, and the path to the Dome on Home (a man walks through that shot, and a loop would double him). For Two and Horses and the land keep their animated photographs.
+- **Sound** (Legacy reference 12, `playFilm`, `endScene`): every loop cut from footage with sound has a "Play with sound" button on frosted glass. It plays that scene of the source film from the start, 6–17 s with the sound fading in and out, then the silent loop returns; pause and sound controls take its place meanwhile. Take the whole property plays the whole Overview reel (`film-overview.mp4`, 140 s). One film sounds at a time. Loops cut from footage without sound (vessyl-web) stay silent and have no button. Callouts get a round button. Films and scenes seek by byte range, which GitHub Pages serves (the local preview server learned it too).
+- **The closing photograph** (`components/Newsletter.svelte`, `styles/closing.css`): it belongs to the page's world and never repeats a photograph already on the page. Arenal After Dark, Eating here and El Rancho close on Moloka's candlelit table, Moloka on the long table under lanterns, Weddings on a candlelit table, the Frequency Dome on the musician by lamplight, Getting here and Things to do on Arenal, the rest on the Dome at night. Each has a dark lower edge; the newsletter and the footer take that edge's colour (night, candle, amber).
+- **Checked:** layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the 56 shell items); axe 0 on all 28 pages at 1440, 768 and 375; gallery, menu and newsletter tests; scenes play, pause and return to the loop in all three engines; reduced motion keeps the loops on their posters and the arches closed; every sound button is reachable at 1440 and 390.
