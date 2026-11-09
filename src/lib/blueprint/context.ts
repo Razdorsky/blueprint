@@ -18,7 +18,7 @@ export function provide(locale: Locale, page: SitePage) {
     locale,
     page,
     t: text => translate(locale, text),
-    href: to => (to === 'booking' ? booking : to.startsWith('pending:') ? null : route(to, locale))
+    href: to => (to === 'booking' ? booking(locale) : to.startsWith('pending:') ? null : route(to, locale))
   };
   setContext(key, value);
   return value;

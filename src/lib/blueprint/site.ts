@@ -11,7 +11,8 @@ export type RoutePage = SitePage & {path:string;locale:Locale};
 export const edition = 'blueprint';
 export const locales: Locale[] = ['en', 'es'];
 export const sitePages = sourcePages as SitePage[];
-export const booking = 'https://akenhotels.com/en/vessyl-home/';
+// Booking opens in the page's language (owner, 2026-11-09).
+export const booking = (locale: Locale = 'en') => `https://reservations.orbebooking.com/Search/Init/PAS6c/${locale === 'es' ? 'es' : 'en'}/`;
 export const base: string = __SITE_BASE__;
 
 const prefix = (locale: Locale) => (locale === 'es' ? 'es/' : '');

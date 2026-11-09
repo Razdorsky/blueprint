@@ -18,7 +18,7 @@
   <div class="wrap footer-close">
     <div class="footer-invite">
       <p class="footer-line">{@html rich(t('Come for Costa Rica.\nCome for the horses.\nCome for the volcano.'))}<br />{t('Just come curious.')}</p>
-      <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+      <a class="button" href={booking(locale)} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
     </div>
     <figure class="frame footer-night" data-reveal><Picture media={{loop: 'stars', alt: 'The Frequency Dome under the Milky Way'}} sizes="(min-width: 900px) 46vw, 92vw" /></figure>
   </div>

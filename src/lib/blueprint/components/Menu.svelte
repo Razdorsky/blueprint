@@ -41,7 +41,7 @@
     </div>
   </div>
   <div class="menu-foot">
-    <a class="button" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+    <a class="button" href={booking(locale)} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
     <a class="link" href={route('rates-and-offers', locale)}>{t('Rates and offers')}</a>
   </div>
 </dialog>

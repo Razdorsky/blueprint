@@ -18,7 +18,7 @@
         <a href={route(page.slug, 'en')} hreflang="en" lang="en" aria-current={locale === 'en' ? 'true' : undefined} data-locale="en">EN</a>
         <a href={route(page.slug, 'es')} hreflang="es" lang="es" aria-current={locale === 'es' ? 'true' : undefined} data-locale="es">ES</a>
       </nav>
-      <a class="button header-book" href={booking} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
+      <a class="button header-book" href={booking(locale)} target="_blank" rel="noopener noreferrer">{t('Check availability')}</a>
     </div>
   </div>
   <span class="progress" aria-hidden="true" data-progress></span>
