@@ -60,12 +60,12 @@ for (let index = 1; index <= 13; index += 1) {
     .replaceAll('<!--SITE_FOOTER-->', '')
     .replaceAll('<!--SITE_NEWSLETTER-->', `<Newsletter pageIndex={${index}} />`)
     .replaceAll('__EDITION_ROOT__', '{base}/{edition}')
-    .replaceAll('__BOOKING_URL__', 'https://akenhotels.com/en/vessyl-home/')
+    .replaceAll('__BOOKING_URL__', 'https://reservations.orbebooking.com/Search/Init/PAS6c/en/')
     // The artwork URLs were emitted with {base}; only still-rooted sources
     // need prefixing here. Attributes remain native Svelte expressions.
     .replace(/\b(src|href)="\/(media|brand|typography)\//g, '$1="{base}/$2/');
   const script = `<script lang="ts">\n  import Newsletter from '#lib/components/Newsletter.svelte';\n\n  let { edition, base = '' }: { edition: 'blueprint' | 'figma'; base?: string } = $props();\n</script>\n`;
-  markup = markup.replace(/(<section\b[^>]*data-role="gallery"[^>]*><figure\b[^>]*>)([\s\S]*?)(<\/figure>)(<button\b[^>]*data-gallery-open[\s\S]*?<\/button>)/g, '$1$2$4$3').replaceAll('href="https://akenhotels.com/en/vessyl-home/"', 'href="https://akenhotels.com/en/vessyl-home/" target="_blank" rel="noopener noreferrer"');
+  markup = markup.replace(/(<section\b[^>]*data-role="gallery"[^>]*><figure\b[^>]*>)([\s\S]*?)(<\/figure>)(<button\b[^>]*data-gallery-open[\s\S]*?<\/button>)/g, '$1$2$4$3').replaceAll('href="https://reservations.orbebooking.com/Search/Init/PAS6c/en/"', 'href="https://reservations.orbebooking.com/Search/Init/PAS6c/en/" target="_blank" rel="noopener noreferrer"');
   markup = markup.replace(/<img\b[^>]*>/g, tag => {
     const name = tag.match(/\/media\/([^"/]+\.webp)/)?.[1];
     if (!name || /\bwidth=/.test(tag)) return tag;

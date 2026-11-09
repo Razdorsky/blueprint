@@ -478,3 +478,11 @@ Checks:
 - In Chrome with the real clipboard, page text never reaches the clipboard, even after a forced selection. Text selected in the e-mail field does.
 - After in-site navigation the block stays.
 - The gallery, menu and newsletter work at 1440 and 375px. axe reports no violations.
+
+## Booking address — 2026-11-09 (owner request)
+
+The owner's booking engine replaces the old link everywhere, by language: `https://reservations.orbebooking.com/Search/Init/PAS6c/en/` and `/es/`. The owner confirmed that the frozen edition changes too ("Да, в обоих").
+
+- The edition is in English, so every booking link uses `/en/`: `src/lib/site.ts` (header, menu, footer) and the designer's booking buttons on pages 01–06. `scripts/convert-pages-to-svelte.mjs` writes the same address, so a rebuild of the pages keeps it.
+- `node scripts/figma-freeze.mjs --update` refreshed the fingerprints of exactly these seven files; the other 188 are unchanged.
+- No other text, layout or behaviour changed.

@@ -341,4 +341,4 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
 
 ## Booking address (2026-11-09)
 
-The owner's booking engine replaces the old link everywhere: `https://reservations.orbebooking.com/Search/Init/PAS6c/en/` and `/es/`, by language. Figma Enhanced is in English, so it uses `/en/` (`site.ts` and the designer's booking buttons on pages 01–06). Blueprint follows the page's language (`booking(locale)` in `src/lib/blueprint/site.ts`). The frozen `/figma/` waits for the owner's word.
+The owner's booking engine replaces the old link everywhere: `https://reservations.orbebooking.com/Search/Init/PAS6c/en/` and `/es/`, by language. Figma Enhanced is in English, so it uses `/en/` (`site.ts` and the designer's booking buttons on pages 01–06). Blueprint follows the page's language (`booking(locale)` in `src/lib/blueprint/site.ts`). The frozen `/figma/` changes too, on the owner's word (see `docs/figma-adaptation.md`), with `/en/`.
