@@ -120,7 +120,7 @@ The owner likes these as techniques, not as the places where they first appeared
 
 2.7 **Rethought pieces** (published 2026-11-09, see `docs/figma-enhanced-step2.md`): the rail on Experiences, the change on the Harmonic Hearth and the Frequency Dome.
 - The horizontal rail (reference 4) stands out from the blocks around it, minimally (owner, 2026-11-09: "it should stand out somehow, but minimally"; no piling on details).
-- The text-and-photo change (reference 6) gets decisive transitions: an iris or wipe in the circle and line-by-line text, each change on its own beat. No numbering and no step counters (owner, 2026-11-09).
+- The text-and-photo change (reference 6) gets decisive transitions: an iris or wipe in the circle and line-by-line text, each change on its own beat. No numbering or counters of mine; the designer's numbers stay and visibly turn over at each step, and every picture has the same impact (owner, 2026-11-09).
 
 2.8 **Photo portals and frosted glass** from the early prototype (references 15–16): arched or rounded-bottom frames with an inner border and a slow zoom-in on arrival, and frosted panels over film or 3D. No captions inside the photos.
 
@@ -142,7 +142,7 @@ The owner likes these as techniques, not as the places where they first appeared
 
 - **Photography with the owner:** replace the 24 reused photos and the mismatched card photos. No reuse across pages.
 - **Pages 29–37** (When to come, About, Josh Stanley, The people here, Press, Gallery, FAQ, Contact, Rates & policies), plus 404, Privacy and Terms, when texts exist.
-- **Booking:** keep the external link, or add a dates-and-guests bar — the owner decides.
+- **Booking:** keep the external link (since 2026-11-09 the owner's booking engine, `reservations.orbebooking.com/Search/Init/PAS6c/en/` or `/es/`), or add a dates-and-guests bar — the owner decides.
 - **Spanish** if wanted (Blueprint has an ES pipeline).
 
 ## Open questions for the owner before Step 0

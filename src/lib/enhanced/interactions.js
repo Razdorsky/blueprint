@@ -335,6 +335,23 @@ function splitLines(el) {
     return inner;
   });
 }
+// The designer's numbered labels ("1. Heat"): the number and the word each rise through a mask of their own, so the
+// number visibly turns over at every step (change.css).
+function splitLabel(el) {
+  const text = el.dataset.text ?? (el.dataset.text = el.textContent.replace(/\s+/g, ' ').trim());
+  const match = text.match(/^(\d+\.)\s+(.+)$/);
+  if (!match) return splitLines(el);
+  el.textContent = '';
+  return [['num', match[1]], ['word', match[2]]].map(([kind, part], i) => {
+    const outer = document.createElement('span');
+    const inner = document.createElement('span');
+    outer.className = `line ${kind}`;
+    inner.textContent = part;
+    outer.append(inner);
+    el.append(...(i ? [' ', outer] : [outer]));
+    return inner;
+  });
+}
 function unsplit(el) {
   if (el.dataset.text !== undefined) el.textContent = el.dataset.text;
 }
@@ -351,7 +368,7 @@ function setupChange(force = false) {
       const parts = [...state.children];
       if (!armed) {parts.forEach(unsplit);return;}
       let i = 0;
-      parts.forEach(part => splitLines(part).forEach(line => line.style.setProperty('--i', String(i++))));
+      parts.forEach(part => (part.matches('[data-part="eyebrow"]') ? splitLabel(part) : splitLines(part)).forEach(line => line.style.setProperty('--i', String(i++))));
     });
     // The held screen must show the whole of its longest step; where it cannot, the steps are listed.
     const stage = el.querySelector(':scope > section');
@@ -376,6 +393,14 @@ function showChange(item, index, jump) {
   if (jump) {
     item.el.setAttribute('data-instant', '');
     requestAnimationFrame(() => requestAnimationFrame(() => item.el.removeAttribute('data-instant')));
+  } else {
+    // The incoming picture and words return to their starting place first (closed iris, zoomed in, below the mask),
+    // even when they were the ones just under the last step, so every change has the same impact.
+    for (const node of [item.states[index], item.shots[index]]) {
+      node.removeAttribute('data-current');
+      node.removeAttribute('data-previous');
+      void node.offsetWidth;
+    }
   }
   for (const list of [item.states, item.shots]) list.forEach((node, i) => {
     node.toggleAttribute('data-current', i === index);
@@ -395,7 +420,10 @@ function updateChange(jump = false) {
     const progress = span > 0 ? Math.min(1, Math.max(0, -box.top / span)) : 0;
     const index = Math.min(item.states.length - 1, Math.floor(progress * item.states.length));
     item.el.style.setProperty('--cp', progress.toFixed(3));
-    if (index !== item.index) showChange(item, index, jump || item.index < 0);
+    // The first step enters with the same iris and rise as the others once the block is half on screen; a page that
+    // opens further down sets its step at once.
+    if (item.index < 0 && box.top > innerHeight * 0.5) continue;
+    if (index !== item.index) showChange(item, index, jump);
   }
 }
 
