@@ -1,0 +1,37 @@
+/* Figma Enhanced — step 2.7 (docs/figma-enhanced-step2.md): the horizontal rail, /blueprint/ 452c7d0 reference 4,
+   rethought as the owner asked: it stands out from the blocks around it, minimally (2026-11-09). The six experiences
+   sit on a band of the designer's own forest pattern (the panel of The Vessyl Presents), so the tone changes through
+   the painted pattern, and nothing else is added. From 1024px the band holds the screen while the page's scroll walks
+   the cards sideways (interactions.js, setupRail); below it the cards are a row you swipe. Reduced motion keeps the
+   designer's grid on the band. */
+body[data-edition="figma-enhanced"] .current-page > [data-rail] { position: relative; }
+body[data-edition="figma-enhanced"] .current-page > [data-rail] > [data-rail-band] {
+  background: var(--surface-forest) url('../../../assets/patterns/direction-forest.svg') center / 550px;
+  padding-block: var(--section-band);
+}
+/* The designer's experience cards have no surface of their own: on the band their words take the light ink of the
+   pattern panels. */
+body[data-edition="figma-enhanced"] .current-page > [data-rail] [data-part="card"] :is(h3, h3 a) { color: var(--on-dark); }
+body[data-edition="figma-enhanced"] .current-page > [data-rail] [data-part="card"] p { color: rgb(245 235 231 / 0.82); }
+body[data-edition="figma-enhanced"] .current-page > [data-rail] :is(a, button):focus-visible { outline-color: var(--on-dark); }
+
+@media (min-width: 1024px) {
+  body[data-edition="figma-enhanced"] .current-page > [data-rail][data-armed] { height: calc(100svh + var(--travel, 0px)); }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail][data-armed] > [data-rail-band] {
+    position: sticky; top: 0; display: flex; align-items: center; height: 100svh; padding: calc(var(--header) * 0.5) 0 0; overflow: clip;
+  }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail][data-armed] [data-rail-track] {
+    display: flex; align-items: stretch; gap: clamp(28px, 2.6vw, 52px); width: max-content; padding-inline: var(--edge);
+    transform: translate3d(var(--x, 0px), 0, 0); will-change: transform;
+  }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail][data-armed] [data-part="card"] { flex: none; width: clamp(340px, 28vw, 520px); }
+}
+@media (max-width: 1023px) {
+  body[data-edition="figma-enhanced"] .current-page > [data-rail] > [data-rail-band] { padding-inline: 0; }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail] [data-rail-track] {
+    display: flex !important; gap: 16px; padding-inline: var(--edge); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
+    overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail] [data-rail-track]::-webkit-scrollbar { display: none; }
+  body[data-edition="figma-enhanced"] .current-page > [data-rail] [data-part="card"] { flex: none; width: min(78vw, 380px); scroll-snap-align: start; }
+}

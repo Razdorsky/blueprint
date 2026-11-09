@@ -97,7 +97,7 @@ Goal: one system under all 28 pages, so that pages stop looking assembled from h
 
 One at a time, each reviewed before the next. References are numbered as in `docs/figma-design-audit.md`.
 
-The owner likes these as techniques, not as the places where they first appeared (owner, 2026-11-08: the arch is not only for dinners and has no set colour; the drifting gallery fits any continuous run of pictures). Where each one is used is decided page by page, by what the composition needs, and shown to the owner. The only limits are the ones the owner set: the 3D Dome is a small scene, not a page; no captions inside the portals; the rail gets a look of its own; the photo change gets decisive transitions; the next-page button sits inside the media; no generated night versions of real places.
+The owner likes these as techniques, not as the places where they first appeared (owner, 2026-11-08: the arch is not only for dinners and has no set colour; the drifting gallery fits any continuous run of pictures). Where each one is used is decided page by page, by what the composition needs, and shown to the owner. The only limits are the ones the owner set: the 3D Dome is a small scene, not a page; no captions inside the portals; the rail stands out, minimally; the photo change gets decisive transitions and no numbering; the next-page button sits inside the media; no generated night versions of real places.
 
 **Placement map, 2026-11-08** (shown to the owner as a private page: https://claude.ai/artifact/1F5BVydf8DdNniiQ5XF7nG). For every technique it lists the pages and sections it goes to, why, and which photograph or footage it uses. Footage replaces a photograph only where it shows the same subject. The owner's answers, 2026-11-08: yes to the arch film on the text openings of P07 and P13. A place with one photo and arrows is not a gallery, even where the designer's layer is called a gallery slider, so those places are out of the drifting-gallery map. Portals are still open: the photos in the two-card pairs are wide, so an arch comes out low and crops them; the proposal is the tall 50/50 photos that look into the Dome (P09, P10, P11), with the door pairs (P03–P05, P19) as the alternative. Steps 2.1–2.3 are corrected to the map first; 2.4–2.10 follow it.
 
@@ -118,9 +118,9 @@ The owner likes these as techniques, not as the places where they first appeared
 
 2.6 **The next-page block** (reference 7; published 2026-11-09, see `docs/figma-enhanced-step2.md`), improved: the button to the next page is designed inside the opening media, on frosted glass, and a click grows the picture into the next page's opening. On 25 pages in the site's order; the three places to stay keep the designer's links to the other two.
 
-2.7 **Rethought pieces.**
-- The horizontal rail (reference 4) gets a band of its own and a progress cue.
-- The text-and-photo change (reference 6) gets decisive transitions: an iris or wipe in the circle, line-by-line text and a state cue.
+2.7 **Rethought pieces** (published 2026-11-09, see `docs/figma-enhanced-step2.md`): the rail on Experiences, the change on the Harmonic Hearth and the Frequency Dome.
+- The horizontal rail (reference 4) stands out from the blocks around it, minimally (owner, 2026-11-09: "it should stand out somehow, but minimally"; no piling on details).
+- The text-and-photo change (reference 6) gets decisive transitions: an iris or wipe in the circle and line-by-line text, each change on its own beat. No numbering and no step counters (owner, 2026-11-09).
 
 2.8 **Photo portals and frosted glass** from the early prototype (references 15–16): arched or rounded-bottom frames with an inner border and a slow zoom-in on arrival, and frosted panels over film or 3D. No captions inside the photos.
 

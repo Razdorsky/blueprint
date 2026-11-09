@@ -44,6 +44,8 @@ function openMega(trigger, focusFirst) {
 // then only the visitor's own taps play it.
 let filmObserver;
 function syncVideo(video) {
+  const shot = video.closest('[data-armed] [data-shot]');
+  if (shot && !shot.hasAttribute('data-current')) {video.pause();return;}
   const visible = video.dataset.visible === 'true' && !document.hidden;
   if (!visible) {video.pause();return;}
   if (video.dataset.activated === 'true' || 'still' in video.dataset) return;
@@ -252,6 +254,151 @@ function updateNext(jump = false) {
   if (jump) step(); else if (!next.frame) next.frame = requestAnimationFrame(step);
 }
 
+// Step 2.7 (docs/figma-enhanced-step2.md): the rail, /blueprint/ 452c7d0 reference 4. From 1024px, without reduced
+// motion, the band holds the screen for as long as its cards take to pass, and the page's scroll moves them sideways
+// with the same short lag as the arches. A card reached with the keyboard brings the page to where it is in view.
+const rail = {items: [], frame: 0};
+function setupRail() {
+  cancelAnimationFrame(rail.frame);
+  rail.frame = 0;
+  const moving = matchMedia('(min-width: 1024px)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  rail.items = [...document.querySelectorAll('.current-page > [data-rail]')].map(el => {
+    const track = el.querySelector('[data-rail-track]');
+    el.toggleAttribute('data-armed', moving && !!track);
+    if (!moving || !track) {el.style.removeProperty('--travel');track?.style.removeProperty('--x');return null;}
+    const travel = Math.max(0, Math.ceil(track.scrollWidth - el.clientWidth));
+    el.style.setProperty('--travel', `${travel}px`);
+    return {el, track, travel, x: 0, target: 0};
+  }).filter(Boolean);
+  updateRail(true);
+}
+function updateRail(jump = false) {
+  if (!rail.items.length) return;
+  for (const item of rail.items) {
+    const progress = item.travel > 0 ? Math.min(1, Math.max(0, -item.el.getBoundingClientRect().top / item.travel)) : 0;
+    item.target = -progress * item.travel;
+    if (jump) item.x = item.target;
+  }
+  const step = () => {
+    let moving = false;
+    for (const item of rail.items) {
+      item.x += (item.target - item.x) * 0.16;
+      if (Math.abs(item.target - item.x) < 0.5) item.x = item.target; else moving = true;
+      item.track.style.setProperty('--x', `${item.x.toFixed(1)}px`);
+    }
+    rail.frame = moving ? requestAnimationFrame(step) : 0;
+  };
+  if (jump) step(); else if (!rail.frame) rail.frame = requestAnimationFrame(step);
+}
+function railFocus(target) {
+  const item = rail.items.find(item => item.el.contains(target));
+  const card = target.closest?.('[data-part="card"]');
+  if (!item || !card || !item.travel) return;
+  // Where the card will stand once the rail has followed the current scroll.
+  const now = Math.min(1, Math.max(0, -item.el.getBoundingClientRect().top / item.travel));
+  const left = card.offsetLeft - now * item.travel;
+  if (left >= 0 && left + card.offsetWidth <= innerWidth) return;
+  const progress = Math.min(1, Math.max(0, (card.offsetLeft - parseFloat(getComputedStyle(item.track).paddingLeft)) / item.travel));
+  const top = scrollY + item.el.getBoundingClientRect().top + progress * item.travel;
+  if (lenis) lenis.scrollTo(top, {immediate: true, force: true}); else scrollTo(0, top);
+  updateRail(true);
+}
+
+// Step 2.7: text and photograph that change together, /blueprint/ 452c7d0 reference 6, reworked so that every change
+// is a clear moment. The block holds the screen; each step owns an equal stretch of the scroll. At each threshold the
+// new picture opens in the circle like an iris and the step's words rise line by line (change.css); scrolling back
+// runs it the other way. Without motion, or on a screen under 600px tall, the steps are listed instead.
+const change = {items: [], width: 0, height: 0};
+function splitLines(el) {
+  const text = el.dataset.text ?? (el.dataset.text = el.textContent.replace(/\s+/g, ' ').trim());
+  el.textContent = '';
+  const words = text.split(' ').map((word, i) => {
+    const span = document.createElement('span');
+    span.textContent = (i ? ' ' : '') + word;
+    el.append(span);
+    return span;
+  });
+  const lines = [];
+  for (const word of words) {
+    const top = word.offsetTop;
+    if (!lines.length || Math.abs(lines[lines.length - 1].top - top) > 2) lines.push({top, text: ''});
+    lines[lines.length - 1].text += word.textContent;
+  }
+  el.textContent = '';
+  return lines.map(line => {
+    const outer = document.createElement('span');
+    const inner = document.createElement('span');
+    outer.className = 'line';
+    inner.textContent = line.text.trim();
+    outer.append(inner);
+    el.append(outer, ' ');
+    return inner;
+  });
+}
+function unsplit(el) {
+  if (el.dataset.text !== undefined) el.textContent = el.dataset.text;
+}
+function setupChange(force = false) {
+  const armed = !matchMedia('(prefers-reduced-motion: reduce)').matches && innerHeight >= 600;
+  const resplit = force || innerWidth !== change.width || innerHeight !== change.height;
+  change.width = innerWidth;
+  change.height = innerHeight;
+  change.items = [...document.querySelectorAll('.current-page > [data-change]')].map(el => {
+    const states = [...el.querySelectorAll('[data-state]')];
+    const shots = [...el.querySelectorAll('[data-shot]')];
+    el.toggleAttribute('data-armed', armed);
+    if (resplit || !armed) states.forEach(state => {
+      const parts = [...state.children];
+      if (!armed) {parts.forEach(unsplit);return;}
+      let i = 0;
+      parts.forEach(part => splitLines(part).forEach(line => line.style.setProperty('--i', String(i++))));
+    });
+    // The held screen must show the whole of its longest step; where it cannot, the steps are listed.
+    const stage = el.querySelector(':scope > section');
+    const fits = () => {
+      const boxes = [...stage.children].map(child => child.getBoundingClientRect());
+      const style = getComputedStyle(stage);
+      const need = Math.max(...boxes.map(box => box.bottom)) - Math.min(...boxes.map(box => box.top)) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      return need <= stage.clientHeight + 1;
+    };
+    if (armed && stage && !fits()) {
+      el.removeAttribute('data-armed');
+      states.forEach(state => [...state.children].forEach(unsplit));
+    }
+    return {el, states, shots, index: -1};
+  });
+  updateChange(true);
+}
+function showChange(item, index, jump) {
+  const previous = item.index;
+  item.index = index;
+  item.el.dataset.dir = previous > index ? 'back' : 'forward';
+  if (jump) {
+    item.el.setAttribute('data-instant', '');
+    requestAnimationFrame(() => requestAnimationFrame(() => item.el.removeAttribute('data-instant')));
+  }
+  for (const list of [item.states, item.shots]) list.forEach((node, i) => {
+    node.toggleAttribute('data-current', i === index);
+    node.toggleAttribute('data-previous', !jump && i === previous && previous !== index);
+  });
+  item.shots.forEach(shot => {const video = shot.querySelector('video');if (video) syncVideo(video);});
+}
+function updateChange(jump = false) {
+  for (const item of change.items) {
+    if (!item.el.hasAttribute('data-armed')) {
+      item.states.concat(item.shots).forEach(node => {node.removeAttribute('data-current');node.removeAttribute('data-previous');});
+      item.index = -1;
+      continue;
+    }
+    const box = item.el.getBoundingClientRect();
+    const span = box.height - innerHeight;
+    const progress = span > 0 ? Math.min(1, Math.max(0, -box.top / span)) : 0;
+    const index = Math.min(item.states.length - 1, Math.floor(progress * item.states.length));
+    item.el.style.setProperty('--cp', progress.toFixed(3));
+    if (index !== item.index) showChange(item, index, jump || item.index < 0);
+  }
+}
+
 // The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
 // with a short lag (scrub), on screens from 900px and without reduced motion.
 const arch = {el: null, target: 0, current: 0, frame: 0};
@@ -284,14 +431,14 @@ function updateArch(jump = false) {
   if (!arch.frame) arch.frame = requestAnimationFrame(step);
 }
 
-const DARK = '[data-role="photo-hero"], [data-role="overlay"], [data-role="gallery"], [data-role="map"], .site-newsletter, .site-footer';
+const DARK = '[data-role="photo-hero"], [data-role="overlay"], [data-role="gallery"], [data-role="map"], [data-rail-band], .site-newsletter, .site-footer';
 let lastY = 0;
 let refreshHeader = () => {};
 function toneUnder(header) {
   if (header.querySelector('[data-mega][data-open="true"]')) return 'dark';
   const y = header.offsetHeight / 2;
   // The last match is the one on top: a rising block covers the photograph it rises over (step 2.5).
-  const sections = document.querySelectorAll('.current-page > section, .current-page > [data-drift], .current-page > [data-rise] > :is(section, [data-drift]), .site-footer');
+  const sections = document.querySelectorAll('.current-page > section, .current-page > [data-drift], .current-page > [data-rise] > :is(section, [data-drift]), .current-page > :is([data-rail], [data-change]) > section, .site-footer');
   let under = null;
   for (const section of sections) {
     const box = section.getBoundingClientRect();
@@ -335,6 +482,8 @@ export function enhancePage() {
   setupDrift();
   setupRise();
   setupNext();
+  setupRail();
+  setupChange(true);
   refreshHeader();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
@@ -364,8 +513,8 @@ export function installInteractions() {
 
   if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
-  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateRise();updateNext();updateHeader();});}, {signal});
-  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateRise();updateNext();updateHeader();});}, {passive:true, signal});
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateRise();updateNext();setupRail();setupChange();updateHeader();});}, {signal});
+  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateRise();updateNext();updateRail();updateChange();updateHeader();});}, {passive:true, signal});
   on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
     const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;
@@ -378,6 +527,8 @@ export function installInteractions() {
     const target = event.target instanceof Element ? event.target : null;
     if (target?.closest('[data-header]')) document.querySelector('[data-header]')?.classList.remove('is-away');
     if (target && !target.closest('[data-mega], [data-mega-trigger]')) closeMegas();
+    // The browser brings the focused card into view after this event; the rail settles on the next frame.
+    if (target?.closest('[data-rail][data-armed]')) requestAnimationFrame(() => railFocus(target));
   });
   resetPendingMenu=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=undefined;menu()?.classList.remove('closing');};
   // Placement map, 2026-11-08: on wide screens the menu shows the photograph of the page under the pointer or focus

@@ -51,8 +51,9 @@ part "$OVER" 69.25 1.0  loop-tuning      0.5 2.5   # P16 "It matters who is in t
 part "$PROG" 24.95 1.8  loop-halter      0.6 1.8   # P17 callout: the horseman with a horse in the stable
 part "$PROG" 26.85 2.5  loop-swim        0.6 1.6   # P17 "Cold, deep enough to swim in": a swim beside a horse
 part "$EVT"  10.05 4.8  loop-handpan     0.8       # P18: a musician at the handpan, lit in amber
+part "$PROG" 55.85 1.85 loop-benches     0.5 2     # P15 "Heat first, then cold, then sound" (step 2.7): the Hearth's round room, its benches and speakers around the stones
 # Films with sound: their scenes play when a loop is clicked (film time = source time - start).
 film "$PROG" 7.1 79.4 film-programming          # Amenities and Experiences, without the opening and closing logo
 film "$OVER" 0 140.1 film-overview              # Property & Program Overview Reel, whole
 film "$EVT" 5.6 53.8 film-events                # Events reel to its end: Josh speaks until 57.8, over the closing logo (it used to stop at 55.8, mid-sentence)
-for f in "$OUT"/loop-{rancho-pool,rancho,retreat,arenal,estate,experiences,presents,poolview,saddle,plunge,yoga,tuning,halter,swim,handpan}*.mp4 "$OUT"/film-{programming,overview,events}.mp4; do print "$(basename $f) $(du -h $f | cut -f1)"; done
+for f in "$OUT"/loop-{rancho-pool,rancho,retreat,arenal,estate,experiences,presents,poolview,saddle,plunge,yoga,tuning,halter,swim,handpan,benches}*.mp4 "$OUT"/film-{programming,overview,events}.mp4; do print "$(basename $f) $(du -h $f | cut -f1)"; done

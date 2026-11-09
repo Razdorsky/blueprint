@@ -309,3 +309,31 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
 - Behaviour: `setupNext` and `updateNext` in `interactions.js`, on the scroll frame, with the other arches' lag. The block's loop plays only on screen, like every loop.
 - Also fixed: since step 2.5 the opening's page transition missed the 21 openings inside a rising pair (the selector asked for the opening as a direct child of the page). The transition names now reach them again.
 - Checked: layout at 69 widths in Chrome, WebKit and Firefox; axe 0 on all pages; the arch, the loop and the transition in the three engines at 1440 and 390; keyboard (focus ring, the button visible, Enter); reduced motion; galleries, menu and newsletter.
+
+## 2.7 The rail and the text-and-photo change (2026-11-09)
+
+### What the references do
+
+`/blueprint/` 452c7d0 (owner's references 4 and 6):
+- **The rail** (`blocks/Doors.svelte` with `rail: true`, `styles/blocks.css` `.doors.rail*`, `motion.ts` 268–274): from 1024px the block pins and vertical scrolling walks a row of cards sideways (scrub 0.5); on phones it is a row you swipe. The owner: an interesting idea, but it looks like every other block.
+- **The change** (`blocks/Projection.svelte`, `styles/blocks.css` 330–352, `motion.ts` 230–247): the block pins for about 60% of a screen per state; the paragraph on the left and the shot in a circle on the right change at each threshold, while the circle slowly comes closer. The owner: a great approach, but the change is hard to feel (the photo just dissolves, the text swaps without impact).
+
+### The owner's answers (2026-11-09)
+
+- The rail: "it should stand out somehow, but minimally"; no piling on details.
+- The change: no numbering, and no step counters anywhere ("these numberings of everything don't suit me").
+
+### Decisions
+
+- **The rail on Experiences**: the six experiences (the designer's two rows of three) on one band of the designer's own forest pattern, the panel The Vessyl Presents uses for its events. The tone changes through the painted pattern, and nothing else is added: no counter, no progress line. The designer's cards have no surface of their own, so on the band their words take the light ink of the pattern panels. From 1024px the band holds the screen while the page's scroll walks the cards sideways, with the arches' short lag; a card reached with the keyboard brings the page to where it is in view. Below 1024px the cards are a row you swipe; reduced motion keeps the designer's grid on the band. Home shows the same six as a drifting gallery, so the two pages do not repeat each other.
+- **The change on the Harmonic Hearth** ("Heat first, then cold, then sound") and **the Frequency Dome** ("Three things, mostly"): the designer's heading and steps, with a circle beside them. The block holds the screen; each step owns an equal stretch of the scroll. At each threshold the new picture opens in the circle like an iris over the last and settles from a slight zoom, and the step's words rise line by line through a mask while the last ones leave; scrolling back runs it the other way. Each change is its own beat.
+- **No numbering**: the designer numbered the Hearth's four facts ("1. Heat"); in the change the labels keep his words without the numbers, and Capacity stays below as a fact, also without its number.
+- **Pictures in the circle**, none repeated on its page: the Hearth: flames among the hot stones (approved photo from the Blueprint bank), the cold plunge (the designer's photograph, which the loop of the next section otherwise covers), and a new silent loop of the Hearth's round room with its benches and speakers around the stones (Amenities and Experiences film, 0:55.85, one shot). The Dome: guests lying under a blue projection while a musician plays, a morning class with arms raised, and the violinist under a projected night sky (an unused loop).
+- **Short screens and reduced motion**: when the held screen cannot show the whole of the longest step, or without motion, the steps are listed beside the first picture.
+
+### Built (2026-11-09)
+
+- Markup: `div[data-rail]` around one band (`data-rail-band`, `data-rail-track`) on P07; `div[data-change]` with `data-state` and `data-shot` on P14 and P15 (`scratchpad` script, as in earlier steps).
+- Styles: `styles/rail.css`, `styles/change.css`. Behaviour: `setupRail`, `updateRail`, `railFocus`, `setupChange`, `updateChange`, `splitLines` in `interactions.js`; a loop in the circle plays only while its picture is the current one.
+- Media: `loop-benches` cut by `scripts/blueprint-media/loops-map.sh`; `scripts/build-pages.mjs` now also copies the Blueprint photographs a page names.
+- Checked: layout at 69 widths in Chrome, WebKit and Firefox; axe 0 on all pages; the rail and the three steps forwards and back in the three engines at 1440 and 390; the held screen fits from 375×667 to 2560×1440; keyboard through the rail; reduced motion.

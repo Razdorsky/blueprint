@@ -18,6 +18,8 @@
   import '#lib/enhanced/styles/drift.css';
   import '#lib/enhanced/styles/rise.css';
   import '#lib/enhanced/styles/next.css';
+  import '#lib/enhanced/styles/rail.css';
+  import '#lib/enhanced/styles/change.css';
 
   let {children}: {children:Snippet} = $props();
   onMount(installInteractions);

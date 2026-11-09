@@ -43,12 +43,12 @@ async function* files(dir) {
   }
 }
 
-// The enhanced edition plays a few of the brand films cut for Blueprint (docs/figma-enhanced-step2.md, 2.3):
-// copy only the files its pages name, not the whole bp folder.
+// The enhanced edition plays a few of the brand films cut for Blueprint (docs/figma-enhanced-step2.md, 2.3) and
+// shows a few of its approved photographs (2.7): copy only the files its pages name, not the whole bp folder.
 if (edition === 'figma-enhanced') {
   const used = new Set();
   for await (const file of files(out)) {
-    if (file.endsWith('.html')) for (const [, name] of (await fs.readFile(file, 'utf8')).matchAll(/\/bp\/(video\/[\w.-]+)/g)) used.add(name);
+    if (file.endsWith('.html')) for (const [, name] of (await fs.readFile(file, 'utf8')).matchAll(/\/bp\/((?:video|img)\/[\w.-]+)/g)) used.add(name);
   }
   for (const name of used) {
     await fs.mkdir(path.dirname(path.join(out, 'bp', name)), { recursive: true });

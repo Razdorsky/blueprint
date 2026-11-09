@@ -1,0 +1,66 @@
+/* Figma Enhanced — step 2.7 (docs/figma-enhanced-step2.md): text and photograph that change together, /blueprint/
+   452c7d0 reference 6, reworked as the owner asked: every change is a clear moment. The block holds the screen while
+   the designer's steps go by (interactions.js, setupChange). The new picture opens in the circle like an iris over the
+   one it replaces, and settles from a slight zoom; the step's words rise line by line through a mask while the last
+   ones leave; scrolling back runs it the other way. No numbering and no step counter (owner, 2026-11-09). Without
+   motion, or on a very short screen, the steps are simply listed beside the first picture. */
+body[data-edition="figma-enhanced"] .current-page > [data-change] { position: relative; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] > section {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s6); align-items: center;
+  padding: var(--section) var(--edge); background: var(--surface); color: var(--ink);
+}
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="copy"] { grid-column: 1 / span 6; grid-row: 1; display: grid; gap: var(--s4); align-self: end; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="states"] { grid-column: 1 / span 6; grid-row: 2; display: grid; gap: var(--s6); align-self: start; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="state"] { display: grid; gap: var(--s3); max-width: 30em; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="state"] h3 { font-size: var(--t-h3); line-height: 1.25; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="circle"] {
+  position: relative; grid-column: 8 / -1; grid-row: 1 / span 2; justify-self: center; width: min(100%, 72svh); aspect-ratio: 1;
+  border-radius: 50%; overflow: hidden; isolation: isolate; background: var(--surface-warm);
+}
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="shot"] { position: absolute; inset: 0; margin: 0; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="shot"] :is(img, video, [data-part="shot-media"]) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Without motion the first picture stands for the block. */
+body[data-edition="figma-enhanced"] .current-page > [data-change]:not([data-armed]) [data-part="shot"] + [data-part="shot"] { display: none; }
+
+/* ---- Armed: the block holds the screen while its steps go by --------------------------------------------------------- */
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] { height: calc(100svh + (var(--states) - 1) * 70svh); }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] > section {
+  position: sticky; top: 0; height: 100svh; padding-block: calc(var(--header) * 0.6) var(--s6); align-content: center;
+}
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="states"] { display: grid; grid-template: 1fr / 1fr; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="state"] { grid-area: 1 / 1; align-content: start; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="state"]:not([data-current]) { pointer-events: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="circle"] { transform: scale(calc(1 + var(--cp, 0) * 0.05)); }
+
+/* The words: each line rises through its own mask. */
+body[data-edition="figma-enhanced"] .current-page > [data-change] .line { display: block; overflow: clip; padding-block: 0.08em; margin-block: -0.08em; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] .line > span { display: block; transform: translateY(var(--from, 110%)); transition: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-dir="back"] { --from: -110%; --to: 110%; }
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-current] .line > span {
+  transform: none; transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) calc(240ms + var(--i, 0) * 70ms);
+}
+body[data-edition="figma-enhanced"] .current-page > [data-change] [data-previous] .line > span {
+  transform: translateY(var(--to, -110%)); transition: transform 420ms cubic-bezier(0.55, 0, 0.75, 0);
+}
+
+/* The picture: an iris opens the new one over the last, and it settles from a slight zoom. */
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="shot"] { clip-path: circle(0% at 50% 50%); z-index: 0; transition: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="shot"][data-previous] { clip-path: circle(51% at 50% 50%); z-index: 1; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="shot"][data-current] {
+  clip-path: circle(51% at 50% 50%); z-index: 2; transition: clip-path 950ms cubic-bezier(0.6, 0, 0.2, 1);
+}
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="shot"] :is(img, [data-part="shot-media"]) { transform: scale(1.14); transition: none; }
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-armed] [data-part="shot"]:is([data-current], [data-previous]) :is(img, [data-part="shot-media"]) {
+  transform: none; transition: transform 1700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* The first state is set without motion when the page arrives. */
+body[data-edition="figma-enhanced"] .current-page > [data-change][data-instant] :is(.line > span, [data-part="shot"], [data-part="shot"] img, [data-part="shot-media"]) { transition: none !important; }
+
+@media (max-width: 899px) {
+  body[data-edition="figma-enhanced"] .current-page > [data-change] > section { row-gap: var(--s5); align-items: start; }
+  body[data-edition="figma-enhanced"] .current-page > [data-change] :is([data-part="copy"], [data-part="states"], [data-part="circle"]) { grid-column: 1 / -1; }
+  body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="circle"] { grid-row: 1; width: min(76vw, 40svh); }
+  body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="copy"] { grid-row: 2; }
+  body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="states"] { grid-row: 3; }
+  body[data-edition="figma-enhanced"] .current-page > [data-change] [data-part="state"] p:not([data-part="eyebrow"]) { font-size: var(--t-body); line-height: 1.6; }
+}
