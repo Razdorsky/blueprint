@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -45,5 +46,6 @@
 <section data-name="Callout" data-node-id="965:7721" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/96aad99ec0ad155dbaa5.webp" alt="A member of the team at the Hearth" loading="lazy" decoding="async" width="1800" height="2400"></figure><div data-part="copy"><p data-node-id="I965:7721;748:405" data-part="eyebrow">We will book any of this for you</p>
 <h2 data-node-id="I965:7721;748:406" class="c-heading" data-part="heading">At the Hearth, usually with a day of notice, and we are not taking a cut that changes what we recommend.</h2>
 <div data-part="actions"><button data-name="CTA" data-node-id="I965:7721;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Ask us to book any of this — destination not supplied">Ask us to book any of this</button></div></div></div></section>
+<Next pageIndex={28} />
 <Newsletter pageIndex={28} />
 

@@ -233,7 +233,7 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
   - Kept as photographs, because no footage shows their subject: the Villas, Arenal After Dark, Eating here, Moloka, Groups and offsites, Weddings, Things to do, and the path to the Dome on Home (a man walks through that shot, and a loop would double him). For Two and Horses and the land keep their animated photographs.
 - **Sound** (Legacy reference 12, `playFilm`, `endScene`): every loop cut from footage with sound has a "Play with sound" button on frosted glass. It plays that scene of the source film from the start, 6–17 s with the sound fading in and out, then the silent loop returns; pause and sound controls take its place meanwhile. Take the whole property plays the whole Overview reel (`film-overview.mp4`, 140 s). One film sounds at a time. Loops cut from footage without sound (vessyl-web) stay silent and have no button. Callouts get a round button. Playback starts inside the tap, which iOS Safari requires for sound; a scene's start travels in the address as a media fragment (`#t=`), with a seek as the fallback. Films and scenes load by byte range, which GitHub Pages serves (the local preview server learned it too).
 - **The founder on Home** (owner's choice, 2026-11-08: the third fragment, 11 s). "Hear Josh" on the callout's photograph plays the end of the Events reel with sound: the Dome and the hills under his voice, then Josh on camera. His last words run over the reel's closing logo, which the portrait frame would crop, so the photograph returns for them while the sound plays on (`data-photo-after`). `film-events.mp4` now runs to the reel's end instead of stopping mid-sentence at 55.8 s.
-- **The closing photograph** (`components/Newsletter.svelte`, `styles/closing.css`): it belongs to the page's world and never repeats a photograph already on the page. Arenal After Dark, Eating here and El Rancho close on Moloka's candlelit table, Moloka on the long table under lanterns, Weddings on a candlelit table, the Frequency Dome on the musician by lamplight, Getting here and Things to do on Arenal, the rest on the Dome at night. Each has a dark lower edge; the newsletter and the footer take that edge's colour (night, candle, amber).
+- **The closing photograph** (`components/Newsletter.svelte`, `styles/closing.css`): it belongs to the page's world and never repeats a photograph already on the page. Arenal After Dark and Eating here close on Moloka's candlelit table, Moloka on the long table under lanterns, Weddings on a candlelit table, the Frequency Dome on the musician by lamplight, Getting here on Arenal, the rest on the Dome at night (El Rancho and Things to do since step 2.6, so the closing never repeats the next-page block's subject). Each has a dark lower edge; the newsletter and the footer take that edge's colour (night, candle, amber).
 - **Checked:** layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the 56 shell items); axe 0 on all 28 pages at 1440, 768 and 375; gallery, menu and newsletter tests; scenes play, pause and return to the loop in all three engines; reduced motion keeps the loops on their posters and the arches closed; every sound button is reachable at 1440 and 390.
 
 ## 2.4 The drifting gallery (2026-11-08)
@@ -283,3 +283,29 @@ The owner found the techniques of 2.1–2.3 placed in single spots. The placemen
 - Styles: `styles/rise.css`. The section rules, the header's tone, the page transition and the opening's film button also reach sections inside a pair.
 - Behaviour: `setupRise` and `updateRise` in `interactions.js`, on the scroll frame, with the Home arch's lag.
 - Checked: layout at 69 widths in Chrome, WebKit and Firefox (nothing beyond the shell items); axe 0 on all pages; the arch, the hold and the header identical in the three engines; page transitions, Back and Forward; galleries, menu and newsletter.
+
+## 2.6 The next-page block (2026-11-09)
+
+### What the reference does
+
+`/blueprint/` 452c7d0, the `Next` block at the end of every page, before the newsletter (owner's reference 7): `components/Next.svelte`, `styles/blocks.css` 236–254, `motion.ts` 226–229.
+- The next page's name, large, with a round copper arrow after the last word; one line about that page on the right; below, that page's own opening picture, large (`min(78svh, 56vw)`, 64svh on phones).
+- The picture opens from the Dome's arch as it arrives: `clip-path: inset(0 (1−g)·16% 0 (1−g)·16% round …)`, with `--g` from 0 when its top meets the foot of the screen to 1 when its middle reaches 62% (scrub 0.6). The whole block is one link.
+- The owner: "a very pleasant block… it appears in a very interesting way… very smoothly". What it lacked: the button to the next page belongs inside the photo or film, not as the arrow beside the title.
+
+### Decisions
+
+- **Where** (placement map): the 25 pages before the newsletter, each leading to the next in the site's order, the last one home. The three places to stay end on the designer's own links to the other two, so they have no block.
+- **What it shows** (`src/lib/enhanced/next.ts`): the next page's name; one line in the designer's words from that page's opening (its H1, or the first sentence of its description where the H1 is still a placeholder); that page's opening film or photograph. A page that opens on text shows its first photograph. Getting here's first photograph (the golf cart) already ends the Arenal page's last row of cards, so its block shows the page's other photograph.
+- **The button inside the picture**: frosted glass (prototype reference 16) in the designer's button type and radius, with the reference's round arrow, which fills with copper when the block is pointed at, focused or pressed. It stands on the threshold of the arch and arrives as the arch opens. It is named the way the designer names links to a page: "See the treehouse", "See Moloka", "Explore the Dome", "See what is on"; from the last page, "Back to the home page".
+- **The arch's edge**: while the arch is narrow its edge is drawn in a hairline that fades as it opens, so the shape reads against a pale sky (the Dome loop is almost white at the top).
+- **The click continues the movement** (as the reference meant it): when the block's picture is on screen and the navigation goes to its page, the picture grows into that page's opening picture (a shared view transition) and the opening's text arrives after it has settled. A page that opens on text receives the block as a dissolve. Reduced motion keeps the picture open and still and skips the transition.
+- **The closing photograph never repeats the block's subject.** El Rancho's block shows Moloka's table and Things to do's block the pool under Arenal, so both now close on the Dome at night.
+
+### Built (2026-11-09)
+
+- Markup: `components/Next.svelte` before `Newsletter` on pages 01, 02 and 06–28; data in `next.ts`.
+- Styles: `styles/next.css`; the transition in `styles/motion.css` (`vt-next`) and `+layout.svelte` (`throughDoor`).
+- Behaviour: `setupNext` and `updateNext` in `interactions.js`, on the scroll frame, with the other arches' lag. The block's loop plays only on screen, like every loop.
+- Also fixed: since step 2.5 the opening's page transition missed the 21 openings inside a rising pair (the selector asked for the opening as a direct child of the page). The transition names now reach them again.
+- Checked: layout at 69 widths in Chrome, WebKit and Firefox; axe 0 on all pages; the arch, the loop and the transition in the three engines at 1440 and 390; keyboard (focus ring, the button visible, Enter); reduced motion; galleries, menu and newsletter.

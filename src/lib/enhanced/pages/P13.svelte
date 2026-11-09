@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -28,6 +29,7 @@
 <p data-node-id="814:10279" data-part="paragraph">[One line on who they are]</p>
 <p data-node-id="814:10280" data-part="paragraph">[Price] | Free to guests</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="814:10281" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book — destination not supplied">book</button></div></article></section>
+<Next pageIndex={13} />
 <Newsletter pageIndex={13} />
 <section data-name="Heading title" data-node-id="814:9962" data-role="copy" data-tone="white"><div data-part="copy"><h2 data-node-id="I814:9962;768:1391" class="c-heading" data-part="heading">If you make something and you want to make it here, write to [address]. We have [what we can offer: the room, the system, somewhere to sleep], and we are interested.</h2></div></section>
 <section data-name="Galery slider" data-node-id="814:10383" data-role="gallery" data-gallery="1" aria-label="The Vessyl Presents gallery"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/df44479df6d2cfd7b1f9.webp" alt="A musician playing a handpan by lamplight" loading="lazy" decoding="async" data-gallery-image="" width="2400" height="1600"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open The Vessyl Presents gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>

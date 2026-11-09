@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -28,5 +29,6 @@
 <h2 data-node-id="" class="c-heading" data-part="heading">El Rancho is the main room and most dinners happen there.</h2>
 </div>
 <figure data-part="media" data-aspect="portrait"><img src="{base}/media/3e390fdd0c298aaed49e.webp" alt="El Rancho's tables, open to Arenal Volcano" loading="lazy" decoding="async" width="1800" height="2400"></figure></section>
+<Next pageIndex={21} />
 <Newsletter pageIndex={21} />
 

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -41,5 +42,6 @@
 <p data-node-id="I884:8996;814:10265" data-part="paragraph">[Who is running it, one line]</p>
 <p data-node-id="I884:8996;814:10266" data-part="paragraph">[Price]</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I884:8996;814:10267" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="details — destination not supplied">details</button></div></article></section>
+<Next pageIndex={23} />
 <Newsletter pageIndex={23} />
 

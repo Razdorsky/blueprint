@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -32,5 +33,6 @@
 <p data-part="paragraph">Company, dates, headcount, and whether the days are built around work, the opposite of work, or split.</p>
 <div data-part="actions"><button data-name="CTA" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Enquire about a group booking — destination not supplied">Enquire about a group booking</button></div></div></section>
 <section data-name="Galery slider" data-node-id="884:9230" data-role="gallery" data-gallery="1" aria-label="Groups and offsites gallery"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/af02d341fc274ea152ee.webp" alt="Hills and a cloudy sky reflected in the infinity pool" loading="lazy" decoding="async" data-gallery-image="" width="2400" height="1350"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open Groups and offsites gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>
+<Next pageIndex={24} />
 <Newsletter pageIndex={24} />
 

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -25,4 +26,5 @@
 <section data-name="Heading title" data-node-id="814:7311" data-role="copy" data-tone="white"><div data-part="copy"><h2 data-node-id="I814:7311;768:1391" class="c-heading" data-part="heading">Long trousers and closed shoes. Helmets are here. If it has rained hard, [what changes about the route].</h2>
 <div data-part="actions"><button data-name="CTA" data-node-id="I814:7311;805:3718;750:1257" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book a ride — destination not supplied">book a ride</button></div></div></section>
 <section data-name="Galery slider" data-node-id="814:7312" data-role="gallery" data-gallery="1" aria-label="Horses and the River gallery"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/55161e7692315fc7eac4.webp" alt="Two riders crossing the river on horseback" loading="lazy" decoding="async" data-gallery-image="" width="1800" height="2400"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open Horses and the River gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>
+<Next pageIndex={12} />
 <Newsletter pageIndex={12} />

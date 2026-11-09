@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -44,5 +45,6 @@
 <p data-part="paragraph">GPS: [lat, long]</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I965:7513;748:584;750:1289;750:1257" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Open in Google Maps — destination not supplied">Open in Google Maps</button></div></div>
 <figure data-part="media" data-aspect="landscape"><img src="{base}/media/11358b370ad895b42644.webp" alt="The pool and the main house among the trees, with the Dome beyond" loading="lazy" decoding="async" width="2400" height="1798"></figure></section>
+<Next pageIndex={27} />
 <Newsletter pageIndex={27} />
 

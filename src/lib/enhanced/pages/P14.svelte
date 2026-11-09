@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -35,5 +36,6 @@
 <p data-node-id="I862:15941;748:406" data-part="paragraph">You lie on the floor. There are mats, bolsters and blankets, and if the floor does not work for your body, tell us when you book and we will set up a chair or a raised platform. Go barefoot or in socks. Volume gets loud enough that you feel it, and if that is not for you, say so and we will seat you further out.</p>
 <p data-part="paragraph">If you have epilepsy, a pacemaker, an implanted medical device, or you are in the first trimester of pregnancy, talk to your doctor before you book a sound session. Low-frequency sound and strobing light are not safe for everyone. We will refund you in full if you book and then decide against it.</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I862:15941;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Book a Dome session — destination not supplied">Book a Dome session</button></div></div></div></section>
+<Next pageIndex={14} />
 <Newsletter pageIndex={14} />
 

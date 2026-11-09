@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -39,5 +40,6 @@
 <div data-part="actions"><button data-name="CTA" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Book a ride — destination not supplied">Book a ride</button></div></div>
 <figure data-part="media" data-aspect="landscape"><img src="{base}/media/a93767addb691181b87a.webp" alt="A small yellow-breasted bird at the edge of the water" loading="lazy" decoding="async" width="2400" height="1600"></figure></section>
 <section data-name="Galery slider" data-node-id="862:15965" data-role="gallery" data-gallery="1" aria-label="Horses and the land gallery"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/a21a6b8f9cebafbd9e86.webp" alt="Saddled horses resting among the trees by the river" loading="lazy" decoding="async" data-gallery-image="" width="2400" height="1350"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open Horses and the land gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>
+<Next pageIndex={17} />
 <Newsletter pageIndex={17} />
 

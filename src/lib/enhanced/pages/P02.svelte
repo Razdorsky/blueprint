@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -26,4 +27,5 @@
 <div data-part="actions"><a data-name="Link arrow button no margin" data-node-id="755:736" class="current-action" data-part="action" href="https://akenhotels.com/en/vessyl-home/" target="_blank" rel="noopener noreferrer">Check availability</a></div></div></section>
 <section data-name="Rooms Comparison" data-node-id="756:1378" data-role="comparison"><!-- svelte-ignore a11y_no_noninteractive_tabindex (This named scroll region needs keyboard focus.) --><div data-part="table-scroll" tabindex="0" role="region" aria-label="Room comparison"><table><thead><tr><th scope="col">room type</th><th scope="col">Sleeps</th><th scope="col">bathroom</th><th scope="col">best for</th></tr></thead><tbody><tr><td data-label="room type">The Villas</td><td data-label="Sleeps">[x]</td><td data-label="bathroom">Private, indoors</td><td data-label="best for">Couples, four nights or more, rain</td></tr><tr><td data-label="room type">The Treehouse</td><td data-label="Sleeps">[x]</td><td data-label="bathroom">Private, indoors</td><td data-label="best for">One couple who want the best view on the property</td></tr><tr><td data-label="room type">Glamping Tents</td><td data-label="Sleeps">[x]</td><td data-label="bathroom">Private, indoors</td><td data-label="best for">Anyone who wants to hear the forest all night</td></tr></tbody></table></div></section>
 <section data-name="Map" data-node-id="756:904" data-role="map"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/0b6f7938d784334e4a7e.webp" alt="An aerial photograph of the property in the forest" loading="lazy" decoding="async" width="2400" height="1513"></figure><ul data-part="map-key"><li>The Villas</li><li>The Pool</li><li>El Rancho</li><li>The Frequency Dome</li><li>The Harmonic Hearth</li><li>The Treehouse</li><li>Glamping Tents</li></ul></section>
+<Next pageIndex={2} />
 <Newsletter pageIndex={2} />

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -39,4 +40,5 @@
 <p data-node-id="I812:5639;764:1128" data-part="highlight">From [rate] a night</p>
 <p data-node-id="I812:5639;750:2529" data-part="paragraph">Sleeps [x]. Canvas, a real bed, a private bathroom, forest on three sides.</p>
 <div data-part="actions"><a data-name="Link arrow button" data-node-id="I812:5639;750:2535" class="current-action" data-part="action" href="{base}/{edition}/glamping-tents/">See the glamping tents</a></div></div></article></div></section>
+<Next pageIndex={11} />
 <Newsletter pageIndex={11} />

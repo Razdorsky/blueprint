@@ -1,0 +1,75 @@
+/* Figma Enhanced — step 2.6 (docs/figma-enhanced-step2.md): the next-page block, /blueprint/ 452c7d0 reference 7.
+   The next page's name and one line of it, then its opening picture, which opens from the Dome's arch as it comes
+   into view: --g goes from 0 to 1 (interactions.js, setupNext), the sides close in by 16% and the top rounds into
+   the arch, as in the reference. The owner's correction: the way through is a button inside the picture, on
+   frosted glass (prototype reference 16) in the designer's button type, with the reference's round arrow, which
+   fills with copper when the block is pointed at. The whole block is one link. */
+body[data-edition="figma-enhanced"] .current-page > .next-page { --g: 1; position: relative; padding-bottom: var(--section); }
+body[data-edition="figma-enhanced"] .current-page > .next-page > .next-head {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s3); align-items: last baseline;
+  margin-bottom: clamp(24px, 3vw, 48px);
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-name {
+  grid-column: 1 / span 7; font-size: var(--t-h1); line-height: 1.05; transition: color var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-line {
+  grid-column: 8 / span 5; max-width: 26em; font-size: var(--t-lede); line-height: 1.4545; color: var(--ink-soft); text-wrap: pretty;
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-door { display: block; color: inherit; text-decoration: none; border-radius: var(--r-photo); -webkit-tap-highlight-color: transparent; }
+/* The heading and the line take the click too. */
+body[data-edition="figma-enhanced"] .current-page .next-page .next-door::after { content: ""; position: absolute; inset: 0; z-index: 2; }
+body[data-edition="figma-enhanced"] .current-page .next-page .next-door:focus-visible { outline: 2px solid var(--heading); outline-offset: 4px; }
+body[data-edition="figma-enhanced"] .current-page .next-page .next-frame { position: relative; display: block; height: min(78svh, 56vw); }
+/* While the arch is narrow its edge is drawn in a hairline, so the shape reads against a pale sky; it fades as the
+   picture reaches its frame. */
+body[data-edition="figma-enhanced"] .current-page .next-page .next-frame::before {
+  content: ""; position: absolute; inset: -1px; background: var(--rule-strong); opacity: calc(1 - var(--g)); pointer-events: none;
+  clip-path: inset(0 calc((1 - var(--g)) * 16%) 0 calc((1 - var(--g)) * 16%)
+    round calc((1 - var(--g)) * 34vw + var(--g) * var(--r-photo) + 1px) calc((1 - var(--g)) * 34vw + var(--g) * var(--r-photo) + 1px) var(--r-photo) var(--r-photo));
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-media {
+  position: absolute; inset: 0; display: block; overflow: hidden; border-radius: var(--r-photo); background: var(--surface-warm);
+  clip-path: inset(0 calc((1 - var(--g)) * 16%) 0 calc((1 - var(--g)) * 16%)
+    round calc((1 - var(--g)) * 34vw + var(--g) * var(--r-photo)) calc((1 - var(--g)) * 34vw + var(--g) * var(--r-photo)) var(--r-photo) var(--r-photo));
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-media > :is(img, video) {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1200ms var(--ease);
+}
+/* The button stands on the threshold of the arch and arrives as the arch opens. */
+body[data-edition="figma-enhanced"] .current-page .next-page .next-go {
+  position: absolute; z-index: 1; left: 50%; bottom: clamp(20px, 4svh, 40px);
+  display: inline-flex; align-items: center; gap: 16px; max-width: calc(100% - 32px); min-height: 56px; padding: 8px 8px 8px 24px;
+  border: 1px solid rgb(245 235 231 / 0.32); border-radius: var(--r-control);
+  background: linear-gradient(135deg, rgb(7 9 8 / 0.58), rgb(7 9 8 / 0.3) 78%); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  color: var(--on-dark); font: 500 var(--t-button) / 1.25 var(--font-body); letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap;
+  opacity: clamp(0, calc((var(--g) - 0.55) * 3), 1); transform: translate(-50%, calc((1 - var(--g)) * 16px));
+  transition: background-color var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-door:focus-visible .next-go { opacity: 1; }
+body[data-edition="figma-enhanced"] .current-page .next-page .next-arrow {
+  display: grid; flex: 0 0 auto; place-items: center; width: 40px; height: 40px; border: 1px solid rgb(245 235 231 / 0.45); border-radius: 50%;
+  transition: background-color var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page .next-page .next-arrow svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform var(--dur-2) var(--ease);
+}
+body[data-edition="figma-enhanced"] .current-page .next-page:is(:hover, :has(.next-door:focus-visible), :has(.next-door:active)) .next-arrow { background: var(--accent); border-color: var(--accent); }
+body[data-edition="figma-enhanced"] .current-page .next-page:is(:hover, :has(.next-door:focus-visible), :has(.next-door:active)) .next-arrow svg { transform: translateX(2px); }
+body[data-edition="figma-enhanced"] .current-page .next-page:hover .next-name { color: var(--accent); }
+@media (hover: hover) {
+  body[data-edition="figma-enhanced"] .current-page .next-page:hover .next-media > :is(img, video) { transform: scale(1.04); }
+}
+
+@media (max-width: 899px) {
+  body[data-edition="figma-enhanced"] .current-page .next-page .next-name,
+  body[data-edition="figma-enhanced"] .current-page .next-page .next-line { grid-column: 1 / -1; }
+  body[data-edition="figma-enhanced"] .current-page .next-page .next-frame { height: 64svh; }
+}
+@media (max-width: 480px) {
+  /* A long name wraps inside the glass rather than leaving the picture. */
+  body[data-edition="figma-enhanced"] .current-page .next-page .next-go { gap: 12px; padding-left: 18px; font-size: 13px; white-space: normal; width: max-content; text-align: left; text-wrap: balance; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-edition="figma-enhanced"] .current-page .next-page :is(.next-name, .next-media > img, .next-media > video, .next-go, .next-arrow, .next-arrow svg) { transition: none; }
+}

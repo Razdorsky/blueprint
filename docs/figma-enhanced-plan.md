@@ -114,9 +114,9 @@ The owner likes these as techniques, not as the places where they first appeared
 
 2.4 **The drifting gallery** (reference 3; published 2026-11-08, see `docs/figma-enhanced-step2.md`): a sticky title, with photo cards at two depths passing it, on every run of card photographs under a heading (six runs on five pages; Horses and the land after its photographs).
 
-2.5 **The arch over a full-screen photo** (reference 5; built 2026-11-08, see `docs/figma-enhanced-step2.md`): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique. Placed on all 21 openings with a photograph (the description rises) and on Home (the drifting gallery rises over the Dome).
+2.5 **The arch over a full-screen photo** (reference 5; published 2026-11-08, see `docs/figma-enhanced-step2.md`): a panel shaped like the Dome rises over a full-screen photograph and widens to the edges. Its colour is chosen for each place; it was dark on `/blueprint/`, but that is not the technique. Placed on all 21 openings with a photograph (the description rises) and on Home (the drifting gallery rises over the Dome).
 
-2.6 **The next-page block** (reference 7), improved: the button to the next page is designed inside the opening media.
+2.6 **The next-page block** (reference 7; published 2026-11-09, see `docs/figma-enhanced-step2.md`), improved: the button to the next page is designed inside the opening media, on frosted glass, and a click grows the picture into the next page's opening. On 25 pages in the site's order; the three places to stay keep the designer's links to the other two.
 
 2.7 **Rethought pieces.**
 - The horizontal rail (reference 4) gets a band of its own and a progress cue.

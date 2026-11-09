@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -31,5 +32,6 @@
 <h2 data-node-id="I884:8337;748:406" class="c-heading" data-part="heading">Chef Devli Saul Mendoza cooks gallo pinto, pejibaye, achiote and cacao by the pool.</h2>
 <div data-part="actions"><button data-name="CTA" data-node-id="I884:8337;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="The people here — destination not supplied">The people here</button></div></div></div></section>
 <section data-name="Galery slider" data-node-id="884:8338" data-role="gallery" data-gallery="1" aria-label="El Rancho gallery"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/8fcbf81c59ccd93340e9.webp" alt="A long table set under hanging lanterns and a palm centerpiece" loading="lazy" decoding="async" data-gallery-image="" width="1800" height="2400"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open El Rancho gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>
+<Next pageIndex={20} />
 <Newsletter pageIndex={20} />
 

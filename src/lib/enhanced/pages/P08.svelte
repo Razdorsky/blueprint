@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -32,4 +33,5 @@
 <p data-node-id="I814:7293;757:1858;768:1436" data-part="highlight">[offer]</p>
 <p data-node-id="I814:7293;757:1858;757:1837" data-part="paragraph">Runs [start] to [end]. It includes everything above plus [inclusions], and you can stay for dinner if you book a table.</p>
 <div data-part="actions"><button data-name="Link arrow button" data-node-id="I814:7293;757:1858;757:1842" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="BOOK a full DAY HERE — destination not supplied">BOOK a full DAY HERE</button></div></div></article></div></section>
+<Next pageIndex={8} />
 <Newsletter pageIndex={8} />

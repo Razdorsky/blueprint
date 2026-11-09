@@ -220,6 +220,38 @@ function updateRise(jump = false) {
   if (jump) step(); else if (!rise.frame) rise.frame = requestAnimationFrame(step);
 }
 
+// Step 2.6 (docs/figma-enhanced-step2.md): the next-page block's picture opens from the arch as it comes into view,
+// as on /blueprint/ 452c7d0: --g goes from 0, when its top meets the foot of the screen, to 1, when its middle reaches
+// 62% of the screen's height, with the same short lag as the other arches. Reduced motion leaves it open.
+const next = {el: null, media: null, g: 1, target: 1, frame: 0};
+function setupNext() {
+  cancelAnimationFrame(next.frame);
+  next.frame = 0;
+  next.el = document.querySelector('.current-page > [data-next]');
+  next.media = next.el?.querySelector('[data-next-media]') || null;
+  if (!next.el || !next.media || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    next.el?.style.removeProperty('--g');
+    next.el = next.media = null;
+    return;
+  }
+  updateNext(true);
+}
+function updateNext(jump = false) {
+  if (!next.el?.isConnected) return;
+  const box = next.media.getBoundingClientRect();
+  const vh = innerHeight;
+  const end = vh * 0.62 - box.height / 2;
+  next.target = Math.min(1, Math.max(0, (vh - box.top) / (vh - end)));
+  if (jump) next.g = next.target;
+  const step = () => {
+    next.g += (next.target - next.g) * 0.16;
+    if (Math.abs(next.target - next.g) < 0.001) next.g = next.target;
+    next.el.style.setProperty('--g', next.g.toFixed(4));
+    next.frame = next.g !== next.target ? requestAnimationFrame(step) : 0;
+  };
+  if (jump) step(); else if (!next.frame) next.frame = requestAnimationFrame(step);
+}
+
 // The Home arch (/blueprint/ 452c7d0): it opens with the scroll through its 185svh block, following the page
 // with a short lag (scrub), on screens from 900px and without reduced motion.
 const arch = {el: null, target: 0, current: 0, frame: 0};
@@ -302,6 +334,7 @@ export function enhancePage() {
   setupFilms();
   setupDrift();
   setupRise();
+  setupNext();
   refreshHeader();
   document.querySelectorAll('[data-gallery] img[data-gallery-image]').forEach(img => {
     img.tabIndex = 0;
@@ -331,8 +364,8 @@ export function installInteractions() {
 
   if (!reduced.matches) lenis = new Lenis({lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true, autoRaf: true, stopInertiaOnNavigate: true});
   let railFrame = 0, headerFrame = 0;
-  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateRise();updateHeader();});}, {signal});
-  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateRise();updateHeader();});}, {passive:true, signal});
+  addEventListener('resize', () => {cancelAnimationFrame(railFrame);railFrame = requestAnimationFrame(() => {markRails();setupArch();updateDrift();updateRise();updateNext();updateHeader();});}, {signal});
+  addEventListener('scroll', () => {if (!headerFrame) headerFrame = requestAnimationFrame(() => {headerFrame = 0;updateArch();updateDrift();updateRise();updateNext();updateHeader();});}, {passive:true, signal});
   on('visibilitychange', () => document.querySelectorAll('.current-page video[data-loop], .current-page video[data-film], .current-page video[data-still]').forEach(syncVideo));
   for (const name of ['play', 'pause', 'ended', 'volumechange']) on(name, event => {
     const box = event.target instanceof HTMLVideoElement ? event.target.closest('[data-film-box]') : null;

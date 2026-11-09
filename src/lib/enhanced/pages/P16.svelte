@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -28,5 +29,6 @@
 <div data-part="actions"><button data-name="CTA" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Book a session — destination not supplied">Book a session</button><button data-name="Link arrow button" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="The people here — destination not supplied">The people here</button></div></div></section>
 <section data-name="Callout" data-node-id="862:15988" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/747094363a1826d240d9.webp" alt="A brass singing bowl and its striker on a cushion" loading="lazy" decoding="async" width="2400" height="1600"></figure><div data-part="copy"><p data-node-id="I862:15988;748:405" data-part="eyebrow">What we do not do</p>
 <h2 data-node-id="I862:15988;748:406" class="c-heading" data-part="heading">We do not diagnose anything, treat anything, or tell you that a session will fix a condition. Nobody here is a doctor. If you are being treated for something, keep doing that, and talk to the person treating you before you add anything on top of it.</h2></div></div></section>
+<Next pageIndex={16} />
 <Newsletter pageIndex={16} />
 

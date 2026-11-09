@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -30,5 +31,6 @@
 <p data-part="paragraph">What is worth your time near La Fortuna, what is a tourist trap, and how long each one takes.</p></div></article>
 <article data-part="card" data-name="Cards"><figure data-part="media" data-aspect="landscape"><img src="{base}/media/a32b1d05d2deb9142826.webp" alt="The top of the Dome against a bright, cloudy sky" loading="lazy" decoding="async" width="2400" height="1350"></figure><div data-part="copy"><h3 data-node-id="" class="c-heading" data-part="heading">When to come</h3>
 <p data-part="paragraph">Month by month in Arenal: rain, heat, crowds and rates.</p></div></article></div></section>
+<Next pageIndex={26} />
 <Newsletter pageIndex={26} />
 

@@ -17,6 +17,7 @@
   import '#lib/enhanced/styles/films.css';
   import '#lib/enhanced/styles/drift.css';
   import '#lib/enhanced/styles/rise.css';
+  import '#lib/enhanced/styles/next.css';
 
   let {children}: {children:Snippet} = $props();
   onMount(installInteractions);
@@ -50,6 +51,17 @@
     await Promise.race([image.decode().catch(() => {}), new Promise(resolve => setTimeout(resolve, 400))]);
     return image.complete && image.naturalWidth ? image : null;
   }
+  // Step 2.6: a navigation to the page the next-page block leads to, while its picture is on screen, carries the
+  // picture into that page's opening (motion.css, vt-next); a page that opens on text receives it as a dissolve.
+  const door = () => document.querySelector<HTMLElement>('.current-page [data-next-media]');
+  const throughDoor = (to: URL | undefined) => {
+    const media = door();
+    const link = media?.closest('a');
+    if (!media || !link || !to || to.pathname !== new URL(link.href).pathname) return false;
+    const box = media.getBoundingClientRect();
+    return Math.min(box.bottom, innerHeight) - Math.max(box.top, 0) > box.height * 0.3;
+  };
+  const arrivingPicture = () => document.querySelector('.current-page > [data-rise]:first-child > [data-role="photo-hero"]:first-child > [data-part="hero-image"], .current-page > [data-hero="arch"]:first-child [data-part="arch-media"]');
   let activeTransition: ViewTransition | undefined;
   onNavigate(navigation => {
     activeTransition?.skipTransition();
@@ -60,13 +72,20 @@
       return;
     }
     const header = document.querySelector('[data-header]');
-    root.dataset.vt = onScreen(opening(), 0.4) ? 'hero' : 'dissolve';
+    const viaDoor = throughDoor(navigation.to?.url);
+    root.dataset.vt = viaDoor ? 'next' : onScreen(opening(), 0.4) ? 'hero' : 'dissolve';
     root.dataset.vtHeader = header && !header.classList.contains('is-away') ? 'shared' : 'none';
     let arriving: HTMLImageElement | null = null;
     return new Promise<void>(resolveNavigation => {
       const transition = document.startViewTransition(async () => {
         resolveNavigation();
         await navigation.complete;
+        if (viaDoor) {
+          const grows = scrollY < 2 && !!arrivingPicture();
+          if (grows) await photoReady();
+          root.dataset.vt = grows ? 'next-in' : 'dissolve';
+          return;
+        }
         // The new page is in: its opening joins the transition when the page starts at the top.
         arriving = scrollY < 2 ? await photoReady() : null;
         root.dataset.vt = scrollY < 2 ? 'hero' : 'dissolve';

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -24,5 +25,6 @@
 <section data-name="Callout" data-node-id="862:15975" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/475782777018244eff8a.webp" alt="Josh Stanley in a hat and a red woven shawl among the trees" loading="lazy" decoding="async" width="800" height="800"></figure><div data-part="copy"><p data-node-id="I862:15975;748:405" data-part="eyebrow">Tell us what you are making</p>
 <p data-node-id="I862:15975;748:406" data-part="paragraph">The studio is booked by the day or the week, with or without an engineer, and usually alongside rooms for whoever you bring. Rates depend on how long you are here and how many people are coming, so email us and tell us what you are making.</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I862:15975;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Booking it — destination not supplied">Booking it</button></div></div></div></section>
+<Next pageIndex={18} />
 <Newsletter pageIndex={18} />
 

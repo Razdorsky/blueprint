@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -25,4 +26,5 @@
 <section data-name="Callout" data-node-id="814:7302" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/74d24d2bc43b341ebc91.webp" alt="The Vessyl logo" loading="lazy" decoding="async" width="471" height="374"></figure><div data-part="copy"><p data-node-id="I814:7302;748:405" data-part="eyebrow">Before you book</p>
 <p data-node-id="I814:7302;748:406" data-part="paragraph">If you are pregnant, have a pacemaker or another implanted device, or have a history of seizures, write to us first. There are a few things we will ask you to check with a doctor, and a few we will say no to, and we would rather say it now than at the door.</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I814:7302;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book a session — destination not supplied">book a session</button></div></div></div></section>
+<Next pageIndex={9} />
 <Newsletter pageIndex={9} />

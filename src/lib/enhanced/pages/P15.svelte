@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -29,5 +30,6 @@
 <section data-name="Callout" data-node-id="862:15952" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/475782777018244eff8a.webp" alt="Josh Stanley in a hat and a red woven shawl among the trees" loading="lazy" decoding="async" width="800" height="800"></figure><div data-part="copy"><p data-node-id="I862:15952;748:405" data-part="eyebrow">Before you book</p>
 <p data-node-id="I862:15952;748:406" data-part="paragraph">Sessions are [x] minutes and they are booked, not dropped in on, because the room holds [x] people. Bring swimwear. Towels are here. If you are pregnant, have a heart condition, or take medication for blood pressure, talk to your doctor before you book.</p>
 <div data-part="actions"><button data-name="CTA" data-node-id="I862:15952;748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="Book a session — destination not supplied">Book a session</button></div></div></div></section>
+<Next pageIndex={15} />
 <Newsletter pageIndex={15} />
 

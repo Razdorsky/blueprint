@@ -9,9 +9,19 @@
   --vt-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --vt-arrive: cubic-bezier(0.16, 1, 0.3, 1);
 }
-html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > :is(section:first-child, [data-rise]:first-child > section:first-child) { view-transition-name: vt-opening; }
-html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > :is(section:first-child, [data-rise]:first-child > section:first-child) > :is([data-part="hero-copy"], [data-part="copy"]) { view-transition-name: vt-opening-copy; }
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child,
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > [data-rise]:first-child > section:first-child { view-transition-name: vt-opening; }
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > section:first-child > :is([data-part="hero-copy"], [data-part="copy"]),
+html[data-vt="hero"] body[data-edition="figma-enhanced"] .current-page > [data-rise]:first-child > section:first-child > :is([data-part="hero-copy"], [data-part="copy"]) { view-transition-name: vt-opening-copy; }
 html[data-vt-header="shared"] body[data-edition="figma-enhanced"] .site-header { view-transition-name: vt-header; }
+/* Step 2.6: through the next-page block (+layout.svelte). The block's picture is captured as it stands, and on the new
+   page that page's opening picture takes its name, so the picture grows from the block into the opening; the
+   opening's text arrives after it. A page that opens on text has no picture to grow into, and the block dissolves. */
+html[data-vt="next"] body[data-edition="figma-enhanced"] .current-page [data-next-media] { view-transition-name: vt-next; }
+html[data-vt="next-in"] body[data-edition="figma-enhanced"] .current-page > [data-rise]:first-child > [data-role="photo-hero"]:first-child > [data-part="hero-image"],
+html[data-vt="next-in"] body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"]:first-child [data-part="arch-media"] { view-transition-name: vt-next; }
+html[data-vt="next-in"] body[data-edition="figma-enhanced"] .current-page > [data-rise]:first-child > [data-role="photo-hero"]:first-child > [data-part="hero-copy"],
+html[data-vt="next-in"] body[data-edition="figma-enhanced"] .current-page > [data-hero="arch"]:first-child > [data-part="arch-stage"] > [data-part="hero-copy"] { view-transition-name: vt-opening-copy; }
 /* Never capture a mega panel over the departing page. */
 html[data-vt] body[data-edition="figma-enhanced"] .site-header .mega { visibility: hidden !important; transition: none !important; }
 
@@ -27,9 +37,22 @@ html[data-vt] body[data-edition="figma-enhanced"] .site-header .mega { visibilit
 ::view-transition-old(vt-opening):only-child { animation: vt-out 450ms var(--vt-ease) both; }
 ::view-transition-new(vt-opening) { animation: vt-in var(--vt-scene) var(--vt-ease) both; }
 
+::view-transition-group(vt-next) { z-index: 1; animation-duration: var(--vt-scene); animation-timing-function: var(--vt-ease); }
+::view-transition-image-pair(vt-next) { overflow: clip; }
+::view-transition-old(vt-next),
+::view-transition-new(vt-next) { width: 100%; height: 100%; object-fit: cover; }
+/* The block's picture stays whole under the arriving one, then leaves in the second half, so an arch opening loses its
+   corners softly. */
+::view-transition-old(vt-next) { animation: vt-next-out var(--vt-scene) var(--vt-ease) both; }
+::view-transition-old(vt-next):only-child { animation: vt-out 450ms var(--vt-ease) both; }
+::view-transition-new(vt-next) { animation: vt-in 500ms var(--vt-ease) both; }
+
 ::view-transition-group(vt-opening-copy) { z-index: 2; animation: none; }
 ::view-transition-old(vt-opening-copy) { animation: vt-out 120ms ease-out both; }
 ::view-transition-new(vt-opening-copy) { animation: vt-copy var(--vt-copy) 240ms var(--vt-arrive) both; }
+/* Through the next-page block the opening's text waits until the picture has nearly settled, so the growing picture
+   never passes under words. */
+html[data-vt="next-in"]::view-transition-new(vt-opening-copy) { animation-delay: 520ms; }
 
 ::view-transition-group(vt-header) { z-index: 3; animation: none; }
 ::view-transition-old(vt-header) { animation: vt-out var(--vt-header) var(--vt-ease) both; }
@@ -40,6 +63,7 @@ html[data-vt] body[data-edition="figma-enhanced"] .site-header .mega { visibilit
 
 @keyframes vt-out { to { opacity: 0; } }
 @keyframes vt-in { from { opacity: 0; } }
+@keyframes vt-next-out { 0%, 55% { opacity: 1; } to { opacity: 0; } }
 @keyframes vt-copy { from { opacity: 0; transform: translateY(7px); } }
 
 @media (prefers-reduced-motion: reduce) {

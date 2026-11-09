@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -24,4 +25,5 @@
 <p data-part="paragraph">On a clear night the volcano is black against the sky and the valley below is a scatter of lights. On a cloudy night you hear more than you see, and that is its own thing.</p></div></section>
 <section data-name="Heading title" data-node-id="814:7321" data-role="copy" data-tone="white"><div data-part="copy"><h2 data-node-id="I814:7321;768:1391" class="c-heading" data-part="heading">Bring a layer. It drops [x] degrees once the sun goes.</h2>
 <div data-part="actions"><button data-name="CTA" data-node-id="I814:7321;805:3718;750:1257" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="book an evening — destination not supplied">book an evening</button></div></div></section>
+<Next pageIndex={10} />
 <Newsletter pageIndex={10} />

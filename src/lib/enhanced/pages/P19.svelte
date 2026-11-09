@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -33,5 +34,6 @@
 <p data-node-id="I882:8115;757:1858;757:1837" data-part="paragraph">The smaller room. [x] seats, [x] nights a week.</p>
 <div data-part="actions"><a data-name="Link arrow button" data-node-id="I882:8115;757:1858;757:1842" class="current-action" data-part="action" href="{base}/{edition}/moloka/">See Moloka</a></div></div></article></div></section>
 <section data-name="Galery slider" data-node-id="882:8116" data-role="gallery" data-gallery="1" aria-label="Eating here gallery"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/0557fe813fc92a097ea1.webp" alt="A printed dinner menu on a gold charger plate" loading="lazy" decoding="async" data-gallery-image="" width="1603" height="2400"><button type="button" data-gallery-open="" data-part="gallery-prev" aria-label="Open Eating here gallery"></button><button type="button" data-gallery-open="" data-part="gallery-next" tabindex="-1" aria-hidden="true"></button></figure></section>
+<Next pageIndex={19} />
 <Newsletter pageIndex={19} />
 

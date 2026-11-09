@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -55,4 +56,5 @@
 <section data-name="Callout" data-node-id="750:972" data-role="callout"><div data-part="callout-panel"><figure data-part="media" data-aspect="portrait" data-film-box><img src="{base}/media/475782777018244eff8a.webp" alt="Josh Stanley in a hat and a red woven shawl among the trees" loading="lazy" decoding="async" width="800" height="800"><video data-still playsinline preload="none" aria-hidden="true" tabindex="-1" data-full="{base}/bp/video/film-events.mp4" data-start="40.9" data-end="53.2" data-photo-after="50.0"></video><button type="button" class="film-play" data-film-play aria-label="Hear Josh Stanley talk about the Vessyl, with sound"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="currentColor"/></svg><span>Hear Josh</span></button><div class="film-controls" data-film-controls hidden><button type="button" data-film-toggle aria-label="Pause the film"><svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5h2v9H5zM9 3.5h2v9H9z" fill="currentColor"/></svg><svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="currentColor"/></svg></button><button type="button" data-film-mute aria-label="Mute the film"><svg class="icon-sound" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z" fill="currentColor"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6 6 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg><svg class="icon-muted" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z" fill="currentColor"/><path d="M11 6l3.5 4M14.5 6L11 10" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button></div></figure><div data-part="copy"><p data-node-id="748:405" data-part="eyebrow">the founder</p>
 <h2 data-node-id="748:406" class="c-heading" data-part="heading">The Vessyl was designed and is run by Josh Stanley, who lives on the property.</h2>
 <div data-part="actions"><button data-name="CTA" data-node-id="748:407" class="current-action" data-part="action" type="button" data-pending-link="" aria-label="About Josh — destination not supplied">About Josh</button></div></div></div></section>
+<Next pageIndex={1} />
 <Newsletter pageIndex={1} />

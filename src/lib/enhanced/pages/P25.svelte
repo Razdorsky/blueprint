@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -32,5 +33,6 @@
 <h2 data-node-id="I944:7532;764:946" class="c-heading" data-part="heading">The paperwork</h2>
 <p data-node-id="I944:7532;764:948" data-part="paragraph" class="current-lede">TO SUPPLY: legal requirements, residency rules, documentation and timelines,{' '}confirmed with a Costa Rican attorney.</p></div></section>
 <section data-name="Rooms Comparison" data-node-id="944:7533" data-role="topics"><ul data-part="topics"><li data-node-id="I944:7533;756:1354"><h3 data-node-id="I944:7533;756:1344" class="c-heading" data-part="heading">Documents you need</h3></li><li data-node-id="I944:7533;756:1367"><h3 data-node-id="I944:7533;756:1368" class="c-heading" data-part="heading">Timelines</h3></li><li data-node-id="I944:7533;756:1372"><h3 data-node-id="I944:7533;756:1373" class="c-heading" data-part="heading">Residency rules</h3></li></ul></section>
+<Next pageIndex={25} />
 <Newsletter pageIndex={25} />
 

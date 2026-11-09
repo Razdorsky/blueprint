@@ -1,5 +1,6 @@
 <script lang="ts">
   import Newsletter from '#lib/enhanced/components/Newsletter.svelte';
+  import Next from '#lib/enhanced/components/Next.svelte';
 
   let { edition, base = '' }: { edition: 'figma-enhanced'; base?: string } = $props();
 </script>
@@ -37,5 +38,6 @@
 <p data-part="paragraph">For companies that have had enough of hotel ballrooms.</p></div></article>
 <article data-part="card" data-depth="1.2" data-side="left" style="--y: 90svh" data-name="Cards"><figure data-part="media" data-aspect="portrait"><img src="{base}/media/eba6f9c7897a9601a45f.webp" alt="A wedding table with white flowers and candles at night" loading="lazy" decoding="async" width="1350" height="2400"></figure><div data-part="copy"><h3 data-node-id="" class="c-heading" data-part="heading"><a href="{base}/{edition}/weddings/">Weddings</a></h3>
 <p data-part="paragraph">Small, private, and outdoors.</p></div></article></div></section></div>
+<Next pageIndex={22} />
 <Newsletter pageIndex={22} />
 
